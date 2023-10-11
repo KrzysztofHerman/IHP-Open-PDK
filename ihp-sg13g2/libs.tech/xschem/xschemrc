@@ -53,7 +53,7 @@ set dircolor(devices$) red
 #### Start without a design if no filename given on command line:
 #### To avoid absolute paths, use a path that is relative to one of the
 #### XSCHEM_LIBRARY_PATH directories. Default: empty
-set XSCHEM_START_WINDOW {sg13g2_tests/IHP_testcases.sch}
+#set XSCHEM_START_WINDOW {sg13g2_tests/IHP_testcases.sch}
 
 ###########################################################################
 #### IHP130 PDK SPECIFIC VARIABLES
@@ -87,6 +87,16 @@ if {[info exists PDK_ROOT]} {
   puts stderr "netlist_dir: $netlist_dir"
 }
 
+
+if {[info exists PDK_ROOT]} {
+append XSCHEM_LIBRARY_PATH :${PDK_ROOT}/libs.tech/xschem/
+}
+#append XSCHEM_LIBRARY_PATH :${PDK_ROOT}/libs.tech/xschem/sg13g2_pr
+#append XSCHEM_LIBRARY_PATH :${PDK_ROOT}/libs.tech/xschem/sg13g2_tests
+
+if {[info exists PDK_ROOT]} {
+set XSCHEM_START_WINDOW ${PDK_ROOT}/libs.tech/xschem/sg13g2_tests/IHP_testcases.sch
+}
 ###########################################################################
 #### NETLIST AND HIERARCHICAL PRINT EXCLUDE PATTERNS
 ###########################################################################
