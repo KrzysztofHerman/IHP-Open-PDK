@@ -1,2 +1,4 @@
 set ngbehavior=hsa
 set ng_nomodcheck
+*set ngdebug
+*set debug
