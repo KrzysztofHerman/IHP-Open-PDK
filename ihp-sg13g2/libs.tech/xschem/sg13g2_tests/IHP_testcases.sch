@@ -64,3 +64,4 @@ C {sg13g2_tests/dc_ptap1.sym} 180 -360 0 0 {name=x26}
 C {sg13g2_tests/tran_logic_not.sym} 520 -590 0 0 {name=x27}
 C {sg13g2_tests/dc_logic_not.sym} 180 -220 0 0 {name=x28}
 C {sg13g2_tests/tran_logic_nand.sym} 520 -550 0 0 {name=x29}
+C {sg13g2_tests/sp_hbt_13g2_lna.sym} 1920 -630 0 0 {name=x30}
