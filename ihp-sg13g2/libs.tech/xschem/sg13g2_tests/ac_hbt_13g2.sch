@@ -6,15 +6,15 @@ V {}
 S {}
 E {}
 B 2 140 -850 940 -450 {flags=graph
-y1=0.021
-y2=0.13
+y1=0
+y2=0.01
 ypos1=0
 ypos2=2
 divy=5
 subdivy=4
 unity=1
-x1=4
-x2=8
+x1=-35
+x2=-5.30103
 divx=5
 subdivx=8
 xlabmag=1.0
@@ -77,6 +77,10 @@ meas ac vnom_at FIND Vc AT=100k
 let v3db = vnom_at*0.707
 meas ac freq_at when Vc=v3db
 write ac_hbt_13g2.raw
+reset
+save all
+tran 1n 5u
+write tran_hbt_13g2.raw
 .endc
 "}
 C {devices/gnd.sym} 440 -230 0 0 {name=l1 lab=GND}
@@ -90,12 +94,12 @@ model=npn13G2
 spiceprefix=X
 Nx=1}
 C {devices/res.sym} 500 -390 1 0 {name=R1
-value=40k
+value=1k
 footprint=1206
 device=resistor
 m=1}
 C {devices/lab_pin.sym} 420 -390 0 0 {name=p1 sig_type=std_logic lab=Vc}
-C {devices/vsource.sym} 180 -280 0 0 {name=Vce1 value="dc 0.8 ac 1m"}
+C {devices/vsource.sym} 180 -280 0 0 {name=Vce1 value="dc 0.8 ac 1m sine(0, 1m, 1meg)"}
 C {devices/res.sym} 280 -320 1 0 {name=R2
 value=33k
 footprint=1206
