@@ -1,0 +1,39 @@
+
+.control 
+save all
+op
+print Vc Vb I(Vce)
+ac dec 10 10k 100meg 
+meas ac vnom_at FIND Vc AT=100k 
+let v3db = vnom_at*0.707
+meas ac freq_at when Vc=v3db
+write ac_hbt_13g2.raw
+reset
+save all
+tran 1n 5u
+write tran_hbt_13g2.raw
+.endc
+"}
+
+
+.param temp=27
+.param mc_ok = 1
+
+.control 
+let mc_runs = 1000
+let run = 0
+shell rm ../csv/mc_hbt_3dB.csv
+***************** LOOP *********************
+dowhile run < mc_runs
+reset
+set run=$&run
+save all
+ac dec 10 10k 1000meg 
+meas ac vnom_at FIND Vc AT=100k 
+let v3db = vnom_at*0.707
+meas ac freq_3dB when Vc=v3db
+print freq_3dB >> ../csv/mc_hbt_3dB.csv
+let run=run+1 
+end
+***************** LOOP *********************
+.endc
