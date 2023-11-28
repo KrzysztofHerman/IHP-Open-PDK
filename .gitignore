@@ -4,3 +4,6 @@
 *.osdi
 .DS_Store
 *.pyc
+
+#Sphinks build
+docs/_build/
