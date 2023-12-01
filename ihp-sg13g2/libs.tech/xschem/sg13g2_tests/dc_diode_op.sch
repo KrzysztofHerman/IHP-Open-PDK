@@ -7,14 +7,14 @@ S {}
 E {}
 B 2 -510 -700 290 -300 {flags=graph
 y1=-3e-06
-y2=2.3e-06
+y2=1.5e-05
 ypos1=0
 ypos2=2
 divy=5
 subdivy=4
 unity=1
 x1=-12
-x2=1
+x2=2
 divx=5
 subdivx=4
 xlabmag=1.0
@@ -62,7 +62,7 @@ save all
 op
 print I(Vmda) I(Vmdp) 
 reset 
-dc V1 -12 1 1m
+dc V1 -12 2 1m
 write dc_diode_op.raw
 wrdata dc_diode.csv I(Vmda) I(Vmdp)
 .endc
