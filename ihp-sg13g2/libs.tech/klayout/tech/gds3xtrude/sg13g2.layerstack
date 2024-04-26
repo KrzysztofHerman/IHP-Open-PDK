@@ -1,0 +1,122 @@
+from gds3xtrude.include import layer, Material
+
+# GDS2 layer numbers.
+
+       # "Activ":            "1, 0",
+       #  "GatPoly":          "5, 0",
+       #  "Cont":             "6, 0",
+       #  "nSD":              "7, 0",
+       #  "Metal1":           "8, 0",
+       #  "Passiv":           "9, 0",
+       #  "Metal2":           "10, 0",
+       #  "pSD":              "14, 0",
+       #  "Via1":             "19, 0",
+       #  "Via2":             "29, 0",
+       #  "Metal3":           "30, 0",
+       #  "NWell":            "31, 0",
+       #  "nBuLay":           "32, 0",
+       #  "EmWind":           "33, 0",
+       #  "MIM":              "36, 0",
+       #  "EdgeSeal":         "39, 0",
+       #  "Substrate":        "40, 0",
+       #  "ThickGateOx":      "44, 0",
+       #  "Via3":             "49, 0",
+       #  "Metal4":           "50, 0",
+       #  "HeatTrans":        "51, 0",
+       #  "Via4":             "66, 0",
+       #  "Metal5":           "67, 0",
+       #  "TopVia1":             "125, 0",
+       #  "TopMetal1":           "126, 0",
+       #  "TopVia2":             "133, 0",
+       #  "TopMetal2":           "134, 0",
+
+Active= layer(1)
+GatPoly = layer(5)
+nSD = layer(7)
+Passiv = layer(9)
+pSD = layer(14)
+NWell = layer(31)
+Substrate = layer(40)
+nBuLay = layer(32)
+
+EmWind = layer(33)
+MIM  = layer(36)
+
+Cont = layer(6)
+Metal1 = layer(8)
+Metal2 = layer(10)
+Via1 = layer(19)
+Via2 = layer(29)
+Metal3 = layer(30)
+Via3 = layer(49)
+Metal4 = layer(50)
+Via4 = layer(66)
+Metal5 = layer(67)
+TopVia1 = layer(125)
+TopMetal1 = layer(126)
+TopVia2 = layer(133)
+TopMetal2 = layer(134)
+
+#bulk = nwell-pimplant-nimplant + pwell-pimplant-nimplant
+# Define materials/colors
+
+m_GatPoly = Material("GatPoly", color=(0.4, 0.4, 0.4))
+m_nSD = Material("n+", color=(0.9, 0.6, 0.9))
+m_pSD = Material("p+", color=(0.1, 0.6, 0.9))
+m_poly = Material("polysilicon", color=(0.7, 0, 0))
+m_Nwell= Material("n-", color=(0.7, 0, 0))
+m_nBuLay = Material("n-", color=(0.7, 1, 0))
+m_Substrate =  Material("p-", color=(0.1, 0.1, 0.1))
+m_Passiv =  Material("SiO2", color=(0.4, 0, 0))
+m_Cont  = Material("tungsten", color=(0.5, 0.1, 1))
+m_Via = Material("tungsten", color=(0.5, 0.3, 1))
+m_Metal = Material("Al", color=(0.3, 0.3, 1))
+
+# Set materials/colors
+
+GatPoly.material = m_GatPoly
+nSD.material = m_nSD
+Passiv.material = m_Passiv
+pSD.material = m_pSD
+NWell.material = m_Nwell
+Substrate.material = m_Substrate
+nBuLay.material = m_nBuLay
+Cont.material = m_Cont
+Metal1.material = m_Metal
+Metal2.material = m_Metal
+Via1.material =  m_Via
+Via2.material = m_Via
+Metal3.material = m_Metal
+Via3.material = m_Via
+Metal4.material = m_Metal
+Via4.material = m_Via
+Metal5.material = m_Metal
+TopVia1.material = m_Via
+TopMetal1.material = m_Metal
+TopVia2.material = m_Via
+TopMetal2.material = m_Metal
+
+
+# Define additional layers from boolean operation
+contact_to_silicon = Cont - GatPoly
+
+layerstack = [
+    (10, [Active, pSD, nSD, Substrate]),    # silicon
+    (20, GatPoly),           # gate oxide
+    #(20, [GatPoly]),          # poly-silicon
+    (200, Cont),                 # metal1-poly contacts
+    (50, Metal1),
+    (200, Via1),
+    (50, Metal2),
+    (200, Via2),
+    (50, Metal3),
+    (200, Via3),
+    (50, Metal4),
+    (200, Via4),
+    (50, Metal5),
+    (200, TopVia1),
+    (50, TopMetal1),
+    (200, TopVia2),
+    (50, TopMetal2),
+]
+       #
