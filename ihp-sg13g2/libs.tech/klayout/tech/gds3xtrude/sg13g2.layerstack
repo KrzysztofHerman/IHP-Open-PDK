@@ -96,27 +96,29 @@ TopMetal1.material = m_Metal
 TopVia2.material = m_Via
 TopMetal2.material = m_Metal
 
+MIM.material=m_Metal
 
 # Define additional layers from boolean operation
 contact_to_silicon = Cont - GatPoly
 
 layerstack = [
-    (10, [Active, pSD, nSD, Substrate]),    # silicon
+    (400, [Active, pSD, nSD, Substrate]),    # silicon
     (20, GatPoly),           # gate oxide
     #(20, [GatPoly]),          # poly-silicon
-    (200, Cont),                 # metal1-poly contacts
-    (50, Metal1),
-    (200, Via1),
-    (50, Metal2),
-    (200, Via2),
-    (50, Metal3),
-    (200, Via3),
-    (50, Metal4),
-    (200, Via4),
-    (50, Metal5),
-    (200, TopVia1),
-    (50, TopMetal1),
-    (200, TopVia2),
-    (50, TopMetal2),
+    (640, Cont),                 # metal1-poly contacts
+    (420, Metal1),
+    (540, Via1),
+    (490, Metal2),
+    (540, Via2),
+    (490, Metal3),
+    (540, Via3),
+    (490, Metal4),
+    (540, Via4),
+    (490, Metal5),
+    (40, MIM),
+    (850, TopVia1),
+    (2000, TopMetal1),
+    (2800, TopVia2),
+    (3000, TopMetal2),
 ]
        #
