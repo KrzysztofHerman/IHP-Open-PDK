@@ -902,7 +902,11 @@
         "sealring_complete_minW": "50u",
         "sealring_complete_maxL": "25000u",
         "sealring_complete_maxW": "32000u",
-        "sealring_complete_edgeBox": "25u"
+        "sealring_complete_edgeBox": "25u",
+        
+        "gring_defW": "3u",
+        "gring_defL": "3u",
+        "gring_model": "gring_model"
     },
     "Layers": {
         "Activ":            "1, 0",
