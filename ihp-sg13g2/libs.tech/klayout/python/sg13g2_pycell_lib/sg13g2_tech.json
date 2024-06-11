@@ -905,8 +905,7 @@
         "sealring_complete_edgeBox": "25u",
         
         "gring_defW": "3u",
-        "gring_defL": "3u",
-        "gring_model": "gring_model"
+        "gring_defL": "3u"
     },
     "Layers": {
         "Activ":            "1, 0",
@@ -977,6 +976,8 @@
         "Passiv.pdl":       "9, 40",
         "Passiv.sbump":     "9, 36",
         "Passiv.pillar":    "9, 35",
+
+        "dfpad":            "41, 0",
 
         "Metal2":           "10, 0",
         "Metal2.drawing":   "10, 0",
