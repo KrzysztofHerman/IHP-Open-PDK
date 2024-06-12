@@ -39,6 +39,9 @@ from cni.instance import *
 from cni.paramarray import *
 from cni.pin import *
 from cni.term import *
+from cni.path import *
+from cni.shapefilter import *
+from cni.net import *
 
 import pya
 import sys
@@ -123,6 +126,12 @@ class PyCellContext(object):
             raise Exception("Impl not set!")
         return self._impl
 
+    @property
+    def cell(self):
+        if self._cell is None:
+            raise Exception("Cell not set!")
+        return self._cell
+
 
 class PCellWrapper(pya.PCellDeclaration):
 
@@ -150,6 +159,8 @@ class PCellWrapper(pya.PCellDeclaration):
             value_type = pya.PCellParameterDeclaration.TypeInt
         elif type(value) is str:
             value_type = pya.PCellParameterDeclaration.TypeString
+        elif type(value) is bool:
+            value_type = pya.PCellParameterDeclaration.TypeBoolean
         else:
             print(f"Invalid parameter type for parameter {name} (value is {repr(value)})")
             assert(False)
@@ -186,6 +197,7 @@ class PCellWrapper(pya.PCellDeclaration):
         params = self.params_as_hash(parameters)
 
         with (PyCellContext(self.tech, cell, self._impl)):
+            self._impl.addCellContext(cell)
             self._impl.setupParams(params)
             self._impl.genLayout()
 
