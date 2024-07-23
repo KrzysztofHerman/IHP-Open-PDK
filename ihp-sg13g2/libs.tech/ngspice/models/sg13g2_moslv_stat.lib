@@ -52,4 +52,12 @@
 .param sg13g2_lv_pmos_cjorbot  ='gauss(sg13g2_lv_pmos_cjorbot_norm,  0.0267, mc_ok)'
 .param sg13g2_lv_pmos_cjorsti  ='gauss(sg13g2_lv_pmos_cjorsti_norm,  0.0267, mc_ok)'
 .param sg13g2_lv_pmos_cjorgat  ='gauss(sg13g2_lv_pmos_cjorgat_norm,  0.0267, mc_ok)'
+
+
+.param sg13g2_lv_nmos_delvto_mm  = 'gauss(sg13g2_lv_nmos_delvto_mm_norm , 0.004, mm_ok)'
+.param sg13g2_lv_nmos_factuo_mm  = 'gauss(sg13g2_lv_nmos_factuo_mm_norm , 0.005, mm_ok)'
+           
+.param sg13g2_lv_pmos_delvto_mm  = 'gauss(sg13g2_lv_pmos_delvto_mm_norm , 0.032, mm_ok)'
+.param sg13g2_lv_pmos_factuo_mm  = 'gauss(sg13g2_lv_pmos_factuo_mm_norm , 0.005, mm_ok)'
+
       

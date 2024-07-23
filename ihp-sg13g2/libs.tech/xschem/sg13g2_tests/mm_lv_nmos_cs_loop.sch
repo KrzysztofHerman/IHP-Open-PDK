@@ -61,18 +61,18 @@ lab=vc}
 C {devices/code_shown.sym} 260 110 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"
 value="
-.lib cornerMOSlv.lib mos_tt_mismatch
+.lib cornerMOSlv.lib mos_tt_stat
 
 "}
 C {devices/code_shown.sym} -300 -440 0 0 {name=NGSPICE only_toplevel=true 
 value="
 .param mm_ok=1
-.param mc_ok=1
+.param mc_ok=0
 .param temp=27
 
 .control
 
-let mc_runs = 1000
+let mc_runs = 100
 let run = 0
 set curplot=new
 set scratch=$curplot

@@ -81,6 +81,8 @@
           + pd='2*(max(w/ng,wmin)*((ng-1)/2+1)+z1+(ng-1)/2*z2)/ng'  
           + dta=trise  
           + ngcon=2   
+          + delvto='sg13g2_lv_nmos_delvto_mm' 
+          + factuo='sg13g2_lv_nmos_factuo_mm'
     .else
         Nsg13_lv_nmos d g s b sg13g2_lv_nmos_psp w='w/ng' l=l mult='ng*m'   
           + as='max(w/ng,wmin)*(2*z1+max(0,(ng-2)/2)*z2)/ng'  
@@ -89,11 +91,15 @@
           + pd='max(w/ng,wmin)+z2'  
           + dta=trise  
           + ngcon=2   
+          + delvto='sg13g2_lv_nmos_delvto_mm' 
+          + factuo='sg13g2_lv_nmos_factuo_mm'
     .endif
 .else
     Nsg13_lv_nmos d g s b sg13g2_lv_nmos_psp w='w/ng' l=l as='as/ng' ad='ad/ng' pd='pd/ng' ps='ps/ng' mult='ng*m'   
       + dta=trise  
       + ngcon=2   
+      + delvto='sg13g2_lv_nmos_delvto_mm' 
+      + factuo='sg13g2_lv_nmos_factuo_mm'
 .endif
 .ends
   
@@ -111,6 +117,8 @@
           + pd='2*(max(w/ng,wmin)*((ng-1)/2+1)+z1+(ng-1)/2*z2)/ng'  
           + dta=trise  
           + ngcon=2   
+          + delvto='sg13g2_lv_pmos_delvto_mm' 
+          + factuo='sg13g2_lv_pmos_factuo_mm'
     .else
         Nsg13_lv_pmos d g s b sg13g2_lv_pmos_psp w='w/ng' l=l mult='ng*m'   
           + as='max(w/ng,wmin)*(2*z1+max(0,(ng-2)/2)*z2)/ng'  
@@ -119,10 +127,14 @@
           + pd='max(w/ng,wmin)+z2'  
           + dta=trise  
           + ngcon=2   
+          + delvto='sg13g2_lv_pmos_delvto_mm' 
+          + factuo='sg13g2_lv_pmos_factuo_mm'
     .endif
 .else
     Nsg13_lv_pmos d g s b sg13g2_lv_pmos_psp w='w/ng' l=l as='as/ng' ad='ad/ng' pd='pd/ng' ps='ps/ng' mult='ng*m'  
       + dta=trise  
       + ngcon=2   
+      + delvto='sg13g2_lv_pmos_delvto_mm' 
+      + factuo='sg13g2_lv_pmos_factuo_mm'
 .endif
 .ends

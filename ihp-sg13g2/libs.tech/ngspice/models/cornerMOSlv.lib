@@ -110,7 +110,13 @@
  
   .parameters sg13g2_lv_svaricap_lap   = 1.082   
   .parameters sg13g2_lv_svaricap_toxo  = 1   
-
+           
+  .parameter sg13g2_lv_nmos_delvto_mm = 0 
+  .parameter sg13g2_lv_nmos_factuo_mm = 1 
+  
+  .parameter sg13g2_lv_pmos_delvto_mm = 0 
+  .parameter sg13g2_lv_pmos_factuo_mm = 1 
+           
   .include sg13g2_moslv_mod.lib
 .ENDL mos_tt
   
@@ -154,6 +160,11 @@
   
   .parameters sg13g2_lv_svaricap_lap   = 1.082   
   .parameters sg13g2_lv_svaricap_toxo  = 1   
+           
+  .parameter sg13g2_lv_nmos_delvto_mm_norm = 0 
+  .parameter sg13g2_lv_nmos_factuo_mm_norm = 1 
+  .parameter sg13g2_lv_pmos_delvto_mm_norm = 0 
+  .parameter sg13g2_lv_pmos_factuo_mm_norm = 1 
 
   .include sg13g2_moslv_stat.lib
   .include sg13g2_moslv_mod.lib
@@ -200,8 +211,13 @@
   .parameters sg13g2_lv_svaricap_lap   = 1.082   
   .parameters sg13g2_lv_svaricap_toxo  = 1   
 
-  .include sg13g2_moslv_mismatch.lib
-  .include sg13g2_moslv_mod_mismatch.lib
+  .parameter sg13g2_lv_nmos_delvto_mm_norm = 0 
+  .parameter sg13g2_lv_nmos_factuo_mm_norm = 1 
+  .parameter sg13g2_lv_pmos_delvto_mm_norm = 0 
+  .parameter sg13g2_lv_pmos_factuo_mm_norm = 1 
+
+  .include sg13g2_moslv_stat.lib
+  .include sg13g2_moslv_mod.lib
 .ENDL mos_tt_mismatch
 
 **************** CORNER_LIB OF sg13g2_lv SS MODEL **************** 
