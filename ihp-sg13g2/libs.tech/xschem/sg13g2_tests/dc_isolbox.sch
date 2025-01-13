@@ -1,20 +1,19 @@
-v {xschem version=3.4.5 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
 S {}
 E {}
 B 2 0 -800 800 -400 {flags=graph
-y1=-3e-06
-y2=2.3e-06
+y1=-1.4
+y2=17
 ypos1=0
 ypos2=2
 divy=5
 subdivy=4
 unity=1
-x1=-12
-x2=1
+x1=-0.001
+x2=0.001
 divx=5
 subdivx=4
 xlabmag=1.0
@@ -25,9 +24,10 @@ dataset=-1
 unitx=1
 logx=0
 logy=0
-color="7 8"
-node="i(Vmdp)
-i(Vmda)"}
+
+color="4 5"
+node="nwell
+isosub"}
 N -510 -210 -510 -190 {
 lab=GND}
 N -350 -210 -350 -190 {
@@ -55,10 +55,8 @@ value="
 .param temp=27
 .control
 save all 
-op
-print I(Vmda) I(Vmdp) 
-reset 
-dc V1 -12 1 1m
+
+dc I0 -1m 1m 1u
 write dc_isolbox.raw
 .endc
 "}

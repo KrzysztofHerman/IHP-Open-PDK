@@ -15,8 +15,9 @@ class isolbox(DloGen):
         techparams = specs.tech.getTechParams()
         
         CDFVersion = techparams['CDFVersion']
-        minL       = '3.6u'
-        minW       = minL
+        
+        minL       = techparams['isolbox_defLW']
+        minW       = techparams['isolbox_defLW']
         defA       = '12.96p'
         defP       = '14.4u'
         

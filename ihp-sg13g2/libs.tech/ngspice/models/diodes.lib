@@ -117,7 +117,8 @@ D3 1 2 dpcorner area=DEV_C
 .model dinneredge_mod D  ( tnom=27 level=1 tlevc=0 tlev=2 is=3.89e-20 n=1.01 ik=3e-6  xti=1.529 bv=9.7 ibv=1e-12 isr=20e-18 rs=5e4 )
 .model dsub_mod D        ( tnom=27 level=1 tlevc=0 tlev=2 is=4.052e-18 n=1.01 ik=1.023e-9 xti=2.112 bv=94.7 isr=86e-18 rs=5e5 )
 .model dsubedge0_mod D   ( tnom=27 level=1 tlevc=0 tlev=2 is=4.052e-18 n=1.01  ik=1.023e-9  xti=2.112 bv=13.54 isr=10e-18 rs=10e3 )
-.model dsubedgexds_mod D ( tnom=27 level=1 tlevc=0 tlev=2 is=4.052e-18 n=1.01  ik=1.023e-9  xti=2.112 bv=-11.70818 isr=1e-16 rs=28e3  )
+.model dsubedgexds_mod D ( tnom=27 level=1 tlevc=0 tlev=2 is=4.052e-18 n=1.01  ik=1.023e-9  xti=2.112 bv=11.70818 isr=1e-16 rs=28e3  )
+*.model doutcapcorner_mod D ( tnom=27 level=1 tlevc=0 tlev=2   bv=213.2898 )
 .model doutcapcorner_mod D ( tnom=27 level=1 tlevc=0 tlev=2  cjsw=389.8354 mjsw=0.3029153  bv=213.2898 )
 .model doutcaparea_mod D   ( tnom=27 level=1 tlevc=0 tlev=2 is=1e-25 cj=70.13e-18 mj=0.3874 vj=0.3357 cjsw=471.3008 mjsw=0.2842892  bv=262.7082 )
 
@@ -144,8 +145,8 @@ douter bn NWell dsub_mod area=(mf*aws) pj=0
 .endif
 
 * abs -> aws
-*doutcapcorner bn NWell doutcapcorner_mod area=0  pj=mf*14.4
-*doutcaparea bn NWell doutcaparea_mod area=mf*aws pj=mf*ls
+doutcapcorner bn NWell doutcapcorner_mod area=1e-32  pj=mf*14.4
+doutcaparea bn NWell doutcaparea_mod area=mf*aws pj=mf*ls
 *
 .ends isolbox
 
