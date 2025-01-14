@@ -1,4 +1,4 @@
-*#######################################################################
+*l#######################################################################
 *
 * Copyright 2023 IHP PDK Authors
 * 
@@ -20,13 +20,19 @@
 
 **ptap1 (TIE SUB)
 .subckt ptap1 1 2 
-R1 1 2 R=262.847
+.param R=262.8 w=0 l=0
+R1 1 2 R=R
 .ends ptap1
+
 
 **ntap1 (TIE WELL)
 .subckt ntap1 1 2 
-R1 1 2 R=262.847
+.param R=262.8 w=0 l=0
+R1 1 2 R=R
 .ends ntap1
+
+
+
 
 * Parasitic R/C models
 * aluminum: prozess tol. res_rpara 
