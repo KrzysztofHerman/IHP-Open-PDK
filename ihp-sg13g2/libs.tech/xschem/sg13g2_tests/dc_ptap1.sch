@@ -1,5 +1,4 @@
-v {xschem version=3.4.4 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -47,12 +46,46 @@ N 0 40 0 80 {
 lab=GND}
 N -180 40 -180 80 {
 lab=GND}
-C {devices/code_shown.sym} -210 160 0 0 {name=MODEL only_toplevel=true
-format="tcleval( @value )"
+C {devices/vsource.sym} 0 10 0 0 {name=Vres value=1.5}
+C {devices/title.sym} -100 240 0 0 {name=l5 author="Copyright 2023 IHP PDK Authors"}
+C {devices/lab_pin.sym} 50 -60 2 0 {name=p1 sig_type=std_logic lab=Vcc}
+C {devices/ammeter.sym} -70 -60 1 0 {name=Vr}
+C {sg13g2_pr/ptap1.sym} -180 10 0 0 {name=R1
+model=ptap1
+spiceprefix=X
+w=0.78e-6
+l=0.78e-6
+}
+C {gnd.sym} -180 100 0 0 {name=l1 lab=GND}
+C {simulator_commands_shown.sym} -270 -460 0 0 {name=Libs_Ngspice
+simulator=ngspice
+only_toplevel=false 
 value="
-.lib $::SG13G2_MODELS/cornerRES.lib  res_typ 
+.lib cornerRES.lib res_typ
 "}
-C {devices/code_shown.sym} 290 -10 0 0 {name=NGSPICE only_toplevel=true 
+C {launcher.sym} -200 -140 0 0 {name=h3
+descr=SimulateNGSPICE
+tclcommand="
+# Setup the default simulation commands if not already set up
+# for example by already launched simulations.
+set_sim_defaults
+puts $sim(spice,1,cmd) 
+
+# Change the Xyce command. In the spice category there are currently
+# 5 commands (0, 1, 2, 3, 4). Command 3 is the Xyce batch
+# you can get the number by querying $sim(spice,n)
+set sim(spice,1,cmd) \{ngspice  \\"$N\\" -a\}
+
+# change the simulator to be used (Xyce)
+set sim(spice,default) 0
+
+# run netlist and simulation
+xschem netlist
+simulate
+"}
+C {simulator_commands_shown.sym} -260 -360 0 0 {name=Simulator2
+simulator=ngspice
+only_toplevel=false 
 value="
 .param temp=27
 .control
@@ -64,18 +97,7 @@ dc Vres 0 3 0.01
 write dc_ptap1.raw
 .endc
 "}
-C {devices/gnd.sym} -180 100 0 0 {name=l1 lab=GND}
-C {devices/vsource.sym} 0 10 0 0 {name=Vres value=1.5}
-C {devices/title.sym} -100 240 0 0 {name=l5 author="Copyright 2023 IHP PDK Authors"}
-C {devices/launcher.sym} -120 -200 0 0 {name=h5
+C {devices/launcher.sym} 170 -20 0 0 {name=h5
 descr="load waves" 
 tclcommand="xschem raw_read $netlist_dir/dc_ptap1.raw dc"
 }
-C {devices/lab_pin.sym} 50 -60 2 0 {name=p1 sig_type=std_logic lab=Vcc}
-C {sg13g2_pr/ptap1.sym} -180 10 0 0 {name=R1
-model=ntap1
-spiceprefix=X
-R=262.847.0
-Imax=0.3e-6
-}
-C {devices/ammeter.sym} -70 -60 1 0 {name=Vr}

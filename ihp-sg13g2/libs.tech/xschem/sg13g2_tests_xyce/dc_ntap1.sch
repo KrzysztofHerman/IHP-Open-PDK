@@ -1,13 +1,12 @@
-v {xschem version=3.4.4 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
 S {}
 E {}
-B 2 200 -470 1000 -70 {flags=graph
+B 2 620 -480 1420 -80 {flags=graph
 
-y2=0.012
+y2=0.032
 ypos1=0
 ypos2=2
 divy=5
@@ -27,7 +26,7 @@ logy=0
 y1=0
 rainbow=0
 color=4
-node=i(Vmeas)}
+node=i(Vr)}
 T {Here GND is for simulation purpose. The actuall connection goes to NWELL} -150 110 0 0 0.2 0.2 {}
 N -180 90 -180 100 {
 lab=GND}
@@ -47,12 +46,80 @@ N -180 90 0 90 {
 lab=GND}
 N -180 40 -180 90 {
 lab=GND}
-C {devices/code_shown.sym} -200 160 0 0 {name=MODEL only_toplevel=true
-format="tcleval( @value )"
+C {devices/gnd.sym} -180 100 0 0 {name=l1 lab=GND}
+C {devices/vsource.sym} 0 10 0 0 {name=Vres value=1.5}
+C {devices/title.sym} -130 260 0 0 {name=l5 author="Copyright 2023 IHP PDK Authors"}
+C {devices/lab_pin.sym} 50 -60 2 0 {name=p1 sig_type=std_logic lab=Vcc}
+C {devices/ammeter.sym} -70 -60 1 0 {name=Vr}
+C {sg13g2_pr/ntap1.sym} -180 10 0 0 {name=R1
+model=ntap1
+spiceprefix=X
+w=1.78e-6
+l=1.78e-6
+}
+C {simulator_commands_shown.sym} -150 -600 0 0 {name=Simulator1
+simulator=xyce
+only_toplevel=false 
 value="
-.lib $::SG13G2_MODELS/cornerRES.lib res_typ
+.preprocess replaceground true
+.option temp=27
+.dc Vres 0 3 0.01
+.print dc format=raw file=dc_ntap1.raw I(Vr)
 "}
-C {devices/code_shown.sym} 290 -10 0 0 {name=NGSPICE only_toplevel=true 
+C {launcher.sym} -70 -400 0 0 {name=h2
+descr=SimulateXyce
+tclcommand="
+# Setup the default simulation commands if not already set up
+# for example by already launched simulations.
+set_sim_defaults
+
+# Change the Xyce command. In the spice category there are currently
+# 5 commands (0, 1, 2, 3, 4). Command 3 is the Xyce batch
+# you can get the number by querying $sim(spice,n)
+set sim(spice,3,cmd) \{Xyce -plugin $env(PDK_ROOT)/$env(PDK)/libs.tech/xyce/plugins/Xyce_Plugin_PSP103_VA.so \\"$N\\"\}
+
+# change the simulator to be used (Xyce)
+set sim(spice,default) 3
+
+# run netlist and simulation
+xschem netlist
+simulate
+"}
+C {simulator_commands_shown.sym} -210 -720 0 0 {name=Libs_Xyce
+simulator=xyce
+only_toplevel=false 
+value="tcleval(
+.lib $::SG13G2_MODELS_XYCE/cornerRES.lib res_typ
+)"}
+C {simulator_commands_shown.sym} -600 -720 0 0 {name=Libs_Ngspice
+simulator=ngspice
+only_toplevel=false 
+value="
+.lib cornerRES.lib res_typ
+"}
+C {launcher.sym} -530 -400 0 0 {name=h3
+descr=SimulateNGSPICE
+tclcommand="
+# Setup the default simulation commands if not already set up
+# for example by already launched simulations.
+set_sim_defaults
+puts $sim(spice,1,cmd) 
+
+# Change the Xyce command. In the spice category there are currently
+# 5 commands (0, 1, 2, 3, 4). Command 3 is the Xyce batch
+# you can get the number by querying $sim(spice,n)
+set sim(spice,1,cmd) \{ngspice  \\"$N\\" -a\}
+
+# change the simulator to be used (Xyce)
+set sim(spice,default) 0
+
+# run netlist and simulation
+xschem netlist
+simulate
+"}
+C {simulator_commands_shown.sym} -590 -620 0 0 {name=Simulator2
+simulator=ngspice
+only_toplevel=false 
 value="
 .param temp=27
 .control
@@ -64,18 +131,7 @@ dc Vres 0 3 0.01
 write dc_ntap1.raw
 .endc
 "}
-C {devices/gnd.sym} -180 100 0 0 {name=l1 lab=GND}
-C {devices/vsource.sym} 0 10 0 0 {name=Vres value=1.5}
-C {devices/title.sym} -130 260 0 0 {name=l5 author="Copyright 2023 IHP PDK Authors"}
-C {devices/launcher.sym} -40 -200 0 0 {name=h5
+C {devices/launcher.sym} 700 -50 0 0 {name=h5
 descr="load waves" 
 tclcommand="xschem raw_read $netlist_dir/dc_ntap1.raw dc"
 }
-C {devices/lab_pin.sym} 50 -60 2 0 {name=p1 sig_type=std_logic lab=Vcc}
-C {sg13g2_pr/ntap1.sym} -180 10 0 0 {name=R1
-model=ntap1
-spiceprefix=X
-R=262.847.0
-Imax=0.3e-6
-}
-C {devices/ammeter.sym} -70 -60 1 0 {name=Vmeas}
