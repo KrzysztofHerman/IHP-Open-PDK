@@ -51,12 +51,6 @@ C {devices/vsource.sym} 0 10 0 0 {name=Vres value=1.5}
 C {devices/title.sym} -130 260 0 0 {name=l5 author="Copyright 2023 IHP PDK Authors"}
 C {devices/lab_pin.sym} 50 -60 2 0 {name=p1 sig_type=std_logic lab=Vcc}
 C {devices/ammeter.sym} -70 -60 1 0 {name=Vr}
-C {sg13g2_pr/ntap1.sym} -180 10 0 0 {name=R1
-model=ntap1
-spiceprefix=X
-w=0.78e-6
-l=0.78e-6
-}
 C {simulator_commands_shown.sym} -200 -460 0 0 {name=Libs_Ngspice
 simulator=ngspice
 only_toplevel=false 
@@ -100,3 +94,9 @@ C {devices/launcher.sym} 230 -60 0 0 {name=h5
 descr="load waves" 
 tclcommand="xschem raw_read $netlist_dir/dc_ntap1.raw dc"
 }
+C {sg13g2_pr/ntap1.sym} -180 10 0 0 {name=R1
+model=ntap1
+spiceprefix=X
+w=0.78e-6
+l=0.78e-6
+a=tcleval(}

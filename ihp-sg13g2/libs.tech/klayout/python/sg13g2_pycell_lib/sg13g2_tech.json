@@ -886,6 +886,8 @@
         "bondpad_stack": "nil",
         "bondpad_fill": "nil",
         "bondpad_addFillerEx": "nil",
+        "gring_defL": "10u",
+        "gring_defW": "10u",
         "sealring_topMetal": "TM2",
         "sealring_addLabel": "nil",
         "sealring_defL": "6.0u",
