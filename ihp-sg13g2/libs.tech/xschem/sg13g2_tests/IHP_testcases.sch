@@ -68,3 +68,6 @@ C {sg13g2_tests/dc_lv_nmos.sym} 180 -630 0 0 {name=x5}
 C {sg13g2_tests/tran_bondpad.sym} 520 -510 0 0 {name=x31}
 C {sg13g2_tests/dc_esd_diodes.sym} 180 -150 0 0 {name=x31}
 C {sg13g2_tests/dc_esd_nmos_cl.sym} 180 -110 0 0 {name=x32}
+C {sg13g2_tests/tran_svaricap_test.sym} 520 -470 0 0 {name=x33}
+C {sg13g2_tests/ac_svaricap_test.sym} 860 -550 0 0 {name=x34}
+C {sg13g2_tests/sp_svaricap_test.sym} 1560 -510 0 0 {name=x35}

@@ -30,10 +30,10 @@ autoload=0
 
 color= 4
 node="Ctot"
-y2=3.3e-15
-y1=1.3e-15
-x1=0
-x2=10u}
+y2=6.2e-15
+y1=2.3e-15
+x1=1.0028e-07
+x2=1e-05}
 N -0 75 110 75 {lab=GND}
 N 110 272.5 110 280 {lab=GND}
 N -0 220 0 272.5 {lab=GND}
@@ -53,7 +53,7 @@ N 170 10 170 160 {lab=#net1}
 C {devices/code_shown.sym} -517.5 382.5 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"
 value="
-.lib $::SG13G2_MODELS/cornerCAP.lib cap_typ
+.lib cornerCAP.lib cap_typ
 .lib $::SG13G2_MODELS/cornerRES.lib res_typ
 .lib $::SG13G2_MODELS/cornerMOShv.lib mos_tt
 "}
