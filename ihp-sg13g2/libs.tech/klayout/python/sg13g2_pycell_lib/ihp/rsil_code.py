@@ -264,3 +264,5 @@ class rsil(DloGen):
             rot = 'R90'
             
         lbl = dbCreateLabel(self, Layer(textlayer, 'drawing'), labelpos, labeltext, 'centerCenter', rot, Font.EURO_STYLE, labelheight)
+
+
