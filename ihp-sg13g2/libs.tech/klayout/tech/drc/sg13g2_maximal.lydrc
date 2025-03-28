@@ -15,7 +15,7 @@
  limitations under the License.
 -->
 <klayout-macro>
- <description />
+ <description>Run full DRC</description>
  <version />
  <category>drc</category>
  <prolog />
@@ -25,8 +25,8 @@
  <autorun-early>false</autorun-early>
  <shortcut />
  <show-in-menu>true</show-in-menu>
- <group-name>drc_scripts</group-name>
- <menu-path>tools_menu.drc.end</menu-path>
+ <group-name>DRC</group-name>
+ <menu-path>sg13g2_menu&gt;end("SG13G2 PDK").end</menu-path>
  <interpreter>dsl</interpreter>
  <dsl-interpreter-name>drc-dsl-xml</dsl-interpreter-name>
  <text># Supported variables that can be set using "-rd &lt;name&gt;=&lt;value&gt;" on the command line:

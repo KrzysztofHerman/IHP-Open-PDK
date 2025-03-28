@@ -11,7 +11,7 @@
  <priority>0</priority>
  <shortcut/>
  <show-in-menu>true</show-in-menu>
- <group-name>Run Density Report</group-name>
+ <group-name>filler</group-name>
  <menu-path>sg13g2_menu&gt;end("SG13G2 PDK").end</menu-path>
  <interpreter>dsl</interpreter>
  <dsl-interpreter-name>drc-dsl-xml</dsl-interpreter-name>
