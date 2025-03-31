@@ -15,7 +15,7 @@
  limitations under the License.
 -->
 <klayout-macro>
- <description />
+ <description>Run full DRC</description>
  <version />
  <category>drc</category>
  <prolog />
@@ -25,8 +25,8 @@
  <autorun-early>false</autorun-early>
  <shortcut />
  <show-in-menu>true</show-in-menu>
- <group-name>drc_scripts</group-name>
- <menu-path>tools_menu.drc.end</menu-path>
+ <group-name>DRC</group-name>
+ <menu-path>sg13g2_menu&gt;end("SG13G2 PDK").end</menu-path>
  <interpreter>dsl</interpreter>
  <dsl-interpreter-name>drc-dsl-xml</dsl-interpreter-name>
  <text># Supported variables that can be set using "-rd &lt;name&gt;=&lt;value&gt;" on the command line:
@@ -108,7 +108,20 @@ class DRC::DRCLayer
     end
 end
 
-# Load LVS options from a YAML file
+# Defines the default options for DRC 
+def set_default_options(yaml_file_path)
+    default_options = {
+      'top_cell' => '',
+      'offGridRules' => 'true',
+      'fillerRules' => 'true',
+      'densityRules' => 'true',
+      'latchUpRules' => 'true',
+      'recommendedRules' => 'true',
+    }
+    default_options
+end
+
+# Load DRC options from a YAML file
 #
 # yaml_file_path - The path to the YAML file
 #
@@ -128,58 +141,42 @@ def load_options(yaml_file_path)
   options
 end
 
-def self.set_default_options(yaml_file_path)
-    default_options = {
-      'top_cell' => '',
-      'offGridRules' => 'true',
-      'fillerRules' => 'true',
-      'densityRules' => 'true',
-      'latchUpRules' => 'true',
-      'recommendedRules' => 'true',
-    }
-    default_options
-end
-
 dir_path = File.dirname(File.expand_path(__FILE__))
 options = {}
 yaml_file_path = "#{dir_path}/drc_options.yml"
 # Load options from YAML file
 options = load_options(yaml_file_path)
 
-## passing options to lvs run file
-$offGridRulesflag = options['offGridRules'].to_s
-$fillRulesflag = options['fillerRules'].to_s
-$densityRulesflag = options['densityRules'].to_s
-$latchUpRulesflag = options['latchUpRules'].to_s
-$recommendedRulesflag = options['recommendedRules'].to_s
+## passing options to drc run file
+$topcell1 = options['top_cell'].to_s
 
 
 # Initial definitions of control flow variables
 # Strings from the command line have to be converted
 if defined? $offGridRules
-    $offGridRules = $offGridRules.to_s.downcase == offGridRulesflag
+    $offGridRules = $offGridRules.to_s.downcase == "true"
 else
-    $offGridRules = true
+    $offGridRules = options['offGridRules'].to_s.downcase == "true"
 end
 if defined? $fillerRules
-    $fillerRules = $fillerRules.to_s.downcase == fillerRulesflag
+    $fillerRules = $fillerRules.to_s.downcase == "true"
 else
-    $fillerRules = true
+    $fillerRules = options['fillerRules'].to_s.downcase == "true"
 end
 if defined? $densityRules
-    $densityRules = $densityRules.to_s.downcase == densityRulesflag
+    $densityRules = $densityRules.to_s.downcase == "true"
 else
-    $densityRules = true
+    $densityRules = options['densityRules'].to_s.downcase == "true"
 end
 if defined? $latchUpRules
-    $latchUpRules = $latchUpRules.to_s.downcase == latchUpRulesflag
+    $latchUpRules = $latchUpRules.to_s.downcase == "true"
 else
-    $latchUpRules = true
+    $latchUpRules = options['latchUpRules'].to_s.downcase == "true"
 end
 if defined? $recommendedRules
-    $recommendedRules = $recommendedRules.to_s.downcase == recommendedRulesflag
+    $recommendedRules = $recommendedRules.to_s.downcase == "true"
 else
-    $recommendedRules = true
+    $recommendedRules = options['recommendedRules'].to_s.downcase == "true"
 end
 
 class AbuttingEdges &lt; RBA::EdgePairToEdgeOperator
