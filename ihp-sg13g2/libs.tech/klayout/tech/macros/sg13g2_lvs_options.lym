@@ -66,7 +66,7 @@
     puts "Your KLayout version is: #{klayout_v}"
 
     # Construct the absolute path to the YAML file
-    yaml_file_path = "#{__dir__}/lvs_options.yml"
+    yaml_file_path = File.join(ENV["HOME"], ".klayout", "lvs_options.yml")
 
     # Load options from YAML file
     options = load_options(yaml_file_path)

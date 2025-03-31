@@ -18,9 +18,9 @@
 #==========================================================================
 -->
 <klayout-macro>
- <description>SG13G2 DRC Options</description>
+ <description>SG13G2 Filler Options</description>
  <version>0.1</version>
- <category>drc</category>
+ <category>filler</category>
  <prolog/>
  <epilog/>
  <doc/>
@@ -29,17 +29,17 @@
  <priority>0</priority>
  <shortcut/>
  <show-in-menu>true</show-in-menu>
- <group-name>DRC</group-name>
+ <group-name>Filler</group-name>
  <menu-path>sg13g2_menu&gt;end("SG13G2 PDK").end</menu-path>
  <interpreter>ruby</interpreter>
  <dsl-interpreter-name/>
  <text>
- module SG13G2DRCOptions
+ module SG13G2FillerOptions
   require 'yaml'
   require 'open3'
   include RBA
 
-  # Main function to manage DRC options
+  # Main function to manage Filler options
   def self.main
 
     # check klayout version
@@ -66,9 +66,8 @@
     puts "Your KLayout version is: #{klayout_v}"
 
     # Construct the absolute path to the YAML file
-    # yaml_file_path = "#{__dir__}/drc_options.yml" 
-    yaml_file_path = File.expand_path("../drc/drc_options.yml", __dir__)
-
+    yaml_file_path = File.join(ENV["HOME"], ".klayout", "fill_options.yml")
+    # puts yaml_file_path
     # Load options from YAML file
     options = load_options(yaml_file_path)
 
@@ -82,14 +81,14 @@
 
       # Save options to YAML file
       if save_options(yaml_file_path, options)
-        puts "=========== DRC Options saved successfully. ==========="
+        puts "=========== Filler Options saved successfully. ==========="
       else
-        puts "xxxxxxxxxxx Failed to save DRC options. xxxxxxxxxxx"
+        puts "xxxxxxxxxxx Failed to save Filler options. xxxxxxxxxxx"
       end
     end
   end
 
-  # Load DRC options from a YAML file
+  # Load Filler options from a YAML file
   #
   # yaml_file_path - The path to the YAML file
   #
@@ -109,19 +108,14 @@
     options
   end
 
-  # Set default DRC options and save them to a YAML file
+  # Set default filler options and save them to a YAML file
   #
   # yaml_file_path - The path to the YAML file
   #
   # Returns a hash containing the default options
   def self.set_default_options(yaml_file_path)
     default_options = {
-      'top_cell' => '',
-      'offGridRules' => 'true',
-      'fillerRules' => 'true',
-      'densityRules' => 'true',
-      'latchUpRules' => 'true',
-      'recommendedRules' => 'true',
+      'run_mode' => 'normal',
     }
     save_options(yaml_file_path, default_options)
     default_options
@@ -149,7 +143,7 @@
     cells
   end
 
-  # Create a dialog box for selecting DRC options
+  # Create a dialog box for selecting Filler options
   #
   # options        - A hash containing the current options
   # yaml_file_path - The path to the YAML file
@@ -157,32 +151,14 @@
   # Returns a QDialog instance representing the options dialog
   def self.create_options_dialog(options, yaml_file_path)
     dialog = RBA::QDialog.new
-    dialog.windowTitle = "DRC Options"
+    dialog.windowTitle = "Filler Options"
 
     layout = RBA::QFormLayout.new(dialog)
-    
-    layout.addRow('Top Cell', create_combo_box(options['top_cell'], get_top_cell_names))
-    layout.addRow('', create_check_box('offGridRules', options['offGridRules']))
-    layout.addRow('', create_check_box('fillerRules', options['fillerRules']))
-    layout.addRow('', create_check_box('densityRules', options['densityRules']))
-    layout.addRow('', create_check_box('latchUpRules', options['latchUpRules']))
-    layout.addRow('', create_check_box('recommendedRules', options['recommendedRules']))
-
     layout.addRow('', create_buttons(dialog, yaml_file_path))
-
+    layout.addRow('Run Mode:', create_combo_box(options['run_mode'], ['tight', 'normal', 'relaxed']))
     dialog
   end
 
-  # Create a line edit widget
-  #
-  # text - The initial text for the line edit
-  #
-  # Returns a QLineEdit instance
-  def self.create_line_edit(text)
-    line_edit = RBA::QLineEdit.new
-    line_edit.text = text
-    line_edit
-  end
  
   # Create a combo box widget
   #
@@ -197,43 +173,7 @@
     combo_box
   end
  
-  # Create a file input widget
-  #
-  # text   - The initial text for the file input
-  # parent - The parent widget for the file input
-  #
-  # Returns a QWidget instance containing the file input
-  def self.create_file_input(text, parent)
-    file_input = RBA::QLineEdit.new
-    file_input.text = text
-  
-    browse_button = RBA::QPushButton.new('Browse')
-    browse_button.clicked.connect(Proc.new {
-      file_filter = 'CDL Files (*.cdl);;SPICE Files (*.spice);;Circuit Files (*.cir)'
-      netlist_path = RBA::FileDialog.get_open_file_name('Select File', '.', file_filter)
-      file_input.text = netlist_path.to_s
-    })
 
-    container = RBA::QWidget.new
-    layout = RBA::QHBoxLayout.new(container)
-    layout.addWidget(file_input)
-    layout.addWidget(browse_button)
-    
-    container
-  end
-
-  # Create a check box widget
-  #
-  # text    - The text for the check box
-  # checked - A boolean indicating whether the check box is checked
-  #
-  # Returns a QCheckBox instance
-  def self.create_check_box(text, checked)
-    check_box = RBA::QCheckBox.new(text)
-    check_box.checked = checked
-    check_box
-  end
- 
   # Create buttons for the options dialog
   #
   # dialog        - The options dialog
@@ -272,12 +212,7 @@
   # dialog  - The dialog containing the updated options
   def self.update_options_from_dialog(options, dialog)
 
-    options['top_cell'] = dialog.layout.itemAt(1).widget.currentText
-    options['offGridRules'] = dialog.layout.itemAt(2).widget.checked
-    options['fillerRules'] = dialog.layout.itemAt(3).widget.checked
-    options['densityRules'] = dialog.layout.itemAt(4).widget.checked
-    options['latchUpRules'] = dialog.layout.itemAt(5).widget.checked
-    options['recommendedRules'] = dialog.layout.itemAt(6).widget.checked
+    options['run_mode'] = dialog.layout.itemAt(2).widget.currentText
   end
 
   # Save options to a YAML file
@@ -297,7 +232,7 @@
   end
 end
 
-SG13G2DRCOptions.main
+SG13G2FillerOptions.main
 
 </text>
 </klayout-macro>

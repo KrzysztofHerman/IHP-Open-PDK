@@ -112,7 +112,7 @@ dir_path = File.dirname(File.expand_path(__FILE__))
 layout_path = Pathname.new(RBA::CellView.active.filename)
 
 options = {}
-yaml_file_path = "#{dir_path}/lvs_options.yml"
+yaml_file_path = File.join(ENV["HOME"], ".klayout", "lvs_options.yml")
 # Load options from YAML file
 options = load_options(yaml_file_path)
 
