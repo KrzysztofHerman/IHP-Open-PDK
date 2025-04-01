@@ -31,8 +31,8 @@
  <show-in-menu>true</show-in-menu>
  <group-name>DRC</group-name>
  <menu-path>sg13g2_menu&gt;end("SG13G2 PDK").end</menu-path>
- <interpreter>ruby</interpreter>
- <dsl-interpreter-name/>
+ <interpreter>dsl</interpreter>
+ <dsl-interpreter-name>drc-dsl-xml</dsl-interpreter-name>
  <text>
  module SG13G2DRCOptions
   require 'yaml'
