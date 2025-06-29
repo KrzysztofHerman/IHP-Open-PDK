@@ -15,10 +15,20 @@
 * limitations under the License.
 *
 *#######################################################################
+* NOTE:
+* values are one-sigma deviations (1/3 of min-max)
 
-* ngspice MC parameters
-.param  rsh_rhigh = agauss(rsh_rhigh_norm, 0.0833)
-.param  rsh_rppd  = agauss(rsh_rppd_norm, 0.033)
-.param  rsh_rsil  = agauss(rsh_rsil_norm, 0.0467)
-.param  res_area  = agauss(res_area_norm, 0.033)
-.param  res_rpara = agauss(res_rpara_norm, 0.067)
+.param num_sigmas=1
+
+* statistical parameters
+.param  mc_rsh_rhigh = 'gauss(rsh_rhigh_norm, 0.0833,  num_sigmas)'
+.param  mc_rsh_rsil  = 'gauss(rsh_rsil_norm, 0.0467,  num_sigmas)'
+.param  mc_rsh_rppd  = 'gauss(rsh_rppd_norm, 0.033,  num_sigmas)'
+.param  mc_res_area  = 'gauss(res_area_norm, 0.033,  num_sigmas)'
+.param  mc_res_rpara = 'gauss(res_rpara_norm, 0.067,  num_sigmas)'
+
+.param  rsh_rhigh = mc_rsh_rhigh
+.param  rsh_rsil  = mc_rsh_rsil
+.param  rsh_rppd  = mc_rsh_rppd
+.param  res_area  = mc_res_area
+.param  res_rpara = mc_res_rpara

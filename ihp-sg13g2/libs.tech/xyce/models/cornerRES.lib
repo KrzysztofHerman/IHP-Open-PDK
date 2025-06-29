@@ -26,6 +26,17 @@
            
 .include resistors_mod.lib
 .ENDL res_typ
+
+.LIB res_typ_mismatch  
+
+.param rsh_rhigh = 1360
+.param rsh_rppd  = 260.0
+.param rsh_rsil  = 7.0
+.param res_area  = 1.0
+.param res_rpara = 1.0
+           
+.include resistors_mod_mismatch.lib
+.ENDL res_typ_mismatch
   
 * Typical with statistical modeling
 .LIB res_typ_stat  
@@ -39,6 +50,19 @@
 .include resistors_stat.lib
 .include resistors_mod.lib
 .ENDL res_typ_stat
+
+* Typical with statistical modeling
+.LIB res_typ_stat_mismatch
+
+.param rsh_rhigh_norm = 1360
+.param rsh_rppd_norm  = 260.0
+.param rsh_rsil_norm  = 7.0
+.param res_area_norm  = 1.0
+.param res_rpara_norm = 1.0
+           
+.include resistors_stat.lib
+.include resistors_mod_mismatch.lib
+.ENDL res_typ_stat_mismatch
 
 * Best Case without statistical modeling
 .LIB res_bcs  
