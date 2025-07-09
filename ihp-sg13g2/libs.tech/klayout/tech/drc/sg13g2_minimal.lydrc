@@ -33,7 +33,7 @@
 # log_file    - path to the log file [default: no log file]
 # in_gds      - path to the GDS layout to check (required in batch mode)
 # cell        - name of the cell to check
-# report_file - path to the report database [default: sg13g2_minimal.lyrdb in the script directory]
+# report_file - path to the report database [default: sg13g2_minimal.lyrdb in the layout directory]
 
 # to set logfile: -rd logfile="sg13g2_minimal.log"
 if $log_file
@@ -52,6 +52,12 @@ if main_window and not $in_gds
         main_window.load_layout(layout_path, 1)
         curr_layout_view = main_window.current_view()
     end
+    active_filename = RBA::CellView::active.filename
+    if active_filename != ""
+        report_dir = File.dirname(active_filename)
+    else
+        report_dir = "/tmp"
+    end
     active_layout = RBA::CellView::active.layout
     active_cellname = RBA::CellView::active.cell_name
     source(active_layout, active_cellname)
@@ -69,6 +75,7 @@ else
         active_layout = source.layout
         active_cellname = source.cell_name
     end
+    report_dir = File.dirname($in_gds)
 end
 
 unless active_layout or $in_gds
@@ -79,7 +86,8 @@ if active_layout.dbu != 0.001
     puts "WARNING: Layout dbu value (" + active_layout.dbu.to_s + " ) deviates from rule file dbu value (0.001). This will scale the layout and may not be intended."
 end
 
-report_file = __dir__ + "/sg13g2_minimal.lyrdb"
+report_dir = File.expand_path(report_dir)
+report_file = report_dir + "/sg13g2_minimal.lyrdb"
 # to set report file: -rd report_file="sg13g2_minimal.lyrdb"
 if $report_file
     report_file = File.expand_path($report_file)
@@ -88,6 +96,10 @@ end
 report("design rules: sg13g2_minimal | layout cell: " + active_cellname, report_file)
 
 deep
+
+if $threads
+    threads($threads.to_i)
+end
 
 $drc_error_count = 0
 
@@ -99,7 +111,7 @@ class DRC::DRCLayer
     def output(*args)
         count = self.hier_count()
         $drc_error_count += count
-        puts("Rule %s: %d error(s)" % [args[0], count])
+        puts("%s: %d" % [args[0], count])
         original_output(*args)
     end
 end
@@ -445,8 +457,9 @@ class DRC::DRCLayer
                        metric: @engine.euclidian,
                        consider_intersecting_edges: true,
                        consider_touch_points: true,
-                       consider_overlaps_as_errors: false,
+                       consider_overlaps: false,
                        ignore_non_axis_aligned_edges: false,
+                       inside_edges_are_errors: false,
                        min_angle: 0,
                        max_angle: 90,
                        include_min_angle: true,
@@ -456,7 +469,7 @@ class DRC::DRCLayer
         other_min_coherence_state =  other.data.min_coherence?
         self.data.min_coherence = true
         other.data.min_coherence = true
-        if consider_overlaps_as_errors
+        if consider_overlaps
             output_layer = self.separation(other, value, metric,
                                            @engine.angle_limit(180), @engine.without_touching_corners)
             abutting_edges = output_layer.data.processed(AbuttingEdges::new)
@@ -491,6 +504,9 @@ class DRC::DRCLayer
                     include_max_angle,
                     false)
             end
+        end
+        if inside_edges_are_errors
+            output_layer = output_layer.join(self.and(other).edges.ext_convert_to_edge_pair_layer())
         end
         self.data.min_coherence = self_min_coherence_state
         other.data.min_coherence = other_min_coherence_state
@@ -712,15 +728,9 @@ class DRC::DRCLayer
                   include_min_angle: true,
                   include_max_angle: false,
                   polygon_output: false)
-        if self.polygons?
-            self_min_coherence_state = self.data.min_coherence?
-            self.data.min_coherence = true
-            self_edges = self.edges
-            self.data.min_coherence = self_min_coherence_state
-        else
-            self_edges = self
-        end
-        output_layer = self_edges.width(value, metric, @engine.angle_limit(max_angle))
+        self_min_coherence_state = self.data.min_coherence?
+        self.data.min_coherence = false
+        output_layer = self.width(value, metric, @engine.angle_limit(max_angle))
         if !consider_intersecting_edges and !consider_touch_points
             output_layer = output_layer.with_distance(1, nil)
             if ignore_non_axis_aligned_edges
@@ -742,10 +752,10 @@ class DRC::DRCLayer
                 false)
         end
         if polygon_output
-            return output_layer.polygons.merge(true, 0)
-        else
-            return output_layer
+            output_layer = output_layer.polygons.merge(true, 0)
         end
+        self.data.min_coherence = self_min_coherence_state
+        return output_layer
     end
 
     def ext_interacting_with_text(text_layer, text)
@@ -759,9 +769,14 @@ class DRC::DRCLayer
         return result
     end
 
-    def _ext_with_density(inverse, range, *args)
-        if self.is_empty?
-            return DRC::DRCLayer::new(@engine, RBA::Region::new())
+    def _ext_with_density(inverse,
+                          range,
+                          *args,
+                          tiles_stay_inside: false)
+        if inverse
+            method = :without_density
+        else
+            method = :with_density
         end
         if self.is_merged?
           merged_layer = self
@@ -791,43 +806,93 @@ class DRC::DRCLayer
             origin_x = bbox.left
             origin_y = bbox.bottom
             if tile_size and tile_step and (tile_size.get[0] != tile_step.get[0] or tile_size.get[1] != tile_step.get[1])
-              origin_x = bbox.left + tile_step.get[0]/2
-              origin_y = bbox.bottom + tile_step.get[1]/2
+                origin_x = bbox.left + (tile_size.get[0]-tile_step.get[0])/2
+                origin_y = bbox.bottom + (tile_size.get[1]-tile_step.get[1])/2
             end
             tile_origin = DRC::DRCTileOrigin::new(origin_x, origin_y)
             arguments.push(tile_origin)
-        elsif origin != 'cc'
+        elsif origin == 'cc'
+            origin_x = bbox.center.x
+            origin_y = bbox.center.y
+            tile_origin = DRC::DRCTileOrigin::new(origin_x, origin_y)
+        else
             raise "Unknown origin: 'cc' or 'll' expected"
         end
         if tile_size
             boundary_layer = DRC::DRCLayer::new(@engine, RBA::Region::new(bbox.to_itype(@engine.dbu)))
             tile_boundary = DRC::DRCTileBoundary::new(boundary_layer)
-            if inverse
-                return merged_layer.without_density(*arguments, tile_boundary, @engine.padding_ignore)
+            if tiles_stay_inside
+                if origin != 'll'
+                    raise "Option 'tiles_stay_inside' requires origin='ll'"
+                end
+                tile_width = tile_size.get[0]
+                tile_height = tile_size.get[1]
+                enlarged_bbox = bbox.dup
+                if tile_width &gt; bbox.width
+                    enlarged_bbox.right = bbox.left + tile_width
+                end
+                if tile_height &gt; bbox.height
+                    enlarged_bbox.top = bbox.bottom + tile_height
+                end
+                enlarged_boundary_layer = DRC::DRCLayer::new(@engine, RBA::Region::new(enlarged_bbox.to_itype(@engine.dbu)))
+                if tile_step
+                    tile_step_x = tile_step.get[0]
+                    tile_step_y = tile_step.get[1]
+                else
+                    tile_step_x = tile_width
+                    tile_step_y = tile_height
+                end
+                tile_count_x = 1 + ((bbox.width - tile_width) / tile_step_x).floor()
+                tile_count_x = tile_count_x &lt; 1 ? 1 : tile_count_x
+                tile_count_y = 1 + ((bbox.height - tile_height) / tile_step_y).floor()
+                tile_count_y = tile_count_y &lt; 1 ? 1 : tile_count_y
+                if tile_count_x == 1 and tile_count_y == 1
+                    tile_count = DRC::DRCTileCount::new(tile_count_x, 2)
+                else
+                    tile_count = DRC::DRCTileCount::new(tile_count_x, tile_count_y)
+                end
+                result = merged_layer.public_send(method, *arguments, tile_count, tile_boundary, @engine.padding_ignore)
+                need_top_row = false
+                need_right_column = false
+                if bbox.height &gt; tile_height + (tile_count_y-1)*tile_step_y
+                    need_top_row = true
+                    tile_origin2 = DRC::DRCTileOrigin::new(tile_origin.get[0], tile_origin.get[1]+bbox.height-tile_height)
+                    tile_count = DRC::DRCTileCount::new([2, tile_count_x].max, 1)
+                    result += merged_layer.public_send(method, *arguments, tile_origin2, tile_count, tile_boundary, @engine.padding_ignore)
+                end
+                if bbox.width &gt; tile_width + (tile_count_x-1)*tile_step_x
+                    need_right_column = true
+                    tile_origin2 = DRC::DRCTileOrigin::new(tile_origin.get[0]+bbox.width-tile_width, tile_origin.get[1])
+                    tile_count = DRC::DRCTileCount::new(1, [2, tile_count_y].max)
+                    result += merged_layer.public_send(method, *arguments, tile_origin2, tile_count, tile_boundary, @engine.padding_ignore)
+                end
+                if (need_top_row and bbox.width &gt; tile_width) or (need_right_column and bbox.height &gt; tile_height)
+                    tile_origin2 = DRC::DRCTileOrigin::new(tile_origin.get[0]+bbox.width-tile_width, tile_origin.get[1]+bbox.height-tile_height)
+                    tile_count = DRC::DRCTileCount::new(1, 2)
+                    result += merged_layer.public_send(method, *arguments, tile_origin2, tile_count, tile_boundary, @engine.padding_ignore)
+                end
+                result.raw.select_inside(enlarged_boundary_layer)
             else
-                return merged_layer.with_density(*arguments, tile_boundary, @engine.padding_ignore)
+                result = merged_layer.public_send(method, *arguments, tile_boundary, @engine.padding_ignore)
             end
+            return result.and(boundary_layer)
         else
             tile_size = DRC::DRCTileSize::new(bbox.width, bbox.height)
-            tile_count = DRC::DRCTileCount::new(1,2)
+            tile_count = DRC::DRCTileCount::new(1,3)
             enlarged_bbox = bbox.enlarged(1.1).to_itype(@engine.dbu)
             boundary_layer = DRC::DRCLayer::new(@engine, RBA::Region::new(enlarged_bbox))
             tile_boundary = DRC::DRCTileBoundary::new(boundary_layer)
-            if inverse
-                result = merged_layer.without_density(*arguments, tile_size, tile_count, tile_boundary, @engine.padding_ignore)
-            else
-                result = merged_layer.with_density(*arguments, tile_size, tile_count, tile_boundary, @engine.padding_ignore)
-            end
+            result = merged_layer.public_send(method, *arguments, tile_size, tile_count, tile_boundary, @engine.padding_ignore)
             return result.raw.overlapping(DRC::DRCLayer::new(@engine, RBA::Region::new(bbox.to_itype(@engine.dbu))))
         end
     end
 
-    def ext_with_density(*args)
-        self._ext_with_density(false, *args)
+    def ext_with_density(*args, **kargs)
+        self._ext_with_density(false, *args, **kargs)
     end
 
-    def ext_without_density(*args)
-        self._ext_with_density(true, *args)
+    def ext_without_density(*args, **kargs)
+        self._ext_with_density(true, *args, **kargs)
     end
 
     def ext_outside(other)
@@ -874,7 +939,7 @@ Metal4_pin = source.polygons("50/2")
 Metal4_filler = source.polygons("50/22")
 Metal4_slit = source.polygons("50/24")
 EmPoly = source.polygons("55/0")
-TEXT_0 = source.labels("63/0")
+TEXT = source.labels("63/0")
 Via4 = source.polygons("66/0")
 Metal5 = source.polygons("67/0")
 Metal5_pin = source.polygons("67/2")
@@ -903,33 +968,40 @@ Act_density = Activ.ext_or(Activ_filler)
 Gat_density = GatPoly.ext_or(GatPoly_filler)
 Cont_SQ = Cont.ext_rectangles(true, false, [["==", 0.16.um]], [["==", 0.16.um]], nil)
 ContBar = Cont.ext_with_area([["&gt;", (0.16*0.16).um2]])
+Metal1_Nslit = Metal1.ext_not(Metal1_slit)
+Metal2_Nslit = Metal2.ext_not(Metal2_slit)
 Act_Nsram = Activ.ext_not(SRAM)
 GP_Nsram = GatPoly.ext_not(SRAM)
-M1_Nsram = Metal1.ext_not(SRAM)
-M2_Nsram = Metal2.ext_not(SRAM)
-M3_Nsram = Metal3.ext_not(SRAM)
+Metal3_Nslit = Metal3.ext_not(Metal3_slit)
 Via1_edgC1_out = Via1.ext_not(EdgeSeal)
 Via2_edgC1_out = Via2.ext_not(EdgeSeal)
 Cont_outside_EdgeSeal = Cont.ext_outside(EdgeSeal)
 ThickGateOx_TGO_f = ThickGateOx.ext_width(0.86.um, consider_intersecting_edges: false, polygon_output: true)
 Via3_edgC1_out = Via3.ext_not(EdgeSeal)
-M4_Nsram = Metal4.ext_not(SRAM)
+Metal4_Nslit = Metal4.ext_not(Metal4_slit)
 Via4_edgC1_out = Via4.ext_not(EdgeSeal)
-M5_Nsram = Metal5.ext_not(SRAM)
+Metal5_Nslit = Metal5.ext_not(Metal5_slit)
 TopVia1_edgC1_out = TopVia1.ext_not(EdgeSeal)
+TopMetal1_Nslit = TopMetal1.ext_not(TopMetal1_slit)
 TopVia1_or_Vmim = TopVia1.ext_or(Vmim)
 TopVia2_edgC1_out = TopVia2.ext_not(EdgeSeal)
+TopMetal2_Nslit = TopMetal2.ext_not(TopMetal2_slit)
 M1_density = Metal1.ext_or(Metal1_filler).ext_not(Metal1_slit)
 M2_density = Metal2.ext_or(Metal2_filler).ext_not(Metal2_slit)
-emi2Pin = Metal2_pin.ext_and(TRANS).ext_interacting_with_text(TEXT_0, "E")
+emi2Pin = Metal2_pin.ext_and(TRANS).ext_interacting_with_text(TEXT, "E")
 M3_density = Metal3.ext_or(Metal3_filler).ext_not(Metal3_slit)
 M4_density = Metal4.ext_or(Metal4_filler).ext_not(Metal4_slit)
 M5_density = Metal5.ext_or(Metal5_filler).ext_not(Metal5_slit)
 TM1_density = TopMetal1.ext_or(TopMetal1_filler).ext_not(TopMetal1_slit)
 TM2_density = TopMetal2.ext_or(TopMetal2_filler).ext_not(TopMetal2_slit)
+M1_Nsram = Metal1_Nslit.ext_not(SRAM)
+M2_Nsram = Metal2_Nslit.ext_not(SRAM)
 GP_Nsram_Gat_a = GP_Nsram.ext_width(0.13.um, consider_intersecting_edges: false, polygon_output: true)
 GP_Nsram_Gat_b = GP_Nsram.ext_space(0.18.um, consider_intersecting_edges: false, polygon_output: true)
-transG2L = TRANS.ext_interacting_with_text(TEXT_0, "npn13G2L").ext_covering(emi2Pin)
+M3_Nsram = Metal3_Nslit.ext_not(SRAM)
+M4_Nsram = Metal4_Nslit.ext_not(SRAM)
+M5_Nsram = Metal5_Nslit.ext_not(SRAM)
+transG2L = TRANS.ext_interacting_with_text(TEXT, "npn13G2L").ext_covering(emi2Pin)
 -&gt; do
     Activ_Act_a.dup
 end.().output("Act.a", "Min. Activ width = 0.15")
@@ -942,7 +1014,7 @@ if $densityRules
 	    Act_density.ext_without_density(0.35 .. 0.55, 'll')
 	end.().output("AFil.g/g1", "Global Activ density [%] = 35.00 .. 55.00")
 	-&gt; do
-	    Act_density.ext_without_density(0.25 .. 0.65, 'll', tile_size(800.0.um), tile_step(400.0.um))
+	    Act_density.ext_without_density(0.25 .. 0.65, 'll', tile_size(800.0.um), tile_step(400.0.um), tiles_stay_inside: true)
 	end.().output("AFil.g2/g3", "Activ coverage ratio for any 800 x 800 µm² chip area [%] = 25.00 .. 65.00")
 end
 
@@ -972,10 +1044,10 @@ end.().output("Cnt.a", "Min. and max. Cont width = 0.16")
     Cont_outside_EdgeSeal.ext_space(0.18.um, consider_intersecting_edges: false)
 end.().output("Cnt.b", "Min. Cont space = 0.18")
 -&gt; do
-    Metal1.ext_width(0.16.um)
+    Metal1_Nslit.ext_width(0.16.um)
 end.().output("M1.a", "Min. Metal1 width = 0.16")
 -&gt; do
-    M1_Nsram.ext_space(0.18.um, consider_intersecting_edges: false, ignore_non_axis_aligned_edges: true)
+    M1_Nsram.ext_space(0.18.um)
 end.().output("M1.b", "Min. Metal1 space or notch = 0.18")
 
 if $densityRules
@@ -985,10 +1057,10 @@ if $densityRules
 end
 
 -&gt; do
-    Metal2.ext_width(0.2.um)
+    Metal2_Nslit.ext_width(0.2.um)
 end.().output("M2.a", "Min. Metal2 width = 0.20")
 -&gt; do
-    M2_Nsram.ext_space(0.21.um, consider_intersecting_edges: false, ignore_non_axis_aligned_edges: true)
+    M2_Nsram.ext_space(0.21.um)
 end.().output("M2.b", "Min. Metal2 space or notch = 0.21")
 
 if $densityRules
@@ -998,10 +1070,10 @@ if $densityRules
 end
 
 -&gt; do
-    Metal3.ext_width(0.2.um)
+    Metal3_Nslit.ext_width(0.2.um)
 end.().output("M3.a", "Min. Metal3 width = 0.20")
 -&gt; do
-    M3_Nsram.ext_space(0.21.um, consider_intersecting_edges: false, ignore_non_axis_aligned_edges: true)
+    M3_Nsram.ext_space(0.21.um)
 end.().output("M3.b", "Min. Metal3 space or notch = 0.21")
 
 if $densityRules
@@ -1011,10 +1083,10 @@ if $densityRules
 end
 
 -&gt; do
-    Metal4.ext_width(0.2.um)
+    Metal4_Nslit.ext_width(0.2.um)
 end.().output("M4.a", "Min. Metal4 width = 0.20")
 -&gt; do
-    M4_Nsram.ext_space(0.21.um, consider_intersecting_edges: false, ignore_non_axis_aligned_edges: true)
+    M4_Nsram.ext_space(0.21.um)
 end.().output("M4.b", "Min. Metal4 space or notch = 0.21")
 
 if $densityRules
@@ -1024,10 +1096,10 @@ if $densityRules
 end
 
 -&gt; do
-    Metal5.ext_width(0.2.um)
+    Metal5_Nslit.ext_width(0.2.um)
 end.().output("M5.a", "Min. Metal5 width = 0.20")
 -&gt; do
-    M5_Nsram.ext_space(0.21.um, consider_intersecting_edges: false, ignore_non_axis_aligned_edges: true)
+    M5_Nsram.ext_space(0.21.um)
 end.().output("M5.b", "Min. Metal5 space or notch = 0.21")
 
 if $densityRules
@@ -1035,19 +1107,19 @@ if $densityRules
 	    M5_density.ext_without_density(0.35 .. 0.6, 'll')
 	end.().output("M5.j/k", "Global Metal5 density [%] = 35.00 .. 60.00")
 	-&gt; do
-	    M1_density.ext_without_density(0.25 .. 0.75, 'll', tile_size(800.0.um), tile_step(400.0.um))
+	    M1_density.ext_without_density(0.25 .. 0.75, 'll', tile_size(800.0.um), tile_step(400.0.um), tiles_stay_inside: true)
 	end.().output("M1Fil.h/k", "Metal1 and Metal1:filler coverage ratio for any 800 x 800 µm² chip area [%] = 25.00 .. 75.00")
 	-&gt; do
-	    M2_density.ext_without_density(0.25 .. 0.75, 'll', tile_size(800.0.um), tile_step(400.0.um))
+	    M2_density.ext_without_density(0.25 .. 0.75, 'll', tile_size(800.0.um), tile_step(400.0.um), tiles_stay_inside: true)
 	end.().output("M2Fil.h/k", "Metal2 and Metal2:filler coverage ratio for any 800 x 800 µm² chip area [%] = 25.00 .. 75.00")
 	-&gt; do
-	    M3_density.ext_without_density(0.25 .. 0.75, 'll', tile_size(800.0.um), tile_step(400.0.um))
+	    M3_density.ext_without_density(0.25 .. 0.75, 'll', tile_size(800.0.um), tile_step(400.0.um), tiles_stay_inside: true)
 	end.().output("M3Fil.h/k", "Metal3 and Metal3:filler coverage ratio for any 800 x 800 µm² chip area [%] = 25.00 .. 75.00")
 	-&gt; do
-	    M4_density.ext_without_density(0.25 .. 0.75, 'll', tile_size(800.0.um), tile_step(400.0.um))
+	    M4_density.ext_without_density(0.25 .. 0.75, 'll', tile_size(800.0.um), tile_step(400.0.um), tiles_stay_inside: true)
 	end.().output("M4Fil.h/k", "Metal4 and Metal4:filler coverage ratio for any 800 x 800 µm² chip area [%] = 25.00 .. 75.00")
 	-&gt; do
-	    M5_density.ext_without_density(0.25 .. 0.75, 'll', tile_size(800.0.um), tile_step(400.0.um))
+	    M5_density.ext_without_density(0.25 .. 0.75, 'll', tile_size(800.0.um), tile_step(400.0.um), tiles_stay_inside: true)
 	end.().output("M5Fil.h/k", "Metal5 and Metal5:filler coverage ratio for any 800 x 800 µm² chip area [%] = 25.00 .. 75.00")
 end
 
@@ -1082,10 +1154,10 @@ end.().output("TV1.a", "Min. and max. TopVia1 width = 0.42")
     TopVia1_or_Vmim.ext_space(0.42.um)
 end.().output("TV1.b", "Min. TopVia1 space = 0.42")
 -&gt; do
-    TopMetal1.ext_width(1.64.um)
+    TopMetal1_Nslit.ext_width(1.64.um)
 end.().output("TM1.a", "Min. TopMetal1 width = 1.64")
 -&gt; do
-    TopMetal1.ext_space(1.64.um)
+    TopMetal1_Nslit.ext_space(1.64.um)
 end.().output("TM1.b", "Min. TopMetal1 space or notch = 1.64")
 
 if $densityRules
@@ -1101,10 +1173,10 @@ end.().output("TV2.a", "Min. and max. TopVia2 width = 0.90")
     TopVia2.ext_space(1.06.um)
 end.().output("TV2.b", "Min. TopVia2 space = 1.06")
 -&gt; do
-    TopMetal2.ext_width(2.0.um)
+    TopMetal2_Nslit.ext_width(2.0.um)
 end.().output("TM2.a", "Min. TopMetal2 width = 2.00")
 -&gt; do
-    TopMetal2.ext_space(2.0.um)
+    TopMetal2_Nslit.ext_space(2.0.um)
 end.().output("TM2.b", "Min. TopMetal2 space or notch = 2.00")
 
 if $densityRules
@@ -1126,25 +1198,25 @@ end.().output("Pin.a", "Min. Activ enclosure of Activ:pin = 0.00")
     GatPoly_pin.ext_not(GatPoly)
 end.().output("Pin.b", "Min. GatPoly enclosure of GatPoly:pin = 0.00")
 -&gt; do
-    Metal1_pin.ext_not(Metal1)
+    Metal1_pin.ext_not(Metal1_Nslit)
 end.().output("Pin.e", "Min. Metal1 enclosure of Metal1:pin = 0.00")
 -&gt; do
-    Metal2_pin.ext_not(Metal2)
+    Metal2_pin.ext_not(Metal2_Nslit)
 end.().output("Pin.f.M2", "Min. Metal2 enclosure of Metal2:pin = 0.00")
 -&gt; do
-    Metal3_pin.ext_not(Metal3)
+    Metal3_pin.ext_not(Metal3_Nslit)
 end.().output("Pin.f.M3", "Min. Metal3 enclosure of Metal3:pin = 0.00")
 -&gt; do
-    Metal4_pin.ext_not(Metal4)
+    Metal4_pin.ext_not(Metal4_Nslit)
 end.().output("Pin.f.M4", "Min. Metal4 enclosure of Metal4:pin = 0.00")
 -&gt; do
-    Metal5_pin.ext_not(Metal5)
+    Metal5_pin.ext_not(Metal5_Nslit)
 end.().output("Pin.f.M5", "Min. Metal5 enclosure of Metal5:pin = 0.00")
 -&gt; do
-    TopMetal1_pin.ext_not(TopMetal1)
+    TopMetal1_pin.ext_not(TopMetal1_Nslit)
 end.().output("Pin.g", "Min. TopMetal1 enclosure of TopMetal1:pin = 0.00")
 -&gt; do
-    TopMetal2_pin.ext_not(TopMetal2)
+    TopMetal2_pin.ext_not(TopMetal2_Nslit)
 end.().output("Pin.h", "Min. TopMetal2 enclosure of TopMetal2:pin = 0.00")
 -&gt; do
     LBE.ext_width(100.0.um)
