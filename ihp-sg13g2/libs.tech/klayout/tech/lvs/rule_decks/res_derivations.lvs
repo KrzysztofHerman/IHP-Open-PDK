@@ -45,10 +45,7 @@ rhigh_ports = rhigh_ports_pre.edges.and(rhigh_res.edges).extended(0, 0, 5.nm, 5.
 rppd_res = polyres_mk.and(psd_drw).and(salblock_drw).not(nsd_block).not(nsd_drw)
 rppd_ports_pre = gatpoly.interacting(rppd_res).not(rppd_res)
 rppd_ports = rppd_ports_pre.edges.and(rppd_res.edges).extended(0, 0, 5.nm, 5.nm).not(rppd_res)
-rppd_sub1 = pwell.and(polyres_drw)
-rppd_sub2 = pwell_block.and(polyres_drw).sized(1.nm)
-rppd_well = nwell_drw.and(polyres_drw).sized(-1.nm)
-rppd_sub  = rppd_sub1.join(rppd_sub2).join(rppd_well)
+rppd_sub  = substrate_drw.and(rppd_res)
 
 ## rsil
 rsil_exc = psd_drw.join(salblock_drw).join(nsd_drw).join(nsd_block)
