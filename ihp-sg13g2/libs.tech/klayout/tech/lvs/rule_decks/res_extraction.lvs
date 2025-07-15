@@ -43,7 +43,7 @@ extract_devices(GeneralNTerminalExtractor.new('rppd', 2), {
                   'ports' => rppd_ports,
                   'meas_mk' => polyres_drw,
                   'dev_mk' => polyres_drw.interacting(rppd_res),
-                  'sub_mk' => pwell.join(nwell_drw)
+                  'sub_mk' => substrate_drw.and(pwell)
                 })
 
 # rhigh

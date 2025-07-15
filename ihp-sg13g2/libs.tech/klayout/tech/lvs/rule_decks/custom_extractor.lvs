@@ -114,7 +114,7 @@ class GeneralNTerminalExtractor < RBA::GenericDeviceExtractor
     define_layer('meas_mk', 'Measuring parameters marker')
     define_layer('dev_mk', 'Device Marker')
     # Define sub layer for some devices
-    if name.downcase.start_with?('ind') || name.downcase.include?('varicap')
+    if name.downcase.start_with?('ind') || name.downcase.include?('varicap') || RES_DEV.any? { |res| name.downcase.start_with?(res) }
       define_layer('sub_mk', 'Substrate Marker')
     end
   end
@@ -275,7 +275,7 @@ class GeneralNTerminalExtractor < RBA::GenericDeviceExtractor
     sorted_ports ||= sort_polygons(ports)
 
     # Define sub if exist (should be defined before other terminals)
-    if name.downcase.start_with?('ind') || name.downcase.include?('varicap')
+    if name.downcase.start_with?('ind') || name.downcase.include?('varicap') || RES_DEV.any? { |res| name.downcase.start_with?(res) }
       if sub_mk.is_empty?
         $logger.info("Sub terminal for #{@name} device doesn't exist, please recheck")
         return nil

@@ -28,6 +28,7 @@ connect(rsil_ports, poly_con)
 
 # === rppd ===
 connect(rppd_ports, poly_con)
+connect(rppd_sub, pwell)
 
 # === rhigh ===
 connect(rhigh_ports, poly_con)
