@@ -1,6 +1,5 @@
-
-v {xschem version=3.1.0 file_version=1.0
-* Copyright 2023 IHP PDK Authors
+v {xschem version=3.4.6 file_version=1.0
+* Copyright 2025 IHP PDK Authors
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,30 +13,14 @@ v {xschem version=3.1.0 file_version=1.0
 * See the License for the specific language governing permissions and
 * limitations under the License.
 }
-
-G {}
 K {type=primitive
-format="@name @@X @@A @VDD @VSS @prefix\\\\dlygate4sd1_1"
+format="@name @VDD @VSS @prefix\\\\fill_2"
 template="name=x1 VDD=VDD VSS=VSS prefix=sg13g2_ "
 extra="VDD VSS prefix"
 highlight=true}
-V {}
-S {}
-E {}
-L 4 -20 -20 -20 20 {}
-L 4 -20 -20 20 0 {}
-L 4 -20 20 20 0 {}
-L 4 20 0 40 0 {}
-L 4 -40 0 -20 0 {}
-L 4 -17.5 10 -10 10 {}
-L 4 -10 5 -10 10 {}
-L 4 -10 5 -2.5 5 {}
-L 4 -12.5 0 -5 0 {}
-L 4 -5 -5 -5 0 {}
-L 4 -5 -5 2.5 -5 {}
-B 5 -42.5 -2.5 -37.5 2.5 {name=A dir=in goto=1 propag=1 }
-B 5 37.5 -2.5 42.5 2.5 {name=X dir=out }
-T {A} -35 -14 0 0 0.2 0.2 {}
-T {X} 35 -14 0 1 0.2 0.2 {}
-T {@name} 2.5 15 0 0 0.2 0.2 {}
-T {@symname} -7.5 -25 0 0 0.2 0.2 {}
+T {@symname} 0 -6 0 0 0.2 0.2 {hcenter=true}
+T {@name} 75 -22 0 0 0.2 0.2 {}
+L 4 -70 -10 70 -10 {}
+L 4 -70 10 70 10 {}
+L 4 -70 -10 -70 10 {}
+L 4 70 -10 70 10 {}

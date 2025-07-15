@@ -1,6 +1,5 @@
-
-v {xschem version=3.1.0 file_version=1.0
-* Copyright 2023 IHP PDK Authors
+v {xschem version=3.4.6 file_version=1.2
+* Copyright 2025 IHP PDK Authors
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,11 +13,9 @@ v {xschem version=3.1.0 file_version=1.0
 * See the License for the specific language governing permissions and
 * limitations under the License.
 }
-
 G {}
 K {type=primitive
-function3="1 d ~ 0 & x 3 & | 2 &"
-format="@name @@Q @@D @@GATE_N @@RESET_B @VDD @VSS @prefix\\\\dllrq_1"
+format="@name @@GCLK @@CLK @@GATE @@SCE @VDD @VSS @prefix\\\\slgcp_1"
 template="name=x1 VDD=VDD VSS=VSS prefix=sg13g2_ "
 extra="VDD VSS prefix"
 }
@@ -33,13 +30,13 @@ L 4 -90 -20 -70 -20 {}
 L 4 -90 0 -70 0 {}
 L 4 -90 20 -70 20 {}
 L 4 70 -20 90 -20 {}
-B 5 -92.5 -2.5 -87.5 2.5 {name=D dir=in goto=3}
-B 5 -92.5 -22.5 -87.5 -17.5 {name=GATE_N dir=in goto=3 }
-B 5 -92.5 17.5 -87.5 22.5 {name=RESET_B dir=in }
-B 5 87.5 -22.5 92.5 -17.5 {name=Q dir=out }
-T {@symname} 0 -6 0 0 0.2 0.2 {hcenter=true}
+B 5 -92.5 -22.5 -87.5 -17.5 {name=CLK dir=in }
+B 5 -92.5 -2.5 -87.5 2.5 {name=GATE dir=in }
+B 5 -92.5 17.5 -87.5 22.5 {name=SCE dir=in }
+B 5 87.5 -22.5 92.5 -17.5 {name=GCLK dir=out }
+T {@symname} 10 -6 0 0 0.2 0.2 {hcenter=true}
 T {@name} 75 -42 0 0 0.2 0.2 {}
-T {GATE_N} -65 -24 0 0 0.2 0.2 {}
-T {D} -65 -4 0 0 0.2 0.2 {}
-T {RESET_B} -65 16 0 0 0.2 0.2 {}
-T {Q} 65 -24 0 1 0.2 0.2 {}
+T {CLK} -65 -24 0 0 0.2 0.2 {}
+T {GATE} -65 -4 0 0 0.2 0.2 {}
+T {SCE} -65 16 0 0 0.2 0.2 {}
+T {GCLK} 65 -24 0 1 0.2 0.2 {}
