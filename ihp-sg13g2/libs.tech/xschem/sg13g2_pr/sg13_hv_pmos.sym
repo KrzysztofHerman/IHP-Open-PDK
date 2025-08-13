@@ -18,6 +18,7 @@ G {}
 K {type=pmos
 lvs_format="@name @pinlist @model w=@w l=@l ng=@ng m=@m"
 format="@spiceprefix@name @pinlist @model w=@w l=@l ng=@ng m=@m"
+spectre_format="@spiceprefix@name ( @pinlist ) @model w=@w l=@l ng=@ng m=@m"
 template="name=M1
 l=0.4u
 w=0.3u

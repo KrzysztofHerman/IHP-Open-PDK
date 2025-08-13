@@ -17,6 +17,7 @@ v {xschem version=3.1.0 file_version=1.2
 G {}
 K {type=pnp
 format="tcleval(@spiceprefix@name @pinlist @model a=[ev \{ @w * @l \}] p=[ev \{ ( @w + @l ) * 2 \}] m=[ev \{ @m \}] )"
+spectre_format="tcleval(@spiceprefix@name ( @pinlist ) @model a=[ev \{ @w * @l \}] p=[ev \{ ( @w + @l ) * 2 \}] m=[ev \{ @m \}] )"
 template="name=Q1
 model=pnpMPA
 spiceprefix=X

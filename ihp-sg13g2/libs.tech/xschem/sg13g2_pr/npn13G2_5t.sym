@@ -18,6 +18,7 @@ G {}
 K {type=vertical_npn
 lvs_format="@spiceprefix@name @pinlist @model le=900e-9 we=70.0n m=@Nx"
 format="@spiceprefix@name @pinlist @model Nx=@Nx"
+spectre_format="@spiceprefix@name ( @pinlist ) @model Nx=@Nx"
 template="name=Q1
 model=npn13G2_5t
 spiceprefix=X

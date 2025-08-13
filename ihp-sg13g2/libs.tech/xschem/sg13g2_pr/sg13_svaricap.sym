@@ -16,6 +16,7 @@ v {xschem version=3.4.6 file_version=1.2
 G {}
 K {type=capacitor
 format="@spiceprefix@name @pinlist @model w=@w l=@l Nx=@Nx"
+spectre_format="@spiceprefix@name ( @pinlist ) @model w=@w l=@l Nx=@Nx"
 template="name=C1 
 model=sg13_hv_svaricap 
 w=3.74u 

@@ -16,6 +16,7 @@ v {xschem version=3.1.0 file_version=1.2
 G {}
 K {type=capacitor
 format="@spiceprefix@name @pinlist @model w=@w l=@l m=@m"
+spectre_format="@spiceprefix@name ( @pinlist ) @model w=@w l=@l m=@m"
 template="name=C1
 model=cap_cmim
 w=7.0e-6

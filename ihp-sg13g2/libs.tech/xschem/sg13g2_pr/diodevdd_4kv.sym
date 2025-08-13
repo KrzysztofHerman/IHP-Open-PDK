@@ -18,6 +18,7 @@ G {}
 K {type=diode
 lvs_format="@spiceprefix@name @pinlist @model m=@m"
 format="@spiceprefix@name @pinlist @model m=@m"
+spectre_format="@spiceprefix@name ( @pinlist ) @model m=@m"
 template="name=D1
 model=diodevdd_4kv
 m=1

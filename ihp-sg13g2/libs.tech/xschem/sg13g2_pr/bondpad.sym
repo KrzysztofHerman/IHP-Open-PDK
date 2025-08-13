@@ -18,6 +18,7 @@ G {}
 K {type=pad
 lvs_format="@spiceprefix@name @pinlist @model"
 format="@spiceprefix@name @pinlist @model size=@size shape=@shape padtype=@padtype"
+spectre_format="@spiceprefix@name ( @pinlist ) @model size=@size shape=@shape padtype=@padtype"
 template="name=X1
 model=bondpad
 spiceprefix=X

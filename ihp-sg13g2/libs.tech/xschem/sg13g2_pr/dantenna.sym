@@ -18,6 +18,7 @@ G {}
 K {type=diode
 lvs_format="@spiceprefix@name @pinlist @model l=@l w=@w"
 format="@spiceprefix@name @pinlist @model  l=@l w=@w"
+spectre_format="@spiceprefix@name ( @pinlist ) @model  l=@l w=@w"
 template="name=D1
 model=dantenna
 l=0.78u
