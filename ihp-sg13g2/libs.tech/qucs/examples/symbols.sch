@@ -1,6 +1,6 @@
-<Qucs Schematic 24.3.0>
+<Qucs Schematic 25.1.2>
 <Properties>
-  <View=-36,46,1274,804,1.19789,0,0>
+  <View=7,-56,2516,1628,1.77901,222,955>
   <Grid=10,10,1>
   <DataSet=symbols.dat>
   <DataDisplay=symbols.dpl>
@@ -16,10 +16,10 @@
 <Symbol>
 </Symbol>
 <Components>
-  <Lib sg13_lv_nmos1 1 160 270 50 -20 0 0 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "sg13_lv_nmos" 0 "0.35u" 1 "0.34u" 1 "1" 1 "1" 1 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0.346e-6" 0 "0.38e-6" 0 "0.15e-6" 0 "0" 0 "1" 0>
-  <Lib sg13_hv_nmos1 1 380 270 50 -20 0 0 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "sg13_hv_nmos" 0 "1.0u" 1 "0.45u" 1 "1" 1 "1" 1 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0.346e-6" 0 "0.38e-6" 0 "0.15e-6" 0 "0" 0 "1" 0>
-  <Lib sg13_lv_pmos1 1 160 410 50 -20 0 0 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "sg13_lv_pmos" 0 "0.35u" 1 "0.34u" 1 "1" 0 "1" 1 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0.346e-6" 0 "0.38e-6" 0 "0.15e-6" 0 "0" 0 "1" 0>
-  <Lib sg13_hv_pmos1 1 380 410 50 -20 0 0 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "sg13_hv_pmos" 0 "1.0u" 1 "0.45u" 1 "1" 0 "1" 1 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0.346e-6" 0 "0.38e-6" 0 "0.15e-6" 0 "0" 0 "1" 0>
+  <Lib sg13_lv_nmos1 1 160 270 50 -20 0 0 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "sg13_lv_nmos" 0 "0.35u" 1 "0.34u" 1 "1" 1 "1" 1 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0.346e-6" 0 "0.38e-6" 0 "0.15e-6" 0 "0" 0 "1" 0 "1" 0>
+  <Lib sg13_hv_nmos1 1 380 270 50 -20 0 0 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "sg13_hv_nmos" 0 "1.0u" 1 "0.45u" 1 "1" 1 "1" 1 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0.346e-6" 0 "0.38e-6" 0 "0.15e-6" 0 "0" 0 "1" 0 "1" 0>
+  <Lib sg13_lv_pmos1 1 160 410 50 -20 0 0 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "sg13_lv_pmos" 0 "0.35u" 1 "0.34u" 1 "1" 0 "1" 1 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0.346e-6" 0 "0.38e-6" 0 "0.15e-6" 0 "0" 0 "1" 0 "1" 0>
+  <Lib sg13_hv_pmos1 1 380 410 50 -20 0 0 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "sg13_hv_pmos" 0 "1.0u" 1 "0.45u" 1 "1" 0 "1" 1 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0.346e-6" 0 "0.38e-6" 0 "0.15e-6" 0 "0" 0 "1" 0 "1" 0>
   <Lib npn13G1 1 160 560 10 15 0 0 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "npn13G2" 0 "1" 1>
   <Lib npn13G2l1 1 280 560 10 15 0 0 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "npn13G2l" 0 "1" 1 "1" 1>
   <Lib npn13G2v1 1 400 560 10 15 0 0 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "npn13G2v" 0 "1" 1 "2.5" 1>
@@ -32,9 +32,6 @@
   <Lib idiodevss_4kv1 1 950 570 40 -56 0 1 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "idiodevss_4kv" 0 "1" 1>
   <Lib diodevdd_2kv1 1 720 290 40 -55 0 1 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "diodevdd_2kv" 0 "1" 1>
   <Lib ptap1 1 818 140 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "ptap1" 0 "0.78u" 1 "0.78u" 1>
-  <Lib rppd1 1 920 140 25 -1 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rppd" 0 "1.0u" 1 "0.5u" 1 "1" 1>
-  <Lib rhigh1 1 1028 140 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rhigh" 0 "1.0u" 1 "0.5u" 1 "1" 1>
-  <Lib rsil1 1 1128 140 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rsil" 0 "1.0u" 1 "0.5u" 1 "1" 1>
   <Lib nmoscl_1 1 160 720 -83 -28 0 1 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "nmoscl_2" 0 "1" 1>
   <Lib nmoscl_2 1 290 720 -86 -28 0 1 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "nmoscl_4" 0 "1" 1>
   <Lib dantenna1 1 140 150 -93 -20 0 1 "$HOME/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "dantenna" 0 "0.78u" 1 "0.78u" 1>
@@ -42,6 +39,10 @@
   <Lib ntap1 1 708 140 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "ntap1" 0 "0.78u" 1 "0.78u" 1>
   <Lib cap_rfcmim1 1 540 150 30 -26 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "cap_rfcmim" 0 "7.0u" 1 "7.0u" 1>
   <Lib cap_cmim1 1 380 150 30 -26 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "cap_cmim" 0 "7.0u" 1 "7.0u" 1>
+  <Lib rppd1 1 960 140 25 -1 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rppd" 0 "1.0u" 1 "0.5u" 1 "1" 1>
+  <Lib rhigh1 1 1078 140 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rhigh" 0 "1.0u" 1 "0.5u" 1 "1" 1>
+  <Lib rsil1 1 1218 140 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rsil" 0 "1.0u" 1 "0.5u" 1 "1" 1>
+  <Lib isolbox1 1 580 720 25 -60 0 0 "/home/herman/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "isolbox" 0 "3u" 1 "3u" 1>
 </Components>
 <Wires>
 </Wires>

@@ -57,8 +57,8 @@ class cmim(DloGen):
 
     def setupParams(self, params):
         # process parameter values entered by user
-        self.w = eng_string_to_float(params['w'])*1e6
-        self.l = eng_string_to_float(params['l'])*1e6
+        self.w = Numeric(params['w']) * 1e6
+        self.l = Numeric(params['l']) * 1e6
 
     def genLayout(self):
         self.grid = self.tech.getGridResolution()
@@ -92,16 +92,16 @@ class cmim(DloGen):
         cont_size = self.techparams['TV1_a']
 
         # how many vias?
-        xanz=((self.w-cont_over-cont_over+cont_dist)//(cont_size+cont_dist)+self.epsilon)
+        xanz = fix((self.w-cont_over-cont_over+cont_dist)/(cont_size+cont_dist)+self.epsilon)
         # width for vias
         w1 = xanz*(cont_size+cont_dist)-cont_dist+cont_over+cont_over
         # offset to first via
         self.xoffset=GridFix((self.w-w1)/2)
-
-        yanz = ((self.l-cont_over-cont_over+cont_dist)//(cont_size+cont_dist)+self.epsilon)
+        
+        yanz = fix((self.l-cont_over-cont_over+cont_dist)/(cont_size+cont_dist)+self.epsilon)
         l1=yanz*(cont_size+cont_dist)-cont_dist+cont_over+cont_over
         self.yoffset=GridFix((self.l-l1)/2)
-
+        
         ycont_cnt=cont_over+self.yoffset
         # draw vias
         while ycont_cnt+cont_size+cont_over <= self.l+self.epsilon:

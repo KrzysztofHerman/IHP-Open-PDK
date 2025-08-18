@@ -15,7 +15,7 @@ import klayout.db
 LIB = 'SG13_dev'
 PCELL = 'sealring'
 
-def generate_sealring(width: float, heigth: float, output: str):
+def generate_sealring(width: float, heigth: float, output: str, offset_x: float, offset_y: float):
     """Function to create a new layout, add the sealring PCell to sealring_top
     and save it somewhere on the filesystem.
 
@@ -25,6 +25,10 @@ def generate_sealring(width: float, heigth: float, output: str):
     :type heigth: float
     :param output: Path and name of the file where the sealring should be written to.
     :type output: str
+    :param offset_x: Translation in X direction in µm.
+    :type offset_x: float
+    :param offset_y: Translation in Y direction in µm.
+    :type offset_y: float
 
     """
     layout = klayout.db.Layout(True)
@@ -53,7 +57,16 @@ def generate_sealring(width: float, heigth: float, output: str):
     top_cell = layout.cell(layout.add_cell("sealring_top"))
     pcell = layout.add_pcell_variant(lib, pcell_decl.id(), {'w': f'{width}u', 'l': f'{heigth}u'})
     layout.cell(pcell)
-    top_cell.insert(klayout.db.CellInstArray(pcell, klayout.db.Trans()))
+
+    # Convert offset from µm to dbu
+    dx = int(float(offset_x) * 1000)
+    dy = int(float(offset_y) * 1000)
+
+    # Insert the cell with translation
+    top_cell.insert(klayout.db.CellInstArray(
+        pcell,
+        klayout.db.Trans(klayout.db.Vector(dx, dy))
+    ))
 
     # Create directory where the sealring should be written to.
     pathlib.Path(output).parent.mkdir(parents=True, exist_ok=True)
@@ -78,4 +91,14 @@ except NameError:
     print("Missing output argument. Please define '-rd output=<path-to-sealring>'")
     sys.exit(1)
 
-generate_sealring(width, height, output) # pylint: disable=undefined-variable
+try:
+    offset_x
+except NameError:
+    offset_x = 0.0
+
+try:
+    offset_y
+except NameError:
+    offset_y = 0.0
+
+generate_sealring(width, height, output, offset_x, offset_y)  # pylint: disable=undefined-variable

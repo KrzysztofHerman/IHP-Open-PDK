@@ -186,6 +186,9 @@
 + rshg          =  'rfmode * 3.0'                rgo           =  'rfmode * 40.0'
 + rbulko        =  'rfmode * 0.002 * ng/w'       rwello        =  'rfmode * 0.002 * ng/w'
 + rjunso        =  'rfmode * 5000.0 * l/w'       rjundo        =  'rfmode * 5000.0 * l/w'
++ SWSOA = 'SWSOA'
++ VGS_MAX = 1.6 VGD_MAX = 1.6 VGB_MAX = 1.6
++ VDS_MAX = 1.6 VDB_MAX = 1.6 VSB_MAX = 1.6
 
 *******************************************************************************
 *
@@ -336,7 +339,9 @@
 + rshg          =  'rfmode * 20.0'               rgo           =  'rfmode * 22.0'
 + rbulko        =  'rfmode * 0.002 * ng/w'       rwello        =  'rfmode * 0.001 * ng/w'
 + rjunso        =  'rfmode * 5000.0 * l/w'       rjundo        =  'rfmode * 5000.0 * l/w'
-
++ SWSOA = 'SWSOA'
++ VGS_MAX = 1.6 VGD_MAX = 1.6 VGB_MAX = 1.6
++ VDS_MAX = 1.6 VDB_MAX = 1.6 VSB_MAX = 1.6
 
                 
 .model nmoscl_psp pspnqs103va                  type          =  +1
@@ -467,3 +472,6 @@
 + rshg          =  'rfmode * 3.0'                rgo           =  'rfmode * 40.0'
 + rbulko        =  'rfmode * 0.002 * ng/w'       rwello        =  'rfmode * 0.002 * ng/w'
 + rjunso        =  'rfmode * 5000.0 * l/w'       rjundo        =  'rfmode * 5000.0 * l/w'
++ SWSOA = 'SWSOA'
++ VGS_MAX = 1.6 VGD_MAX = 1.6 VGB_MAX = 1.6
++ VDS_MAX = 1.6 VDB_MAX = 1.6 VSB_MAX = 1.6

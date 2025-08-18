@@ -161,6 +161,7 @@ cython_debug/
 *.raw
 *.la
 *.spice
+*.save
 *.csv
 *.osdi
 *.prn
@@ -173,12 +174,14 @@ cython_debug/
 *.lyrdb
 *.lvsdb
 unit_tests_*
+drc_run_
 lvs_run_*
 *_extracted.cir
 cells_tests_*
 
-# KLayout LVS options
+# KLayout options
 lvs_options.yml
+drc_options.yml
 
 # Git-pulse
 *-pulse.*
@@ -186,3 +189,6 @@ run_git-pulse
 
 # Git-cliff
 cliff*toml
+
+# OpneVAF compiled models dir
+*/*/ngspice/osdi

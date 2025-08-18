@@ -25,6 +25,8 @@
 //
 // Further information can be found in the file releasenotesPSP103.txt
 //
+// Define it to check overvoltage for all 6 branches
+`define SOAcheck
 //  --------------------------------------------------------------------------------------------------------------
 //  Node definitions
 //  --------------------------------------------------------------------------------------------------------------
@@ -650,6 +652,17 @@ electrical BD;
 `MPRcz(SCREF          ,1.0e-6     ,"m"                                  ,"Distance between OD-edge and well edge of a reference device")
 `MPRnb(WEB            ,0.0        ,""                                   ,"Coefficient for SCB")
 `MPRnb(WEC            ,0.0        ,""                                   ,"Coefficient for SCC")
+
+// Safe operating area check
+`ifdef SOAcheck
+`MPIcc(SWSOA          ,0          ,""         ,0           ,1           ,"Flag for safe operating area check")
+`MPRoo(VGS_MAX        ,1e99       ,""         ,0           ,inf         ,"Max gate source voltage")
+`MPRoo(VGD_MAX        ,1e99       ,""         ,0           ,inf         ,"Max gate drain voltage")
+`MPRoo(VGB_MAX        ,1e99       ,""         ,0           ,inf         ,"Max gate bulk voltage")
+`MPRoo(VDS_MAX        ,1e99       ,""         ,0           ,inf         ,"Max drain source voltage")
+`MPRoo(VDB_MAX        ,1e99       ,""         ,0           ,inf         ,"Max drain bulk voltage")
+`MPRoo(VSB_MAX        ,1e99       ,""         ,0           ,inf         ,"Max source bulk voltage")
+`endif
 
 //  --------------------------------------------------------------------------------------------------------------
 //  JUNCAP Parameters
@@ -2141,6 +2154,29 @@ analog begin
             VgdPrime     =  Vgs - Vds;
             xgs_ov       = -VgsPrime * inv_phita;
             xgd_ov       = -VgdPrime * inv_phita;
+
+            `ifdef SOAcheck
+                if (SWSOA > 0) begin
+                    if (abs(Vgs) > VGS_MAX) begin
+                        $strobe("%M: Vgs=%g has exceeded Vgs_max=%g", Vgs, VGS_MAX);
+                    end
+                    if (abs(VgdPrime) > VGD_MAX) begin
+                        $strobe("%M: Vgd=%g has exceeded Vgd_max=%g", VgdPrime, VGD_MAX);
+                    end
+                    if (abs(Vds) > VDS_MAX) begin
+                        $strobe("%M: Vds=%g has exceeded Vds_max=%g", Vds, VDS_MAX);
+                    end
+                    if (abs(Vgs+Vsb) > VGB_MAX) begin
+                        $strobe("%M: Vgb=%g has exceeded Vgb_max=%g", Vgs+Vsb, VGB_MAX);
+                    end
+                    if (abs(Vsb) > VSB_MAX) begin
+                        $strobe("%M: Vsb=%g has exceeded Vsb_max=%g", Vsb, VSB_MAX);
+                    end
+                    if (abs(VdbPrime) > VDB_MAX) begin
+                        $strobe("%M: Vdb=%g has exceeded Vdb_max=%g", VdbPrime, VDB_MAX);
+                    end
+                end
+            `endif // SOAcheck
 
             // Source-drain interchange
             sigVds       =  1.0;

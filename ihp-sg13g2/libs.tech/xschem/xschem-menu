@@ -126,7 +126,7 @@ proc hier_sch_expand {{level 0} {only_subckts 0} {all_hierarchy 1} {pattern {.*}
 # generate the .save lines to save all mos parameters
 proc save_params {} {
   global sch_expand
-  sch_expand 0 1 {vertical_npn}
+  sch_expand 0 1 {npn}
   append fet_bip_list $sch_expand(savelist)
   sch_expand 0 1 {[pn]mos}
   append fet_bip_list $sch_expand(savelist)

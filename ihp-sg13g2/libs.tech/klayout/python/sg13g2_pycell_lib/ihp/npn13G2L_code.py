@@ -209,6 +209,6 @@ class npn13G2L(DloGen):
         groupEmi = Grouping();
         [groupEmi.add(id) for id in self.getShapes() if id.emi]
 
-        MkPin(self, 'C', 1, groupCol.getBBox(), 'Metal1')
-        MkPin(self, 'B', 2, groupBase.getBBox(), 'Metal1')
-        MkPin(self, 'E', 3, groupEmi.getBBox(), 'Metal2')
+        MkPin(self, 'C', 1, groupCol.getBBox(), 'Metal1', True)
+        MkPin(self, 'B', 2, groupBase.getBBox(), 'Metal1', True)
+        MkPin(self, 'E', 3, groupEmi.getBBox(), 'Metal2', True)

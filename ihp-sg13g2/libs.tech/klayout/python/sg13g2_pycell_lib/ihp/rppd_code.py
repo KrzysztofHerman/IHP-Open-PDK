@@ -458,7 +458,7 @@ class rppd(DloGen):
         # create virtuel l for CbResCalc
         lcalc = (self.l*stripes+contactpush*2+lcor)/stripes
         resistance = CbResCalc('R', 0, lcalc*1e-6, self.w*1e-6, self.b, self.ps*1e-6, Cell)
-        labeltext = 'rpnd r={0:.3f}'.format(resistance)
+        labeltext = 'rppd r={0:.3f}'.format(resistance)
 
         labelpos = Point(self.w/2, self.l/2)
             

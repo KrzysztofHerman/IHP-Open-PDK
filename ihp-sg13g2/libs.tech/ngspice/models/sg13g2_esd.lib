@@ -19,8 +19,8 @@
 *                        COMMON ESD MODELS                                    *
 *******************************************************************************
 
-.MODEL diodevdd_mod D (tnom = 27 level = 1 is=4.911e-019 rs=289.6 n=1.04 isr = 5.422E-015 ikf=10m cj0=8.716e-016 m=0.3294 vj=0.6621  bv=11.81 ibv=4.744e-016  nbv=1   eg=1.11 xti=4  )          
-.MODEL diodevss_mod D (tnom = 27 level = 1 is=9.017E-019 rs=200   n=1.03 isr=3.776E-015   ikf=0.0001754 cj0=9.42E-016  m=0.3012  vj=0.6684 bv=11.28 ibv=1E-009 8 nbv=1.324   eg=1.17 xti=3  )
+.MODEL diodevdd_mod D (tnom = 27 level = 1 is=4.911e-019 rs=289.6 n=1.04 isr = 5.422E-015 ikf=10m cj0=8.716e-016 m=0.3294 vj=0.6621  bv=11.81 ibv=4.744e-016   nbv=1   eg=1.11 xti=4  )          
+.MODEL diodevss_mod D (tnom = 27 level = 1 is=9.017E-019 rs=200   n=1.03 isr=3.776E-015   ikf=0.0001754 cj0=9.42E-016  m=0.3012  vj=0.6684 bv=11.28 ibv=1E-009 nbv=1.324   eg=1.17 xti=3  )
 .MODEL dsub_2kv_mod D (tnom = 27 is = 1.7E-016 rs = 4.759 n = 1  ikf = 10m  cj = 99.77E-018   vj = 0.4547 bv = 10 ibv = 1E-019  xti = 3  eg = 1.11 )
 .MODEL dsub_4kv_mod D (tnom = 27 is = 1.7E-016 rs = 4.759 n = 1  ikf = 100u cj = 99.77E-018   vj = 0.4547 bv = 10 ibv = 0       xti = 3  eg = 1.11 )
 ********************************************************

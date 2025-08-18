@@ -272,10 +272,10 @@ contact
   via4   metal4 metal5
   via5   metal5 metal6
   via6   metal6 metal7
-  stackable
 
-  # MiM cap contacts are not stackable!
   mimcc  mimcap metal6
+
+  stackable
 end
 
 #-----------------------------------------------------
@@ -726,6 +726,8 @@ style gdsii
 	grow 180
 	bloat-or allpactivetap * 30 allnactivenontap 0 isodiffres 150
 	bloat-or allpactivenontap * 180 allnactivetap 0
+	bloat-or pmos * 300
+	bloat-or hvpmos * 400
 	and-not transhalo
 	and-not varactorarea
 	or sealc
@@ -1289,7 +1291,7 @@ style gdsii
 
  layer VIA5	via5
 	and-not sealring
- 	squares-grid 5 420 420
+	squares-grid 100 420 420
  	calma 	125 0
 
  layer VIA5	sealv5
@@ -1622,7 +1624,7 @@ style drc
  # not suffice, because only unrelated metal6 should be
  # considered.
  templayer metal6_connects_mimcap
-	bloat-all mimcc/m6 metal6
+	bloat-all mimcc/m6 *metal6
 
  templayer metal6_spacing_to_mimcap metal6
 	and-not metal6_connects_mimcap
@@ -3795,12 +3797,18 @@ drc
  cifmaxwidth butted_tap_short 0 bend_illegal "Diff tap length < 0.30um (pSD.e/f)
  variants *
 
+ # pSD spacing
+ edge4way pfet ~(*pdiff,pfet)/a 330 ~(*nsd)/a (*pdiff)/a 330 "pFET spacing to tap < %d (pSD.i + pSD.d1)"
+ edge4way hvpfet ~(*hvpdiff,hvpfet)/a 430 ~(*hvnsd)/a (*hvpdiff)/a 430 "HV pFET spacing to tap < %d (pSD.i1 + pSD.d1)"
+ edge4way nfet ~(*ndiff,nfet)/a 330 ~(*psd)/a (*ndiff)/a 330 "nFET spacing to tap < %d (pSD.j + pSD.c1)"
+ edge4way hvnfet ~(*hvndiff,hvnfet)/a 430 ~(*hvpsd)/a (*hvndiff)/a 430 "HV nFET spacing to tap < %d (pSD.j + pSD.c1)"
+
  # Length of source/drain areas where butted taps exist
- edge4way pfet *pdiff 300 ~(*nsd)/a 0 0 "pSD must overhang pFET by %dum (pSD.i)"
+ edge4way pfet *pdiff 300 ~(*nsd)/a 0 0 "pSD must overhang pFET by %d (pSD.i)"
  edge4way hvpfet *hvpdiff 400 ~(*hvnsd)/a 0 0 \
-	"pSD must overhang HV pFET by %dum (pSD.i1)"
- edge4way nfet *ndiff 300 ~(*psd)/a 0 0 "pSD must be %dum from nFET (pSD.j)"
- edge4way hvnfet *hvndiff 400 ~(*hvpsd)/a 0 0 "pSD must be %dum from HV nFET (pSD.j1)"
+	"pSD must overhang HV pFET by %d (pSD.i1)"
+ edge4way nfet *ndiff 300 ~(*psd)/a 0 0 "pSD must be %d from nFET (pSD.j)"
+ edge4way hvnfet *hvndiff 400 ~(*hvpsd)/a 0 0 "pSD must be %d from HV nFET (pSD.j1)"
 
  edge4way hvndiff hvnfet 450 hvnfet 0 0 \
 	"HV NMOS minimum length < %d (Gat.a3)"
@@ -4442,8 +4450,6 @@ variants *
 
  width *mimcap 1140 "MiM cap width < %d (MIM.a)"
  spacing *mimcap *mimcap 600 touching_ok "MiM cap spacing < %d (MIM.b)"
- surround *mimcc *mimcap 260 absence_illegal \
-	"MiM cap must surround MiM cap contact by %d (MIM.d - TV1.c)"
  rect_only *mimcap "MiM cap must be rectangular (Grid Rules)
 
  surround *mimcap *metal5/m5 600 absence_illegal \
@@ -4455,14 +4461,12 @@ variants *
 
  # MiM cap contact rules (Vmim)
 
- width mimcc/m5 620 "MiM contact width < %d (TV1.a + 2 * TV1.c)"
+ width mimcc/m6 1140 "MiM contact width < %d (TV1.a + 2 * MIM.d)"
 
- spacing mimcc mimcc 220 touching_ok "MiM contact spacing < %d (TV1.b - 2 * TV1.c)"
+ surround mimcc/m6 *m6,rm6 60 absence_illegal \
+	"Metal6 overlap of MiM contact < %d (TV1.d - MIM.d)"
 
- surround mimcc/m6 *m5,rm5 320 directional \
-	"Metal6 overlap of MiM contact < %d in one direction (TV1.d - TV1.c)"
-
- exact_overlap mimcc/m5
+ exact_overlap mimcc/m6
 
  variants (full)
  cifmaxwidth mimcap_missing_via 0 bend_illegal \
@@ -4588,6 +4592,13 @@ obs obsm4	Metal4
 obs obsm5	Metal5
 obs obsm6	TopMetal1
 obs obsm7	TopMetal2
+
+obs obsm1,obsm2	Via1
+obs obsm2,obsm3	Via2
+obs obsm3,obsm4	Via3
+obs obsm4,obsm5	Via4
+obs obsm5,obsm6	TopVia1
+obs obsm6,obsm7	TopVia2
 
 end
 
