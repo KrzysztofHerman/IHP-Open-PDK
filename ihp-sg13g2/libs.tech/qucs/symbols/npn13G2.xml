@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 130 BiCMOS components" names="Q" schematic_id = "npn13G2">
+    <Description>
+        SG13G2 basic HBT transistor
+    </Description>
+    <Models>
+        <DefaultModel value="npn13G2">
+        </DefaultModel>
+        <SpiceModel value="npn13G2">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value = 'XQ{PartCounter} {nets} npn13G2 Nx={Nx}'>
+        </NgspiceNetlist>
+        <CDLNetlist value = 'Q{PartCounter} {nets} npn13G2 Nx={Nx}'> </CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/bjt.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="Nx" unit="" default_value="1" show="true">
+            <Description>Number of emitters</Description>
+        </Parameter>
+    </Parameters>
+</Component>

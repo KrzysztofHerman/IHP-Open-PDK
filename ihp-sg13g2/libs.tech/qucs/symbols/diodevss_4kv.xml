@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 130 BiCMOS components" names="D" schematic_id = "diodevss_4kv">
+    <Description>
+        SG13G2 ESD 4kV VSS diode
+    </Description>
+    <Models>
+        <DefaultModel value="diodevss_4kv">
+        </DefaultModel>
+        <SpiceModel value="diodevss_4kv">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value = 'XD{PartCounter} {nets} diodevss_4kv m={m}'></NgspiceNetlist>
+        <CDLNetlist value = 'D{PartCounter} {nets} diodevss_4kv m={m}'> </CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/diodevss.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="m" unit="" default_value="1" show="true">
+            <Description>multiplier</Description>
+        </Parameter>
+    </Parameters>
+</Component>

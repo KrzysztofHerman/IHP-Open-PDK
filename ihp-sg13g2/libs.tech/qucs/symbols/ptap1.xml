@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 130 BiCMOS components" names="R" schematic_id = "ptap1">
+    <Description>
+        SG13G2 substrate tap resistor
+    </Description>
+    <Models>
+        <DefaultModel value="ptap1">
+        </DefaultModel>
+        <SpiceModel value="ptap1">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value = 'XR{PartCounter} {nets} ptap1 w={w} l={l} m={m}'>
+        </NgspiceNetlist>
+        <CDLNetlist value = 'R{PartCounter} {nets} ptap1 w={w} l={l} m={m}'> </CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Resistor.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="w" unit="um" default_value="0.78u" show="true">
+            <Description>Width</Description>
+        </Parameter>
+        <Parameter name="l" unit="um" default_value="0.78u" show="true">
+            <Description>Length</Description>
+        </Parameter>
+        <Parameter name="m" unit="" default_value="1" show="true">
+            <Description>multiplier</Description>
+        </Parameter>
+    </Parameters>
+</Component>

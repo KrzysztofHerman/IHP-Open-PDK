@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 130 BiCMOS components" names="M" schematic_id = "sg13_hv_nmos">
+    <Description>
+        SG13G2 low voltage nmos transistor
+    </Description>
+    <Models>
+        <DefaultModel value="sg13_hv_nmos">
+        </DefaultModel>
+        <SpiceModel value="sg13_hv_nmos">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value = 'XM{PartCounter} {nets} sg13_hv_nmos w={w} l={l} ng={ng} m={m}'>
+        </NgspiceNetlist>
+        <CDLNetlist value = 'M{PartCounter} {nets} sg13_hv_nmos w={w} l={l} ng={ng} m={m}'> </CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/nmosHV.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="w" unit="um" default_value="0.13" show="true">
+            <Description>Width</Description>
+        </Parameter>
+        <Parameter name="l" unit="um" default_value="0.13" show="true">
+            <Description>Length</Description>
+        </Parameter>
+        <Parameter name="ng" unit="" default_value="1" show="true">
+            <Description>Number of gates</Description>
+        </Parameter>
+        <Parameter name="m" unit="" default_value="1" show="true">
+            <Description>multiplier</Description>
+        </Parameter>
+    </Parameters>
+</Component>
