@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 131 BiCmos components" names="Diode" schematic_id = "D">
+    <Description>
+        Diode
+    </Description>
+    <Models>
+        <DefaultModel value="D">
+        </DefaultModel>
+        <SpiceModel value="D">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+    <NgspiceNetlist value = "{{{Letter}}}::schematic_id='nequal'D {nets} {model} {{W={W}}}::W='nonempty' {{L={L}}}::L='nonempty'"> </NgspiceNetlist>
+        <CDLNetlist value = "{NgspiceNetlist}"> </CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Diode.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="model" unit="" default_value="dantenna" show="true">
+            <Description>[dantenna,dpantenna]modelname</Description>
+        </Parameter>
+        <Parameter name="Letter" unit="" default_value="X" show="false">
+            <Description>[D,X]</Description>
+        </Parameter>
+        <Parameter name="W" unit="u" default_value="0.78" show="true">
+            <Description>Width</Description>
+        </Parameter>
+        <Parameter name="L" unit="u" default_value="0.78" show="true">
+            <Description>Length</Description>
+        </Parameter>
+    </Parameters>
+</Component>

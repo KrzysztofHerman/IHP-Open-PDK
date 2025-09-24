@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 131 BiCmos components" names="Cmim" schematic_id = "C">
+    <Description>
+        SG13G2 MiM capacitor
+    </Description>
+    <Models>
+            <DefaultModel value="cmim">
+            </DefaultModel>
+            <SpiceModel value="cmim">
+            </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value=
+            "{{{Letter}}}::schematic_id='nequal'C{PartCounter} {nets} {C} M={m} {{{model}}}::model='nonempty'
+            {{W={w}}}::w='nonempty' {{L={l}}}::l='nonempty'">
+        </NgspiceNetlist>
+        <CDLNetlist value="{NgspiceNetlist}"></CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+            <PortSym x="-30" y="0" type="1" angle="0" />
+            <Line x1="-4" y1="-11" x2="-4" y2="11" color="#800000" width="2" style="1" />
+            <Line x1="4" y1="-11" x2="4" y2="11" color="#800000" width="2" style="1" />
+            <Line x1="-30" y1="0" x2="-4" y2="0" color="#000080" width="2" style="1" />
+            <Line x1="4" y1="0" x2="30" y2="0" color="#000080" width="2" style="1" />
+            <PortSym x="30" y="0" type="2" angle="127"/>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="model" unit="" default_value="cap_cmim" show="true">
+            <Description>[cap_cmim,cparasitic,cap_rfcmin] modelname</Description>
+        </Parameter>
+        <Parameter name="Letter" unit="" default_value="X" show="false">
+            <Description>C type</Description>
+        </Parameter>
+        <Parameter name="w" unit="um" default_value="10.0" show="true">
+            <Description>Width</Description>
+        </Parameter>
+        <Parameter name="l" unit="um" default_value="10.0" show="true">
+            <Description>Length</Description>
+        </Parameter>
+        <Parameter name="m" unit="" default_value="1" show="true">
+            <Description>multiplier</Description>
+        </Parameter>
+        <Parameter name="C" unit="F" equation="m*((w*l*1.e-3) + 2*(w+l)*40e-12)" show="true">
+            <Description>Capacitance value</Description>
+        </Parameter>
+    </Parameters>
+</Component>

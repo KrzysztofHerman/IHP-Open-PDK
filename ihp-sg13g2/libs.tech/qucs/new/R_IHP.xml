@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 131 BiCmos components" names="rhigh,rsil,rppd,ptap1,ntap1" schematic_id = "R">
+    <Description>
+        SG13G2 resistor variant
+    </Description>
+    <Models>
+        <DefaultModel value="R_IHP">
+        </DefaultModel>
+        <SpiceModel value="R">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value = "{{{Letter}}}::schematic_id='nequal'R{PartCounter} {nets} {R} {model} {{W={W}}}::W='nonempty' {{L={L}}}::L='nonempty'"> </NgspiceNetlist>
+        <CDLNetlist value = "{NgspiceNetlist}"> </CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Resistor.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="model" unit="" default_value="rhigh" show="true">
+            <Description>[rsil,rppd,rhigh,ptap1,ntap1]</Description>
+        </Parameter>
+        <Parameter name="model" unit="" default_value="rsil" show="true" condition="name=rsil">
+            <Description>[rsil,rppd,rhigh,ptap1,ntap1]</Description>
+        </Parameter>
+        <Parameter name="model" unit="" default_value="rppd" show="true" condition="name=rppd">
+            <Description>[rsil,rppd,rhigh,ptap1,ntap1]</Description>
+        </Parameter>
+        <Parameter name="model" unit="" default_value="ptap1" show="true" condition="name=ptap1">
+            <Description>[rsil,rppd,rhigh,ptap1,ntap1]</Description>
+        </Parameter>
+        <Parameter name="model" unit="" default_value="ntap1" show="true" condition="name=ntap1">
+            <Description>[rsil,rppd,rhigh,ptap1,ntap1]</Description>
+        </Parameter>
+        <Parameter name="Letter" unit="" default_value="X" show="false">
+            <Description>[R,X]</Description>
+        </Parameter>
+        <Parameter name="W" unit="um" default_value="0.5" show="true">
+            <Description>Width</Description>
+        </Parameter>
+        <Parameter name="W" unit="um" default_value="0.78" show="true" condition="name=ntap1,ptap1">
+            <Description>Width</Description>
+        </Parameter>
+        <Parameter name="L" unit="um" default_value="0.5" show="true">
+            <Description>Length</Description>
+        </Parameter>
+        <Parameter name="L" unit="um" default_value="0.78" show="true" condition="name=ntap1,ptap1">
+            <Description>Length</Description>
+        </Parameter>
+        <Parameter name="b" unit="" default_value="0" show="false" condition="name=rhigh,rsil,rppd">
+            <Description>Number of bends</Description>
+        </Parameter>
+        <Parameter name="m" unit="" default_value="1" show="false" condition="name=rhigh,rsil,rppd">
+            <Description>multiplier</Description>
+        </Parameter>
+        <Parameter name="R" unit="Ohm"
+            equation="(1.6e-4 / W + 1360.0*((b + 1)*L + (1.081*(W - 0.04e-6) + 0.18e-6)*b) / (W - 0.04e-6)) / m"
+            show="true" condition="name=rhigh">
+            <Description>Resistance value</Description>
+        </Parameter>
+        <Parameter name="R" unit="Ohm"
+            equation="(9.0e-6 / W + 7.0 * ((b + 1)*L + (1.081*(W + 1.0e-8) + 0.18e-6)*b) / (W + 1.0e-8)) / m"
+            show="true" condition="name=rsil">
+            <Description>Resistance value</Description>
+        </Parameter>
+        <Parameter name="R" unit="Ohm"
+            equation="(70.0e-6 / W + 260.0 * ((b + 1)*L + (1.081*(W + 6.0e-9) + 0.18e-6)*b) / (W + 6.0e-9)) / m"
+            show="true" condition="name=rppd">
+            <Description>Resistance value</Description>
+        </Parameter>
+        <Parameter name="R" unit="Ohm"
+            equation="1.0 / (1.0 / (9.8e-10 / (W * L)) + 1.0 / (9.8e-4 / (2.0 * (W + L))))"
+            show="true" condition="name=ntap1,ptap1">
+            <Description>Resistance value</Description>
+        </Parameter>
+    </Parameters>
+</Component>

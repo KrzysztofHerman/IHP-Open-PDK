@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 131 BiCmos components" names="LV N-mos,HV N-mos,LV P-mos,HV P-mos" schematic_id = "M">
+    <Description>
+        4-pin MOS
+    </Description>
+    <Models>
+        <DefaultModel value="npn13g2">
+        </DefaultModel>
+        <SpiceModel value="npn13g2">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value=
+            "{{{Letter}}}::schematic_id='nequal'M{PartCounter} {nets} {{{model}}}::model='nonempty'
+            {{W={W}}}::W='nonempty' {{L={L}}}::L='nonempty' {{ng={ng}}}::ng='nonempty' {{m={m}}}::m='nonempty'">
+        </NgspiceNetlist>
+        <CDLNetlist value="{NgspiceNetlist}"> </CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Mos.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="Letter" unit="" default_value="X" show="false">
+            <Description>SPICE letter</Description>
+        </Parameter>
+        <Parameter name="type" unit="" default_value="nmos" show="false">
+            <Description>Channel type</Description>
+        </Parameter>
+        <Parameter name="type" unit="" default_value="pmos" show="false" condition="name=LV P-mos,HV P-mos">
+            <Description>Channel type</Description>
+        </Parameter>
+        <Parameter name="model" unit="" default_value="sg13_lv_nmos" show="true">
+            <Description>[sg13_lv_nmos,sg13_hv_nmos]</Description>
+        </Parameter>
+        <Parameter name="model" unit="" default_value="sg13_hv_nmos" show="true" condition="name=HV N-mos,HV P-mos">
+            <Description>[sg13_lv_nmos,sg13_hv_nmos]</Description>
+        </Parameter>
+        <Parameter name="W" unit="" default_value="1u" show="true">
+            <Description>Width</Description>
+        </Parameter>
+        <Parameter name="L" unit="" default_value="1u" show="true">
+            <Description>Length</Description>
+        </Parameter>
+        <Parameter name="ng" unit="" default_value="1" show="false">
+            <Description>no. gates</Description>
+        </Parameter>
+        <Parameter name="m" unit="" default_value="1" show="false">
+            <Description>no. devices</Description>
+        </Parameter>
+    </Parameters>
+</Component>

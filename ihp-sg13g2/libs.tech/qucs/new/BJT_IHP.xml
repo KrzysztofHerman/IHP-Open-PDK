@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 131 BiCmos components" names="npn13g2,npn13g2l,npn13g2v" schematic_id = "Q">
+    <Description>
+        Q(NPN) BJT
+    </Description>
+    <Models>
+        <DefaultModel value="npn13g2">
+        </DefaultModel>
+        <SpiceModel value="npn13g2">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value=
+            "{{{Letter}}}::schematic_id='nequal'Q{PartCounter} {nets} {{{model}}}::model='nonempty'
+            {{Nx={Nx}}}::Nx='nonempty' {{El={El}}}::El='nonempty'">
+        </NgspiceNetlist>
+        <CDLNetlist value="{NgspiceNetlist}"></CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Bjt.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="Letter" unit="" default_value="X" show="false">
+            <Description>[Q,X] BJT type</Description>
+        </Parameter>
+        <Parameter name="model" unit="" default_value="npn13g2" show="true">
+            <Description>[npn13g2,npn13g2l,npn13g2v]</Description>
+        </Parameter>
+        <Parameter name="model" unit="" default_value="npn13g2l" show="true" condition="name=npn13g2l">
+            <Description>[npn13g2,npn13g2l,npn13g2v]</Description>
+        </Parameter>
+        <Parameter name="model" unit="" default_value="npn13g2v" show="true" condition="name=npn13g2v">
+            <Description>[npn13g2,npn13g2l,npn13g2v]</Description>
+        </Parameter>
+        <Parameter name="Nx" unit="" default_value="1" show="true">
+            <Description>Number of emitters</Description>
+        </Parameter>
+        <Parameter name="Nx" unit="" default_value="1" show="true" condition="name=ntap1,ptap1">
+            <Description>Number of emitters</Description>
+        </Parameter>
+        <Parameter name="El" unit="" default_value="" show="false">
+            <Description>Emitter length</Description>
+        </Parameter>
+        <Parameter name="El" unit="" default_value="1" show="true" condition="name=npn13g2l">
+            <Description>Emitter length</Description>
+        </Parameter>
+    </Parameters>
+</Component>

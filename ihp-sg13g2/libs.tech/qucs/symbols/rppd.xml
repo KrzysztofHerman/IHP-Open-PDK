@@ -2,20 +2,19 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="R" schematic_id = "rppd">
+  library="IHP 130 BiCMOS components" names="rppd" schematic_id = "R">
     <Description>
-        SG13G2 unsalicided resistor
+        SG13G2 resistor variant
     </Description>
     <Models>
-        <DefaultModel value="rppd">
+        <DefaultModel value="R">
         </DefaultModel>
-        <SpiceModel value="rppd">
+        <SpiceModel value="R">
         </SpiceModel>
     </Models>
     <Netlists>
-        <NgspiceNetlist value = 'XR{PartCounter} {nets} rppd w={w} l={l} b={b} m={m}'>
-        </NgspiceNetlist>
-        <CDLNetlist value = 'R{PartCounter} {nets} rppd w={w} l={l} b={b} m={m}'> </CDLNetlist>
+        <NgspiceNetlist value = "{{{Letter}}}::schematic_id='nequal'R{PartCounter} {nets} {bulk} {model} {{w={w}}}::w='nonempty' {{l={l}}}::l='nonempty' {{m={m}}}::m='nonempty'"> </NgspiceNetlist>
+        <CDLNetlist value = "{NgspiceNetlist}"> </CDLNetlist>
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
@@ -23,17 +22,31 @@
         </Symbol>
     </Symbols>
     <Parameters>
+        <Parameter name="model" unit="" default_value="rppd" show="true">
+            <Description>rppd</Description>
+        </Parameter>
+        <Parameter name="Letter" unit="" default_value="X" show="false">
+            <Description>Prefix</Description>
+        </Parameter>
         <Parameter name="w" unit="um" default_value="0.5" show="true">
-            <Description>Width</Description>
+            <Description>width</Description>
         </Parameter>
         <Parameter name="l" unit="um" default_value="0.5" show="true">
             <Description>Length</Description>
         </Parameter>
-        <Parameter name="m" unit="" default_value="1" show="true">
+        <Parameter name="b" unit="" default_value="0" show="false">
+            <Description>Number of bends</Description>
+        </Parameter>
+        <Parameter name="bulk" unit="" default_value="sub" show="false">
+            <Description>Third terminal net name</Description>
+        </Parameter>
+        <Parameter name="m" unit="" default_value="1" show="false">
             <Description>multiplier</Description>
         </Parameter>
-        <Parameter name="b" unit="" default_value="0" show="true">
-            <Description>Number of bends</Description>
+        <Parameter name="R" unit="Ohm"
+            equation="(70.0e-6 / w + 260.0 * ((b + 1)*l + (1.081*(w + 6.0e-9) + 0.18e-6)*b) / (w + 6.0e-9)) / m"
+            show="true">
+            <Description>Resistance value</Description>
         </Parameter>
     </Parameters>
 </Component>
