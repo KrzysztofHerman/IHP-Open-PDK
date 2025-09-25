@@ -7,7 +7,7 @@
         SG13G2 resistor variant
     </Description>
     <Models>
-        <DefaultModel value="R">
+        <DefaultModel value="R_IHP">
         </DefaultModel>
         <SpiceModel value="R">
         </SpiceModel>
@@ -23,15 +23,15 @@
     </Symbols>
     <Parameters>
         <Parameter name="model" unit="" default_value="rppd" show="true">
-            <Description>rppd</Description>
+            <Description>Model name</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">
-            <Description>Prefix</Description>
+            <Description>Spice prefix</Description>
         </Parameter>
-        <Parameter name="w" unit="um" default_value="0.5" show="true">
-            <Description>width</Description>
+        <Parameter name="w" unit="u" default_value="0.5" show="true">
+            <Description>Width</Description>
         </Parameter>
-        <Parameter name="l" unit="um" default_value="0.5" show="true">
+        <Parameter name="l" unit="u" default_value="0.5" show="true">
             <Description>Length</Description>
         </Parameter>
         <Parameter name="b" unit="" default_value="0" show="false">
@@ -41,7 +41,7 @@
             <Description>Third terminal net name</Description>
         </Parameter>
         <Parameter name="m" unit="" default_value="1" show="false">
-            <Description>multiplier</Description>
+            <Description>Multiplier</Description>
         </Parameter>
         <Parameter name="R" unit="Ohm"
             equation="(70.0e-6 / w + 260.0 * ((b + 1)*l + (1.081*(w + 6.0e-9) + 0.18e-6)*b) / (w + 6.0e-9)) / m"
