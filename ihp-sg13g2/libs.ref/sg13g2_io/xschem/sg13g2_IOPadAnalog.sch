@@ -1,5 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -95,7 +94,6 @@ N 3380 -390 3390 -390 {
 lab=pad}
 C {sg13g2_DCNDiode.sym} 3090 -430 0 0 {name=x3}
 C {sg13g2_DCPDiode.sym} 3090 -310 0 0 {name=x4}
-C {sg13g2_SecondaryProtection.sym} 3540 -390 0 0 {}
 C {sg13g2_Clamp_N20N0D.sym} 2660 -530 0 0 {name=x1}
 C {sg13g2_Clamp_P20N0D.sym} 2660 -280 2 1 {name=x2}
 C {devices/iopin.sym} 3750 -390 0 0 {name=padres lab=padres}
@@ -104,3 +102,4 @@ C {devices/iopin.sym} 3090 -670 3 0 {name=iovdd lab=iovdd}
 C {devices/iopin.sym} 3350 -530 3 0 {name=pad lab=pad}
 C {devices/iopin.sym} 3220 -670 3 0 {name=vdd lab=vdd}
 C {devices/iopin.sym} 3340 -170 1 0 {name=vss lab=vss}
+C {sg13g2_SecondaryProtection.sym} 3540 -390 0 0 {name=x5}

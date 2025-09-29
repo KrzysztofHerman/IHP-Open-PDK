@@ -1,158 +1,157 @@
-v {xschem version=3.4.4 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
 S {}
 E {}
 N -240 -590 -240 -560 {
-lab=xxx}
+lab=iovss}
 N 1480 -560 1580 -560 {
-lab=xxx}
+lab=iovss}
 N 1580 -590 1580 -560 {
-lab=xxx}
+lab=iovss}
 N -110 -590 -110 -560 {
-lab=xxx}
+lab=iovss}
 N -210 -560 -110 -560 {
-lab=xxx}
+lab=iovss}
 N 20 -590 20 -560 {
-lab=xxx}
+lab=iovss}
 N -80 -560 20 -560 {
-lab=xxx}
+lab=iovss}
 N 150 -590 150 -560 {
-lab=xxx}
+lab=iovss}
 N 50 -560 150 -560 {
-lab=xxx}
+lab=iovss}
 N 280 -590 280 -560 {
-lab=xxx}
+lab=iovss}
 N 210 -560 280 -560 {
-lab=xxx}
+lab=iovss}
 N 410 -590 410 -560 {
-lab=xxx}
+lab=iovss}
 N 310 -560 410 -560 {
-lab=xxx}
+lab=iovss}
 N 540 -590 540 -560 {
-lab=xxx}
+lab=iovss}
 N 440 -560 540 -560 {
-lab=xxx}
+lab=iovss}
 N 670 -590 670 -560 {
-lab=xxx}
+lab=iovss}
 N 570 -560 670 -560 {
-lab=xxx}
+lab=iovss}
 N 800 -590 800 -560 {
-lab=xxx}
+lab=iovss}
 N 700 -560 800 -560 {
-lab=xxx}
+lab=iovss}
 N 930 -590 930 -560 {
-lab=xxx}
+lab=iovss}
 N 830 -560 930 -560 {
-lab=xxx}
+lab=iovss}
 N 1060 -590 1060 -560 {
-lab=xxx}
+lab=iovss}
 N 960 -560 1060 -560 {
-lab=xxx}
+lab=iovss}
 N 1190 -590 1190 -560 {
-lab=xxx}
+lab=iovss}
 N 1090 -560 1190 -560 {
-lab=xxx}
+lab=iovss}
 N 1320 -590 1320 -560 {
-lab=xxx}
+lab=iovss}
 N 1220 -560 1320 -560 {
-lab=xxx}
+lab=iovss}
 N 1450 -590 1450 -560 {
-lab=xxx}
+lab=iovss}
 N 1350 -560 1450 -560 {
-lab=xxx}
+lab=iovss}
 N -240 -620 -210 -620 {
-lab=xxx}
+lab=iovss}
 N -210 -620 -210 -560 {
-lab=xxx}
+lab=iovss}
 N -240 -560 -210 -560 {
-lab=xxx}
+lab=iovss}
 N -110 -620 -80 -620 {
-lab=xxx}
+lab=iovss}
 N -80 -620 -80 -560 {
-lab=xxx}
+lab=iovss}
 N -110 -560 -80 -560 {
-lab=xxx}
+lab=iovss}
 N 20 -620 50 -620 {
-lab=xxx}
+lab=iovss}
 N 50 -620 50 -560 {
-lab=xxx}
+lab=iovss}
 N 20 -560 50 -560 {
-lab=xxx}
+lab=iovss}
 N 150 -620 180 -620 {
-lab=xxx}
+lab=iovss}
 N 180 -620 180 -560 {
-lab=xxx}
+lab=iovss}
 N 150 -560 180 -560 {
-lab=xxx}
+lab=iovss}
 N 280 -620 310 -620 {
-lab=xxx}
+lab=iovss}
 N 310 -620 310 -560 {
-lab=xxx}
+lab=iovss}
 N 280 -560 310 -560 {
-lab=xxx}
+lab=iovss}
 N 410 -620 440 -620 {
-lab=xxx}
+lab=iovss}
 N 440 -620 440 -560 {
-lab=xxx}
+lab=iovss}
 N 410 -560 440 -560 {
-lab=xxx}
+lab=iovss}
 N 540 -620 570 -620 {
-lab=xxx}
+lab=iovss}
 N 570 -620 570 -560 {
-lab=xxx}
+lab=iovss}
 N 540 -560 570 -560 {
-lab=xxx}
+lab=iovss}
 N 1580 -620 1610 -620 {
-lab=xxx}
+lab=iovss}
 N 1610 -620 1610 -560 {
-lab=xxx}
+lab=iovss}
 N 1580 -560 1610 -560 {
-lab=xxx}
+lab=iovss}
 N 1450 -620 1480 -620 {
-lab=xxx}
+lab=iovss}
 N 1480 -620 1480 -560 {
-lab=xxx}
+lab=iovss}
 N 1450 -560 1480 -560 {
-lab=xxx}
+lab=iovss}
 N 1320 -620 1350 -620 {
-lab=xxx}
+lab=iovss}
 N 1350 -620 1350 -560 {
-lab=xxx}
+lab=iovss}
 N 1320 -560 1350 -560 {
-lab=xxx}
+lab=iovss}
 N 1190 -620 1220 -620 {
-lab=xxx}
+lab=iovss}
 N 1220 -620 1220 -560 {
-lab=xxx}
+lab=iovss}
 N 1190 -560 1220 -560 {
-lab=xxx}
+lab=iovss}
 N 1060 -620 1090 -620 {
-lab=xxx}
+lab=iovss}
 N 1090 -620 1090 -560 {
-lab=xxx}
+lab=iovss}
 N 1060 -560 1090 -560 {
-lab=xxx}
+lab=iovss}
 N 930 -620 960 -620 {
-lab=xxx}
+lab=iovss}
 N 960 -620 960 -560 {
-lab=xxx}
+lab=iovss}
 N 930 -560 960 -560 {
-lab=xxx}
+lab=iovss}
 N 800 -620 830 -620 {
-lab=xxx}
+lab=iovss}
 N 830 -620 830 -560 {
-lab=xxx}
+lab=iovss}
 N 800 -560 830 -560 {
-lab=xxx}
+lab=iovss}
 N 670 -620 700 -620 {
-lab=xxx}
+lab=iovss}
 N 700 -620 700 -560 {
-lab=xxx}
+lab=iovss}
 N 670 -560 700 -560 {
-lab=xxx}
+lab=iovss}
 N -240 -690 -240 -650 {
 lab=pad}
 N 1450 -690 1580 -690 {
@@ -278,15 +277,15 @@ lab=pad}
 N 20 -690 130 -690 {
 lab=pad}
 N 210 -380 210 -340 {
-lab=xxx}
+lab=iovss}
 N 180 -560 210 -560 {
-lab=xxx}
+lab=iovss}
 N 140 -410 140 -380 {
-lab=xxx}
+lab=iovss}
 N 140 -380 210 -380 {
-lab=xxx}
+lab=iovss}
 N 210 -560 210 -380 {
-lab=xxx}
+lab=iovss}
 N 140 -500 140 -470 {
 lab=gate}
 N 110 -500 140 -500 {
@@ -411,12 +410,6 @@ w=4.4u
 ng=1
 m=1
 model=sg13_hv_nmos
-spiceprefix=X
-}
-C {sg13g2_pr/dantenna.sym} 140 -440 0 0 {name=D1
-model=dantenna
-l=0.64u
-w=0.3u
 spiceprefix=X
 }
 C {devices/iopin.sym} 210 -340 1 0 {name=iovss lab=iovss}

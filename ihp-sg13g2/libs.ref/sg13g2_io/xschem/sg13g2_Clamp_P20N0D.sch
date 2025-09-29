@@ -1,5 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -733,7 +732,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 1980 -30 0 0 {name=M2
+C {sg13g2_pr/sg13_hv_pmos.sym} 1980 -30 2 1 {name=M2
 l=0.6u
 w=6.66u
 ng=1
@@ -749,7 +748,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 2230 -30 0 0 {name=M4
+C {sg13g2_pr/sg13_hv_pmos.sym} 2230 -30 2 1 {name=M4
 l=0.6u
 w=6.66u
 ng=1
@@ -765,7 +764,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 2470 -30 0 0 {name=M6
+C {sg13g2_pr/sg13_hv_pmos.sym} 2470 -30 2 1 {name=M6
 l=0.6u
 w=6.66u
 ng=1
@@ -781,7 +780,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 2720 -30 0 0 {name=M8
+C {sg13g2_pr/sg13_hv_pmos.sym} 2720 -30 2 1 {name=M8
 l=0.6u
 w=6.66u
 ng=1
@@ -797,7 +796,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 2970 -30 0 0 {name=M10
+C {sg13g2_pr/sg13_hv_pmos.sym} 2970 -30 2 1 {name=M10
 l=0.6u
 w=6.66u
 ng=1
@@ -813,7 +812,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 3220 -30 0 0 {name=M12
+C {sg13g2_pr/sg13_hv_pmos.sym} 3220 -30 2 1 {name=M12
 l=0.6u
 w=6.66u
 ng=1
@@ -829,7 +828,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 3470 -30 0 0 {name=M14
+C {sg13g2_pr/sg13_hv_pmos.sym} 3470 -30 2 1 {name=M14
 l=0.6u
 w=6.66u
 ng=1
@@ -845,7 +844,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 3710 -30 0 0 {name=M16
+C {sg13g2_pr/sg13_hv_pmos.sym} 3710 -30 2 1 {name=M16
 l=0.6u
 w=6.66u
 ng=1
@@ -861,7 +860,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 3960 -30 0 0 {name=M18
+C {sg13g2_pr/sg13_hv_pmos.sym} 3960 -30 2 1 {name=M18
 l=0.6u
 w=6.66u
 ng=1
@@ -877,7 +876,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 4210 -30 0 0 {name=M20
+C {sg13g2_pr/sg13_hv_pmos.sym} 4210 -30 2 1 {name=M20
 l=0.6u
 w=6.66u
 ng=1
@@ -893,7 +892,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 1980 -290 0 0 {name=M22
+C {sg13g2_pr/sg13_hv_pmos.sym} 1980 -290 2 1 {name=M22
 l=0.6u
 w=6.66u
 ng=1
@@ -909,7 +908,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 2230 -290 0 0 {name=M24
+C {sg13g2_pr/sg13_hv_pmos.sym} 2230 -290 2 1 {name=M24
 l=0.6u
 w=6.66u
 ng=1
@@ -925,7 +924,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 2470 -290 0 0 {name=M26
+C {sg13g2_pr/sg13_hv_pmos.sym} 2470 -290 2 1 {name=M26
 l=0.6u
 w=6.66u
 ng=1
@@ -941,7 +940,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 2720 -290 0 0 {name=M28
+C {sg13g2_pr/sg13_hv_pmos.sym} 2720 -290 2 1 {name=M28
 l=0.6u
 w=6.66u
 ng=1
@@ -957,7 +956,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 2970 -290 0 0 {name=M30
+C {sg13g2_pr/sg13_hv_pmos.sym} 2970 -290 2 1 {name=M30
 l=0.6u
 w=6.66u
 ng=1
@@ -973,7 +972,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 3220 -290 0 0 {name=M32
+C {sg13g2_pr/sg13_hv_pmos.sym} 3220 -290 2 1 {name=M32
 l=0.6u
 w=6.66u
 ng=1
@@ -989,7 +988,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 3470 -290 0 0 {name=M34
+C {sg13g2_pr/sg13_hv_pmos.sym} 3470 -290 2 1 {name=M34
 l=0.6u
 w=6.66u
 ng=1
@@ -1005,7 +1004,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 3710 -290 0 0 {name=M36
+C {sg13g2_pr/sg13_hv_pmos.sym} 3710 -290 2 1 {name=M36
 l=0.6u
 w=6.66u
 ng=1
@@ -1021,7 +1020,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 3960 -290 0 0 {name=M38
+C {sg13g2_pr/sg13_hv_pmos.sym} 3960 -290 2 1 {name=M38
 l=0.6u
 w=6.66u
 ng=1
@@ -1037,7 +1036,7 @@ m=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_pmos.sym} 4210 -290 0 0 {name=M40
+C {sg13g2_pr/sg13_hv_pmos.sym} 4210 -290 2 1 {name=M40
 l=0.6u
 w=6.66u
 ng=1

@@ -1,5 +1,4 @@
-v {xschem version=3.4.4 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -94,7 +93,7 @@ lab=pad}
 N 860 -280 910 -280 {
 lab=pad}
 N 1030 -230 1030 -210 {
-lab=iovdd}
+lab=iovss}
 C {sg13g2_pr/sg13_hv_pmos.sym} 840 -340 0 0 {name=M1
 l=0.6u
 w=6.66u
@@ -125,12 +124,6 @@ w=6.66u
 ng=1
 m=1
 model=sg13_hv_pmos
-spiceprefix=X
-}
-C {sg13g2_pr/dpantenna.sym} 620 -390 0 0 {name=D1
-model=dpantenna
-l=0.64u
-w=0.3u
 spiceprefix=X
 }
 C {devices/iopin.sym} 910 -210 1 0 {name=pad lab=pad}

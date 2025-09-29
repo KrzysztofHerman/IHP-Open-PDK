@@ -1,5 +1,4 @@
-v {xschem version=3.4.4 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -64,153 +63,153 @@ lab=pad}
 N 230 -640 360 -640 {
 lab=pad}
 N 230 -770 230 -740 {
-lab=xxx}
+lab=iovdd}
 N 1950 -770 2050 -770 {
-lab=xxx}
+lab=iovdd}
 N 2050 -770 2050 -750 {
-lab=xxx}
+lab=iovdd}
 N 360 -770 360 -740 {
-lab=xxx}
+lab=iovdd}
 N 260 -770 360 -770 {
-lab=xxx}
+lab=iovdd}
 N 490 -770 490 -740 {
-lab=xxx}
+lab=iovdd}
 N 400 -770 490 -770 {
-lab=xxx}
+lab=iovdd}
 N 620 -770 620 -740 {
-lab=xxx}
+lab=iovdd}
 N 510 -770 620 -770 {
-lab=xxx}
+lab=iovdd}
 N 750 -770 750 -740 {
-lab=xxx}
+lab=iovdd}
 N 650 -770 750 -770 {
-lab=xxx}
+lab=iovdd}
 N 880 -770 880 -750 {
-lab=xxx}
+lab=iovdd}
 N 780 -770 880 -770 {
-lab=xxx}
+lab=iovdd}
 N 1010 -770 1010 -750 {
-lab=xxx}
+lab=iovdd}
 N 910 -770 1010 -770 {
-lab=xxx}
+lab=iovdd}
 N 1140 -770 1140 -750 {
-lab=xxx}
+lab=iovdd}
 N 1040 -770 1140 -770 {
-lab=xxx}
+lab=iovdd}
 N 1270 -770 1270 -750 {
-lab=xxx}
+lab=iovdd}
 N 1170 -770 1270 -770 {
-lab=xxx}
+lab=iovdd}
 N 1400 -770 1400 -750 {
-lab=xxx}
+lab=iovdd}
 N 1300 -770 1400 -770 {
-lab=xxx}
+lab=iovdd}
 N 1530 -770 1530 -750 {
-lab=xxx}
+lab=iovdd}
 N 1430 -770 1530 -770 {
-lab=xxx}
+lab=iovdd}
 N 1660 -770 1660 -750 {
-lab=xxx}
+lab=iovdd}
 N 1560 -770 1660 -770 {
-lab=xxx}
+lab=iovdd}
 N 1790 -770 1790 -750 {
-lab=xxx}
+lab=iovdd}
 N 1690 -770 1790 -770 {
-lab=xxx}
+lab=iovdd}
 N 1920 -770 1920 -750 {
-lab=xxx}
+lab=iovdd}
 N 1820 -770 1920 -770 {
-lab=xxx}
+lab=iovdd}
 N 360 -710 400 -710 {
-lab=xxx}
+lab=iovdd}
 N 400 -770 400 -710 {
-lab=xxx}
+lab=iovdd}
 N 360 -770 400 -770 {
-lab=xxx}
+lab=iovdd}
 N 490 -710 510 -710 {
-lab=xxx}
+lab=iovdd}
 N 510 -770 510 -710 {
-lab=xxx}
+lab=iovdd}
 N 490 -770 510 -770 {
-lab=xxx}
+lab=iovdd}
 N 620 -710 650 -710 {
-lab=xxx}
+lab=iovdd}
 N 650 -770 650 -710 {
-lab=xxx}
+lab=iovdd}
 N 620 -770 650 -770 {
-lab=xxx}
+lab=iovdd}
 N 750 -710 780 -710 {
-lab=xxx}
+lab=iovdd}
 N 780 -770 780 -710 {
-lab=xxx}
+lab=iovdd}
 N 750 -770 780 -770 {
-lab=xxx}
+lab=iovdd}
 N 880 -720 910 -720 {
-lab=xxx}
+lab=iovdd}
 N 910 -770 910 -720 {
-lab=xxx}
+lab=iovdd}
 N 880 -770 910 -770 {
-lab=xxx}
+lab=iovdd}
 N 1010 -720 1040 -720 {
-lab=xxx}
+lab=iovdd}
 N 1040 -770 1040 -720 {
-lab=xxx}
+lab=iovdd}
 N 1010 -770 1040 -770 {
-lab=xxx}
+lab=iovdd}
 N 1140 -720 1170 -720 {
-lab=xxx}
+lab=iovdd}
 N 1170 -770 1170 -720 {
-lab=xxx}
+lab=iovdd}
 N 1140 -770 1170 -770 {
-lab=xxx}
+lab=iovdd}
 N 1270 -720 1300 -720 {
-lab=xxx}
+lab=iovdd}
 N 1300 -770 1300 -720 {
-lab=xxx}
+lab=iovdd}
 N 1270 -770 1300 -770 {
-lab=xxx}
+lab=iovdd}
 N 1400 -720 1430 -720 {
-lab=xxx}
+lab=iovdd}
 N 1430 -770 1430 -720 {
-lab=xxx}
+lab=iovdd}
 N 1400 -770 1430 -770 {
-lab=xxx}
+lab=iovdd}
 N 1530 -720 1560 -720 {
-lab=xxx}
+lab=iovdd}
 N 1560 -770 1560 -720 {
-lab=xxx}
+lab=iovdd}
 N 1530 -770 1560 -770 {
-lab=xxx}
+lab=iovdd}
 N 1660 -720 1690 -720 {
-lab=xxx}
+lab=iovdd}
 N 1690 -770 1690 -720 {
-lab=xxx}
+lab=iovdd}
 N 1660 -770 1690 -770 {
-lab=xxx}
+lab=iovdd}
 N 1790 -720 1820 -720 {
-lab=xxx}
+lab=iovdd}
 N 1820 -770 1820 -720 {
-lab=xxx}
+lab=iovdd}
 N 1790 -770 1820 -770 {
-lab=xxx}
+lab=iovdd}
 N 1920 -720 1950 -720 {
-lab=xxx}
+lab=iovdd}
 N 1950 -770 1950 -720 {
-lab=xxx}
+lab=iovdd}
 N 1920 -770 1950 -770 {
-lab=xxx}
+lab=iovdd}
 N 2050 -720 2080 -720 {
-lab=xxx}
+lab=iovdd}
 N 2080 -770 2080 -720 {
-lab=xxx}
+lab=iovdd}
 N 2050 -770 2080 -770 {
-lab=xxx}
+lab=iovdd}
 N 230 -710 260 -710 {
-lab=xxx}
+lab=iovdd}
 N 260 -770 260 -710 {
-lab=xxx}
+lab=iovdd}
 N 230 -770 260 -770 {
-lab=xxx}
+lab=iovdd}
 N 230 -840 230 -820 {
 lab=pad}
 N 1980 -820 2050 -820 {
@@ -270,153 +269,153 @@ lab=pad}
 N 1400 -820 1530 -820 {
 lab=pad}
 N 230 -940 230 -900 {
-lab=xxx}
+lab=iovdd}
 N 1950 -940 2050 -940 {
-lab=xxx}
+lab=iovdd}
 N 2050 -940 2050 -910 {
-lab=xxx}
+lab=iovdd}
 N 1920 -940 1920 -910 {
-lab=xxx}
+lab=iovdd}
 N 1820 -940 1920 -940 {
-lab=xxx}
+lab=iovdd}
 N 1790 -940 1790 -910 {
-lab=xxx}
+lab=iovdd}
 N 1690 -940 1790 -940 {
-lab=xxx}
+lab=iovdd}
 N 1660 -940 1660 -910 {
-lab=xxx}
+lab=iovdd}
 N 1560 -940 1660 -940 {
-lab=xxx}
+lab=iovdd}
 N 1530 -940 1530 -910 {
-lab=xxx}
+lab=iovdd}
 N 1460 -940 1530 -940 {
-lab=xxx}
+lab=iovdd}
 N 1400 -940 1400 -910 {
-lab=xxx}
+lab=iovdd}
 N 1300 -940 1400 -940 {
-lab=xxx}
+lab=iovdd}
 N 1270 -940 1270 -910 {
-lab=xxx}
+lab=iovdd}
 N 1140 -940 1140 -910 {
-lab=xxx}
+lab=iovdd}
 N 1040 -940 1140 -940 {
-lab=xxx}
+lab=iovdd}
 N 1010 -940 1010 -910 {
-lab=xxx}
+lab=iovdd}
 N 910 -940 1010 -940 {
-lab=xxx}
+lab=iovdd}
 N 880 -940 880 -910 {
-lab=xxx}
+lab=iovdd}
 N 780 -940 880 -940 {
-lab=xxx}
+lab=iovdd}
 N 750 -940 750 -900 {
-lab=xxx}
+lab=iovdd}
 N 650 -940 750 -940 {
-lab=xxx}
+lab=iovdd}
 N 620 -940 620 -900 {
-lab=xxx}
+lab=iovdd}
 N 520 -940 620 -940 {
-lab=xxx}
+lab=iovdd}
 N 490 -940 490 -900 {
-lab=xxx}
+lab=iovdd}
 N 380 -940 490 -940 {
-lab=xxx}
+lab=iovdd}
 N 360 -940 360 -900 {
-lab=xxx}
+lab=iovdd}
 N 250 -940 360 -940 {
-lab=xxx}
+lab=iovdd}
 N 230 -870 250 -870 {
-lab=xxx}
+lab=iovdd}
 N 250 -940 250 -870 {
-lab=xxx}
+lab=iovdd}
 N 230 -940 250 -940 {
-lab=xxx}
+lab=iovdd}
 N 360 -870 380 -870 {
-lab=xxx}
+lab=iovdd}
 N 380 -940 380 -870 {
-lab=xxx}
+lab=iovdd}
 N 360 -940 380 -940 {
-lab=xxx}
+lab=iovdd}
 N 490 -870 520 -870 {
-lab=xxx}
+lab=iovdd}
 N 520 -940 520 -870 {
-lab=xxx}
+lab=iovdd}
 N 490 -940 520 -940 {
-lab=xxx}
+lab=iovdd}
 N 620 -870 650 -870 {
-lab=xxx}
+lab=iovdd}
 N 650 -940 650 -870 {
-lab=xxx}
+lab=iovdd}
 N 620 -940 650 -940 {
-lab=xxx}
+lab=iovdd}
 N 750 -870 780 -870 {
-lab=xxx}
+lab=iovdd}
 N 780 -940 780 -870 {
-lab=xxx}
+lab=iovdd}
 N 750 -940 780 -940 {
-lab=xxx}
+lab=iovdd}
 N 880 -880 910 -880 {
-lab=xxx}
+lab=iovdd}
 N 910 -940 910 -880 {
-lab=xxx}
+lab=iovdd}
 N 880 -940 910 -940 {
-lab=xxx}
+lab=iovdd}
 N 1010 -880 1040 -880 {
-lab=xxx}
+lab=iovdd}
 N 1040 -940 1040 -880 {
-lab=xxx}
+lab=iovdd}
 N 1010 -940 1040 -940 {
-lab=xxx}
+lab=iovdd}
 N 1140 -880 1170 -880 {
-lab=xxx}
+lab=iovdd}
 N 1170 -940 1270 -940 {
-lab=xxx}
+lab=iovdd}
 N 1170 -940 1170 -880 {
-lab=xxx}
+lab=iovdd}
 N 1140 -940 1170 -940 {
-lab=xxx}
+lab=iovdd}
 N 1270 -880 1300 -880 {
-lab=xxx}
+lab=iovdd}
 N 1300 -940 1300 -880 {
-lab=xxx}
+lab=iovdd}
 N 1270 -940 1300 -940 {
-lab=xxx}
+lab=iovdd}
 N 1400 -880 1430 -880 {
-lab=xxx}
+lab=iovdd}
 N 1430 -940 1430 -880 {
-lab=xxx}
+lab=iovdd}
 N 1400 -940 1430 -940 {
-lab=xxx}
+lab=iovdd}
 N 1530 -880 1560 -880 {
-lab=xxx}
+lab=iovdd}
 N 1560 -940 1560 -880 {
-lab=xxx}
+lab=iovdd}
 N 1530 -940 1560 -940 {
-lab=xxx}
+lab=iovdd}
 N 1660 -880 1690 -880 {
-lab=xxx}
+lab=iovdd}
 N 1690 -940 1690 -880 {
-lab=xxx}
+lab=iovdd}
 N 1660 -940 1690 -940 {
-lab=xxx}
+lab=iovdd}
 N 1790 -880 1820 -880 {
-lab=xxx}
+lab=iovdd}
 N 1820 -940 1820 -880 {
-lab=xxx}
+lab=iovdd}
 N 1790 -940 1820 -940 {
-lab=xxx}
+lab=iovdd}
 N 1920 -880 1950 -880 {
-lab=xxx}
+lab=iovdd}
 N 1950 -940 1950 -880 {
-lab=xxx}
+lab=iovdd}
 N 1920 -940 1950 -940 {
-lab=xxx}
+lab=iovdd}
 N 2050 -880 2090 -880 {
-lab=xxx}
+lab=iovdd}
 N 2090 -940 2090 -880 {
-lab=xxx}
+lab=iovdd}
 N 2050 -940 2090 -940 {
-lab=xxx}
+lab=iovdd}
 N 140 -870 190 -870 {
 lab=gate}
 N 130 -790 130 -710 {
@@ -516,15 +515,15 @@ lab=pad}
 N 1920 -640 1980 -640 {
 lab=pad}
 N 2080 -770 2180 -770 {
-lab=xxx}
+lab=iovdd}
 N 2180 -940 2180 -770 {
-lab=xxx}
+lab=iovdd}
 N 2090 -940 2180 -940 {
-lab=xxx}
+lab=iovdd}
 N 1460 -970 1460 -940 {
-lab=xxx}
+lab=iovdd}
 N 1430 -940 1460 -940 {
-lab=xxx}
+lab=iovdd}
 N 1460 -640 1460 -570 {
 lab=pad}
 N 1400 -640 1460 -640 {
@@ -538,9 +537,9 @@ lab=gate}
 N 130 -870 140 -870 {
 lab=gate}
 N 140 -970 1460 -970 {
-lab=xxx}
+lab=iovdd}
 N 1460 -1040 1460 -970 {
-lab=xxx}
+lab=iovdd}
 N 1680 -590 1680 -560 {
 lab=iovss}
 C {sg13g2_pr/sg13_hv_pmos.sym} 210 -710 0 0 {name=M1
@@ -781,12 +780,6 @@ w=6.66u
 ng=1
 m=1
 model=sg13_hv_pmos
-spiceprefix=X
-}
-C {sg13g2_pr/dpantenna.sym} 140 -940 0 0 {name=D1
-model=dpantenna
-l=0.64u
-w=0.3u
 spiceprefix=X
 }
 C {devices/iopin.sym} 1460 -570 1 0 {name=pad lab=pad}

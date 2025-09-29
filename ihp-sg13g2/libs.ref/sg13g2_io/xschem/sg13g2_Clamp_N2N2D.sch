@@ -1,5 +1,4 @@
-v {xschem version=3.4.4 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -62,8 +61,8 @@ lab=iovss}
 N 990 -200 990 -160 {
 lab=iovss}
 N 850 -380 850 -350 {
-lab=iovss}
-C {sg13g2_pr/sg13_hv_nmos.sym} 1070 -270 2 1 {name=M1
+lab=iovdd}
+C {sg13g2_pr/sg13_hv_nmos.sym} 1070 -270 0 0 {name=M1
 l=0.6u
 w=4.4u
 ng=1
@@ -71,18 +70,12 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 880 -270 2 1 {name=M2
+C {sg13g2_pr/sg13_hv_nmos.sym} 880 -270 0 0 {name=M2
 l=0.6u
 w=4.4u
 ng=1
 m=1
 model=sg13_hv_nmos
-spiceprefix=X
-}
-C {sg13g2_pr/dantenna.sym} 780 -220 0 0 {name=D1
-model=dantenna
-l=0.64u
-w=0.3u
 spiceprefix=X
 }
 C {devices/iopin.sym} 990 -120 1 0 {name=iovss lab=iovss}

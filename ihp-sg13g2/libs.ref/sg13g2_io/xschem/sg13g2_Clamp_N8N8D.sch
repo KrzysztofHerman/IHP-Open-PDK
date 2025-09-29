@@ -1,5 +1,4 @@
-v {xschem version=3.4.4 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -165,7 +164,7 @@ N 1330 -470 1380 -470 {
 lab=gate}
 N 860 -720 860 -690 {
 lab=iovdd}
-C {sg13g2_pr/sg13_hv_nmos.sym} 840 -560 2 1 {name=M1
+C {sg13g2_pr/sg13_hv_nmos.sym} 840 -560 0 0 {name=M1
 l=0.6u
 w=4.4u
 ng=1
@@ -173,7 +172,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 960 -560 2 1 {name=M2
+C {sg13g2_pr/sg13_hv_nmos.sym} 960 -560 0 0 {name=M2
 l=0.6u
 w=4.4u
 ng=1
@@ -181,7 +180,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 1080 -560 2 1 {name=M3
+C {sg13g2_pr/sg13_hv_nmos.sym} 1080 -560 0 0 {name=M3
 l=0.6u
 w=4.4u
 ng=1
@@ -189,7 +188,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 1210 -560 2 1 {name=M4
+C {sg13g2_pr/sg13_hv_nmos.sym} 1210 -560 0 0 {name=M4
 l=0.6u
 w=4.4u
 ng=1
@@ -197,7 +196,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 1350 -560 2 1 {name=M5
+C {sg13g2_pr/sg13_hv_nmos.sym} 1350 -560 0 0 {name=M5
 l=0.6u
 w=4.4u
 ng=1
@@ -205,7 +204,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 710 -560 2 1 {name=M6
+C {sg13g2_pr/sg13_hv_nmos.sym} 710 -560 0 0 {name=M6
 l=0.6u
 w=4.4u
 ng=1
@@ -213,7 +212,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 570 -560 2 1 {name=M7
+C {sg13g2_pr/sg13_hv_nmos.sym} 570 -560 0 0 {name=M7
 l=0.6u
 w=4.4u
 ng=1
@@ -221,7 +220,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 1480 -560 2 1 {name=M8
+C {sg13g2_pr/sg13_hv_nmos.sym} 1480 -560 0 0 {name=M8
 l=0.6u
 w=4.4u
 ng=1

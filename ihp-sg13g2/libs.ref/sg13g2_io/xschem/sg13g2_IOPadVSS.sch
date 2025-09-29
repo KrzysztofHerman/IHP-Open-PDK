@@ -1,5 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -41,3 +40,4 @@ C {devices/iopin.sym} -400 10 2 0 {name=iovss lab=iovss}
 C {devices/iopin.sym} 50 -60 0 0 {name=iovdd lab=iovdd}
 C {devices/iopin.sym} 10 90 0 0 {name=vss lab=vss}
 C {devices/iopin.sym} 240 -120 0 0 {name=vdd lab=vdd}
+C {noconn.sym} 150 -120 0 0 {name=l1}

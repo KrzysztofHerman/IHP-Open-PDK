@@ -1,5 +1,4 @@
-v {xschem version=3.4.4 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -113,17 +112,17 @@ lab=iovdd}
 N 1150 -560 1190 -560 {
 lab=iovdd}
 N 1460 -410 1460 -360 {
-lab=xxx}
+lab=o}
 N 1370 -490 1420 -490 {
-lab=#net4}
+lab=#net2}
 N 1370 -390 1370 -330 {
-lab=#net4}
+lab=#net2}
 N 1370 -330 1420 -330 {
-lab=#net4}
+lab=#net2}
 N 1460 -410 1550 -410 {
-lab=xxx}
+lab=o}
 N 1460 -460 1460 -410 {
-lab=xxx}
+lab=o}
 N 1460 -270 1460 -250 {
 lab=vss}
 N 1250 -250 1460 -250 {
@@ -148,16 +147,16 @@ N 1460 -540 1490 -540 {
 lab=iovdd}
 N 1460 -560 1460 -540 {
 lab=iovdd}
-N 780 -340 780 -160 {}
-N 780 -160 1200 -160 {}
-N 1200 -330 1200 -160 {}
-N 1200 -330 1210 -330 {}
-N 1110 -390 1370 -390 {}
+N 780 -340 780 -160 {lab=i}
+N 780 -160 1200 -160 {lab=i}
+N 1200 -330 1200 -160 {lab=i}
+N 1200 -330 1210 -330 {lab=i}
+N 1110 -390 1370 -390 {lab=#net2}
 N 1110 -430 1110 -390 {
 lab=#net2}
 N 1370 -490 1370 -390 {
-lab=#net4}
-C {sg13g2_pr/sg13_lv_nmos.sym} 850 -340 2 1 {name=M1
+lab=#net2}
+C {sg13g2_pr/sg13_lv_nmos.sym} 850 -340 0 0 {name=M1
 l=0.13u
 w=2.75u
 ng=1
@@ -173,7 +172,7 @@ m=1
 model=sg13_lv_pmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 1090 -330 2 1 {name=M3
+C {sg13g2_pr/sg13_hv_nmos.sym} 1090 -330 0 0 {name=M3
 l=0.45u
 w=1.9u
 ng=1
@@ -181,7 +180,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 1230 -330 2 1 {name=M4
+C {sg13g2_pr/sg13_hv_nmos.sym} 1230 -330 0 0 {name=M4
 l=0.45u
 w=1.9u
 ng=1

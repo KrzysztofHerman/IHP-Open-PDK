@@ -1,5 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -427,7 +426,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 1780 -120 2 1 {name=M2
+C {sg13g2_pr/sg13_hv_nmos.sym} 1780 -120 0 0 {name=M2
 l=0.6u
 w=4.4u
 ng=1
@@ -443,7 +442,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 2040 -120 2 1 {name=M4
+C {sg13g2_pr/sg13_hv_nmos.sym} 2040 -120 0 0 {name=M4
 l=0.6u
 w=4.4u
 ng=1
@@ -459,7 +458,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 2300 -120 2 1 {name=M6
+C {sg13g2_pr/sg13_hv_nmos.sym} 2300 -120 0 0 {name=M6
 l=0.6u
 w=4.4u
 ng=1
@@ -475,7 +474,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 2550 -120 2 1 {name=M8
+C {sg13g2_pr/sg13_hv_nmos.sym} 2550 -120 0 0 {name=M8
 l=0.6u
 w=4.4u
 ng=1
@@ -491,7 +490,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 2820 -120 2 1 {name=M10
+C {sg13g2_pr/sg13_hv_nmos.sym} 2820 -120 0 0 {name=M10
 l=0.6u
 w=4.4u
 ng=1
@@ -507,7 +506,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 3080 -120 2 1 {name=M12
+C {sg13g2_pr/sg13_hv_nmos.sym} 3080 -120 0 0 {name=M12
 l=0.6u
 w=4.4u
 ng=1
@@ -523,7 +522,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 3340 -120 2 1 {name=M14
+C {sg13g2_pr/sg13_hv_nmos.sym} 3340 -120 0 0 {name=M14
 l=0.6u
 w=4.4u
 ng=1
@@ -547,7 +546,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 3730 -120 2 1 {name=M17
+C {sg13g2_pr/sg13_hv_nmos.sym} 3730 -120 0 0 {name=M17
 l=0.6u
 w=4.4u
 ng=1
@@ -563,7 +562,7 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/sg13_hv_nmos.sym} 3990 -120 2 1 {name=M19
+C {sg13g2_pr/sg13_hv_nmos.sym} 3990 -120 0 0 {name=M19
 l=0.6u
 w=4.4u
 ng=1
@@ -579,14 +578,14 @@ m=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13g2_pr/rppd.sym} 1490 90 0 0 {name=Rp1
+C {devices/iopin.sym} 1730 230 1 0 {name=iovss lab=iovss}
+C {devices/iopin.sym} 2280 -300 3 0 {name=pad lab=pad}
+C {devices/iopin.sym} 2630 -300 3 0 {name=iovdd lab=iovdd}
+C {sg13g2_pr/rppd.sym} 1490 90 0 0 {name=R1
 w=0.5e-6
-l=3.54e-6
+l=0.5e-6
 model=rppd
 spiceprefix=X
 b=0
 m=1
 }
-C {devices/iopin.sym} 1730 230 1 0 {name=iovss lab=iovss}
-C {devices/iopin.sym} 2280 -300 3 0 {name=pad lab=pad}
-C {devices/iopin.sym} 2630 -300 3 0 {name=iovdd lab=iovdd}

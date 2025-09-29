@@ -1,5 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -44,3 +43,4 @@ l=1.26u
 w=27.78u
 spiceprefix=X
 }
+C {noconn.sym} -20 140 0 0 {name=l1}

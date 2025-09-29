@@ -1,5 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
-}
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -44,3 +43,4 @@ spiceprefix=X
 C {devices/iopin.sym} 50 30 0 0 {name=cathode lab=cathode}
 C {devices/iopin.sym} -180 50 0 0 {name=anode lab=anode}
 C {devices/iopin.sym} 40 140 0 0 {name=guard lab=guard}
+C {noconn.sym} -20 140 0 0 {name=l1}
