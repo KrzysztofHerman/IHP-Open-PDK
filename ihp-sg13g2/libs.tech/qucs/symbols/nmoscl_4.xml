@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 130 BiCMOS components" names="D" schematic_id = "nmoscl_4">
+    <Description>
+        SG13G2 nmoscl_4 mosfet clamps
+    </Description>
+    <Models>
+        <DefaultModel value="nmoscl_4">
+        </DefaultModel>
+        <SpiceModel value="nmoscl_4">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value = 'XD{PartCounter} {nets} nmoscl_4 m={m}'></NgspiceNetlist>
+        <CDLNetlist value = 'D{PartCounter} {nets} nmoscl_4 m={m}'> </CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Diode.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="m" unit="" default_value="1" show="true">
+            <Description>multiplier</Description>
+        </Parameter>
+    </Parameters>
+</Component>

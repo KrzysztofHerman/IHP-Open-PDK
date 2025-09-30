@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 130 BiCMOS components" names="D" schematic_id = "dantenna">
+    <Description>
+        SG13G2 dantenna diode
+    </Description>
+    <Models>
+        <DefaultModel value="dantenna">
+        </DefaultModel>
+        <SpiceModel value="dantenna">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value = 'XD{PartCounter} {nets} dantenna w={w} l={l} m={m}'></NgspiceNetlist>
+        <CDLNetlist value = 'D{PartCounter} {nets} dantenna w={w} l={l} m={m}'> </CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Diode.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="w" unit="um" default_value="0.78u" show="true">
+            <Description>Width</Description>
+        </Parameter>
+        <Parameter name="l" unit="um" default_value="0.78u" show="true">
+            <Description>Length</Description>
+        </Parameter>
+        <Parameter name="m" unit="" default_value="1" show="true">
+            <Description>multiplier</Description>
+        </Parameter>
+    </Parameters>
+</Component>

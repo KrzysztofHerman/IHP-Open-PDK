@@ -76,6 +76,8 @@ RULES_VAR = {
         "activ",
         "psd",
     ),
+    "met_name": ("Metal1", "Metal2", "Metal3", "Metal4", "Metal5", "TopMetal1", "TopMetal2"),
+    "via_name": ("Via1", "Via2", "Via3", "Via4", "TopVia1", "TopVia2"),
 }
 
 

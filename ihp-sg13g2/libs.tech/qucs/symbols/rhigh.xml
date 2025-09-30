@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 130 BiCMOS components" names="R" schematic_id = "rhigh">
+    <Description>
+        SG13G2 high R resistor
+    </Description>
+    <Models>
+        <DefaultModel value="rhigh">
+        </DefaultModel>
+        <SpiceModel value="rhigh">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value = 'XR{PartCounter} {nets} rhigh w={w} l={l} b={b} m={m}'></NgspiceNetlist>
+        <CDLNetlist value = 'R{PartCounter} {nets} rhigh w={w} l={l} b={b} m={m}'> </CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Resistor.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="w" unit="um" default_value="0.5" show="true">
+            <Description>Width</Description>
+        </Parameter>
+        <Parameter name="l" unit="um" default_value="0.5" show="true">
+            <Description>Length</Description>
+        </Parameter>
+        <Parameter name="m" unit="" default_value="1" show="true">
+            <Description>multiplier</Description>
+        </Parameter>
+        <Parameter name="b" unit="" default_value="0" show="true">
+            <Description>Number of bends</Description>
+        </Parameter>
+    </Parameters>
+</Component>

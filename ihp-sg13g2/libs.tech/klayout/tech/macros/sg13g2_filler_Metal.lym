@@ -173,22 +173,22 @@
 			distances['distance_m1'] = 0.42
 		end
 		distances['distance_m2'] = dialog.layout.itemAt(3).widget.text.to_f
-		if 0.42 > distances['distance_m1']
+		if 0.42 > distances['distance_m2']
 			print("M2fil.b is defined with min. 0.42. Setting 0.42 as distance for Metal2:Filler\n")
 			distances['distance_m2'] = 0.42
 		end
 		distances['distance_m3'] = dialog.layout.itemAt(5).widget.text.to_f
-		if 0.42 > distances['distance_m1']
+		if 0.42 > distances['distance_m3']
 			print("M3fil.b is defined with min. 0.42. Setting 0.42 as distance for Metal3:Filler\n")
 			distances['distance_m3'] = 0.42
 		end
 		distances['distance_m4'] = dialog.layout.itemAt(7).widget.text.to_f
-		if 0.42 > distances['distance_m1']
+		if 0.42 > distances['distance_m4']
 			print("M4fil.b is defined with min. 0.42. Setting 0.42 as distance for Metal4:Filler\n")
 			distances['distance_m4'] = 0.42
 		end
 		distances['distance_m5'] = dialog.layout.itemAt(9).widget.text.to_f
-		if 0.42 > distances['distance_m1']
+		if 0.42 > distances['distance_m5']
 			print("M5fil.b is defined with min. 0.42. Setting 0.42 as distance for Metal5:Filler\n")
 			distances['distance_m5'] = 0.42
 		end

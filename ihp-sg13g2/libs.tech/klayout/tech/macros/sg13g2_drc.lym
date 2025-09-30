@@ -137,10 +137,10 @@ end
 
 # Extract and format options
 cmd_opts = [
-  "--path=#{gds_path}",
+  "--path='#{gds_path}'",
   "--run_mode=#{options['run_mode']}",
-  "--topcell=#{top_cell}",
-  "--run_dir=#{run_dir}",
+  "--topcell='#{top_cell}'",
+  "--run_dir='#{run_dir}'",
   "--mp=#{options['parallel_runs']}",
   "--density_thr=#{options['density_thr']}"
 ]
@@ -149,7 +149,7 @@ cmd_opts = [
   cmd_opts &lt;&lt; "--#{flag}" if options[flag]
 end
 
-cmd_opts &lt;&lt; "--table=#{options['table']}" if options['table'] &amp;&amp; !options['table'].empty? &amp;&amp; options['table'] != 'all'
+cmd_opts &lt;&lt; "--table='#{options['table']}'" if options['table'] &amp;&amp; !options['table'].empty? &amp;&amp; options['table'] != 'all'
 
 # Run DRC with options
 cmd = "nohup python3 #{File.join(project_root, 'drc', 'run_drc.py')} #{cmd_opts.join(' ')}"
