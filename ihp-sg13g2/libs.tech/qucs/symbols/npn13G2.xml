@@ -2,27 +2,35 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="Q" schematic_id = "npn13G2">
+  library="IHP 130 BiCMOS components" names="npn13g2" schematic_id = "Q">
     <Description>
-        SG13G2 basic HBT transistor
+        Q(NPN) BJT
     </Description>
     <Models>
-        <DefaultModel value="npn13G2">
+        <DefaultModel value="npn13g2">
         </DefaultModel>
-        <SpiceModel value="npn13G2">
+        <SpiceModel value="npn13g2">
         </SpiceModel>
     </Models>
     <Netlists>
-        <NgspiceNetlist value = 'XQ{PartCounter} {nets} npn13G2 Nx={Nx}'>
+        <NgspiceNetlist value=
+            "{{{Letter}}}::schematic_id='nequal'Q{PartCounter} {nets} {{{model}}}::model='nonempty'
+            {{Nx={Nx}}}::Nx='nonempty' ">
         </NgspiceNetlist>
-        <CDLNetlist value = 'Q{PartCounter} {nets} npn13G2 Nx={Nx}'> </CDLNetlist>
+        <CDLNetlist value="{NgspiceNetlist}"></CDLNetlist>
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
-           <File>{QUCS_S_COMPONENTS_LIBRARY}/bjt.sym</File>
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Bjt.sym</File>
         </Symbol>
     </Symbols>
     <Parameters>
+        <Parameter name="Letter" unit="" default_value="X" show="false">
+            <Description>Spice prefix</Description>
+        </Parameter>
+        <Parameter name="model" unit="" default_value="npn13g2" show="true">
+            <Description>npn13g2</Description>
+        </Parameter>
         <Parameter name="Nx" unit="" default_value="1" show="true">
             <Description>Number of emitters</Description>
         </Parameter>
