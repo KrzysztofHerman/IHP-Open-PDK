@@ -2,20 +2,19 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="R" schematic_id = "ptap1">
+  library="IHP 130 BiCMOS components" names="ptap1" schematic_id = "R">
     <Description>
         SG13G2 substrate tap resistor
     </Description>
     <Models>
-        <DefaultModel value="ptap1">
+        <DefaultModel value="R_IHP">
         </DefaultModel>
-        <SpiceModel value="ptap1">
+        <SpiceModel value="R">
         </SpiceModel>
     </Models>
     <Netlists>
-        <NgspiceNetlist value = 'XR{PartCounter} {nets} ptap1 w={w} l={l} m={m}'>
-        </NgspiceNetlist>
-        <CDLNetlist value = 'R{PartCounter} {nets} ptap1 w={w} l={l} m={m}'> </CDLNetlist>
+        <NgspiceNetlist value = "{{{Letter}}}::schematic_id='nequal'R{PartCounter} {nets} {model} {{w={w}}}::w='nonempty' {{l={l}}}::l='nonempty'"> </NgspiceNetlist>
+        <CDLNetlist value = "{NgspiceNetlist}"> </CDLNetlist>
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
@@ -23,14 +22,22 @@
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="w" unit="um" default_value="0.78u" show="true">
+        <Parameter name="model" unit="" default_value="ptap1" show="true">
+            <Description>Model name</Description>
+        </Parameter>
+        <Parameter name="Letter" unit="" default_value="X" show="false">
+            <Description>Spice prefix</Description>
+        </Parameter>
+        <Parameter name="w" unit="u" default_value="0.78" show="true">
             <Description>Width</Description>
         </Parameter>
-        <Parameter name="l" unit="um" default_value="0.78u" show="true">
+        <Parameter name="l" unit="u" default_value="0.78" show="true">
             <Description>Length</Description>
         </Parameter>
-        <Parameter name="m" unit="" default_value="1" show="true">
-            <Description>multiplier</Description>
+        <Parameter name="R" unit="Ohm"
+            equation="1.0 / (1.0 / (9.8e-10 / (w * l)) + 1.0 / (9.8e-4 / (2.0 * (w + l))))"
+            show="true">
+            <Description>Resistance value</Description>
         </Parameter>
     </Parameters>
 </Component>

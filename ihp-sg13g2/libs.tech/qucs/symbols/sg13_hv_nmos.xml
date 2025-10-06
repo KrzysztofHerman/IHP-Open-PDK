@@ -2,38 +2,49 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="M" schematic_id = "sg13_hv_nmos">
+  library="IHP 130 BiCMOS components" names="sg13_hv_nmos" schematic_id = "M">
     <Description>
-        SG13G2 low voltage nmos transistor
+        SG13G2 high voltage nmos transistor
     </Description>
     <Models>
-        <DefaultModel value="sg13_hv_nmos">
+        <DefaultModel value="MOS_IHP">
         </DefaultModel>
         <SpiceModel value="sg13_hv_nmos">
         </SpiceModel>
     </Models>
     <Netlists>
-        <NgspiceNetlist value = 'XM{PartCounter} {nets} sg13_hv_nmos w={w} l={l} ng={ng} m={m}'>
+        <NgspiceNetlist value=
+            "{{{Letter}}}::schematic_id='nequal'M{PartCounter} {nets} {{{model}}}::model='nonempty'
+            {{w={w}}}::w='nonempty' {{l={l}}}::l='nonempty' {{ng={ng}}}::ng='nonempty' {{m={m}}}::m='nonempty'">
         </NgspiceNetlist>
-        <CDLNetlist value = 'M{PartCounter} {nets} sg13_hv_nmos w={w} l={l} ng={ng} m={m}'> </CDLNetlist>
+        <CDLNetlist value="{NgspiceNetlist}"> </CDLNetlist>
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
-           <File>{QUCS_S_COMPONENTS_LIBRARY}/nmosHV.sym</File>
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Mos.sym</File>
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="w" unit="um" default_value="0.13" show="true">
+        <Parameter name="model" unit="" default_value="sg13_hv_nmos" show="true">
+            <Description>Model name</Description>
+        </Parameter>
+        <Parameter name="Letter" unit="" default_value="X" show="false">
+            <Description>Spice prefix</Description>
+        </Parameter>
+        <Parameter name="type" unit="" default_value="nmos" show="false">
+            <Description>Channel type</Description>
+        </Parameter>
+        <Parameter name="w" unit="" default_value="1u" show="true">
             <Description>Width</Description>
         </Parameter>
-        <Parameter name="l" unit="um" default_value="0.13" show="true">
+        <Parameter name="l" unit="" default_value="1u" show="true">
             <Description>Length</Description>
         </Parameter>
-        <Parameter name="ng" unit="" default_value="1" show="true">
-            <Description>Number of gates</Description>
+        <Parameter name="ng" unit="" default_value="1" show="false">
+            <Description>no. gates</Description>
         </Parameter>
-        <Parameter name="m" unit="" default_value="1" show="true">
-            <Description>multiplier</Description>
+        <Parameter name="m" unit="" default_value="1" show="false">
+            <Description>no. devices</Description>
         </Parameter>
     </Parameters>
 </Component>

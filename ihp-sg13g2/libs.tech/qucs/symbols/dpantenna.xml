@@ -2,19 +2,19 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="D" schematic_id = "dpantenna">
+  library="IHP 130 BiCMOS components" names="dpantenna" schematic_id = "D">
     <Description>
         SG13G2 dpantenna diode
     </Description>
     <Models>
-        <DefaultModel value="dpantenna">
+        <DefaultModel value="D_IHP">
         </DefaultModel>
-        <SpiceModel value="dpantenna">
+        <SpiceModel value="D">
         </SpiceModel>
     </Models>
     <Netlists>
-        <NgspiceNetlist value = 'XD{PartCounter} {nets} dpantenna w={w} l={l} m={m}'></NgspiceNetlist>
-        <CDLNetlist value = 'D{PartCounter} {nets} dpantenna w={w} l={l}  m={m}'> </CDLNetlist>
+    <NgspiceNetlist value = "{{{Letter}}}::schematic_id='nequal'D {nets} {model} {{w={w}}}::w='nonempty' {{l={l}}}::l='nonempty'"> </NgspiceNetlist>
+        <CDLNetlist value = "{NgspiceNetlist}"> </CDLNetlist>
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
@@ -22,14 +22,17 @@
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="w" unit="um" default_value="0.78u" show="true">
+        <Parameter name="model" unit="" default_value="dpantenna" show="true">
+            <Description>Modelname</Description>
+        </Parameter>
+        <Parameter name="Letter" unit="" default_value="X" show="false">
+            <Description>Spice prefix</Description>
+        </Parameter>
+        <Parameter name="w" unit="u" default_value="0.78" show="true">
             <Description>Width</Description>
         </Parameter>
-        <Parameter name="l" unit="um" default_value="0.78u" show="true">
+        <Parameter name="l" unit="u" default_value="0.78" show="true">
             <Description>Length</Description>
-        </Parameter>
-        <Parameter name="m" unit="" default_value="1" show="true">
-            <Description>multiplier</Description>
         </Parameter>
     </Parameters>
 </Component>
