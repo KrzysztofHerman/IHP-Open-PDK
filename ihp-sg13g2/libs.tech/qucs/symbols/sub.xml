@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 130 BiCMOS components" names="sub" schematic_id = "SUB">
+    <Description>
+        SG13G2 substrate tap resistor
+    </Description>
+    <Models>
+        <DefaultModel value="SUB_IHP">
+        </DefaultModel>
+        <SpiceModel value="SUB">
+        </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value = ".GLOBAL {net} "> </NgspiceNetlist>
+        <CDLNetlist value = "{NgspiceNetlist}"> </CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/sub.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="model" unit="" default_value="" show="true">
+            <Description>Model name</Description>
+        </Parameter>
+        <Parameter name="net" unit="" default_value="sub!" show="false">
+            <Description>Substrate net name</Description>
+        </Parameter>
+    </Parameters>
+</Component>
