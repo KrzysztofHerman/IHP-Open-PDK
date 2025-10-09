@@ -13,7 +13,7 @@
         </SpiceModel>
     </Models>
     <Netlists>
-        <NgspiceNetlist value = "{{{Letter}}}::schematic_id='nequal'R{PartCounter} {nets} {bulk} {model} {{w={w}}}::w='nonempty' {{l={l}}}::l='nonempty' {{m={m}}}::m='nonempty'"> </NgspiceNetlist>
+        <NgspiceNetlist value = "{{{Letter}}}::schematic_id='nequal'R{PartCounter} {nets} {bulk} {model} {{w={w}}}::w='nonempty' {{l={l}}}::l='nonempty' b={b} {{m={m}}}::m='nonempty'"> </NgspiceNetlist>
         <CDLNetlist value = "{NgspiceNetlist}"> </CDLNetlist>
     </Netlists>
     <Symbols>
