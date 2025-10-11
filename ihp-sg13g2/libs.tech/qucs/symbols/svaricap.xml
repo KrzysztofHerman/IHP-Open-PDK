@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<Component
+  xsi:noNamespaceSchemaLocation="Component.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  library="IHP 130 BiCMOS components" names="svaricap" schematic_id = "C">
+    <Description>
+        SG13G2 variable capacitor
+    </Description>
+    <Models>
+            <DefaultModel value="C_IHP">
+            </DefaultModel>
+            <SpiceModel value="svaricap">
+            </SpiceModel>
+    </Models>
+    <Netlists>
+        <NgspiceNetlist value=
+            "{{{Letter}}}::schematic_id='nequal'C{PartCounter} {nets} {C} M={m} {{{model}}}::model='nonempty'
+            {{W={w}}}::w='nonempty' {{L={l}}}::l='nonempty'">
+        </NgspiceNetlist>
+        <CDLNetlist value="{NgspiceNetlist}"></CDLNetlist>
+    </Netlists>
+    <Symbols>
+        <Symbol id="Standard">
+            <File>{QUCS_S_COMPONENTS_LIBRARY}/Varicap.sym</File>
+        </Symbol>
+    </Symbols>
+    <Parameters>
+        <Parameter name="model" unit="" default_value="svaricap" show="true">
+            <Description>Model name</Description>
+        </Parameter>
+        <Parameter name="Letter" unit="" default_value="X" show="false">
+            <Description>Spice prefix</Description>
+        </Parameter>
+        <Parameter name="w" unit="u" default_value="10.0" show="true">
+            <Description>Width</Description>
+        </Parameter>
+        <Parameter name="l" unit="u" default_value="10.0" show="true">
+            <Description>Length</Description>
+        </Parameter>
+        <Parameter name="m" unit="" default_value="1" show="true">
+            <Description>Multiplier</Description>
+        </Parameter>
+    </Parameters>
+</Component>
