@@ -27,7 +27,7 @@ import shutil
 import multiprocessing as mp
 import concurrent.futures
 import traceback
-from typing import Dict, List, Optional, Set, Union
+from typing import Dict, List, Optional, Set, Union, Tuple
 
 
 def get_rules_with_violations(results_database: Union[str, Path]) -> Set[str]:
@@ -65,24 +65,95 @@ def get_rules_with_violations(results_database: Union[str, Path]) -> Set[str]:
     return violating_rules
 
 
+def _get_cell_key(cell: ET.Element) -> str:
+    """Return a unique key for a <cell> element as name|variant."""
+    name_elem = cell.find("name")
+    cell_variant = cell.find("variant")
+    if name_elem is None or not name_elem.text:
+        return ""
+    if cell_variant is not None and cell_variant.text:
+        return f"{name_elem.text.strip()}|{cell_variant.text.strip()}"
+    return f"{name_elem.text.strip()}|"
+
+
+def _merge_categories(base_categories: ET.Element, new_root: ET.Element):
+    categories = new_root.find("categories")
+    if categories is not None:
+        for category in categories.findall("category"):
+            base_categories.append(category)
+
+
+def _merge_cells(base_cells: ET.Element, new_root: ET.Element, existing_keys: set):
+    cells = new_root.find("cells")
+    if cells is not None:
+        for cell in cells.findall("cell"):
+            key = _get_cell_key(cell)
+            if key and key not in existing_keys:
+                base_cells.append(cell)
+                existing_keys.add(key)
+
+
+def _merge_items(base_items: ET.Element, new_root: ET.Element):
+    items = new_root.find("items")
+    if items is not None:
+        for item in items.findall("item"):
+            base_items.append(item)
+
+
+def _group_cells_by_base(base_cells: ET.Element) -> Dict[str, List[Tuple[ET.Element, str]]]:
+    grouped = {}
+    for cell in base_cells.findall("cell"):
+        name_elem = cell.find("name")
+        variant_elem = cell.find("variant")
+        if name_elem is None or not name_elem.text:
+            continue
+        base_name = name_elem.text.strip()
+        variant = (variant_elem.text.strip() if (variant_elem is not None and variant_elem.text) else "")
+        grouped.setdefault(base_name, []).append((cell, variant))
+    return grouped
+
+
+def _rename_plain_variants(base_cells: ET.Element, base_items: ET.Element) -> None:
+    """Rename plain variants to :org if other variants exist."""
+    grouped = _group_cells_by_base(base_cells)
+    rename_map = {}
+
+    for base_name, variants in grouped.items():
+        unique_variants = set(v for _, v in variants)
+        if "" in unique_variants and len(unique_variants) > 1:
+            for cell, variant in variants:
+                if variant == "":
+                    name_elem = cell.find("name")
+                    if name_elem is not None and name_elem.text:
+                        old = name_elem.text.strip()
+                        new = f"{old}:org"
+                        rename_map[old] = new
+                        name_elem.text = new
+
+    # Update <parent> references
+    for ref in base_cells.findall(".//ref"):
+        parent_elem = ref.find("parent")
+        if parent_elem is not None and parent_elem.text:
+            pname = parent_elem.text.strip()
+            if pname in rename_map:
+                parent_elem.text = rename_map[pname]
+
+    # Update <items>/<cell> references
+    for item in base_items.findall("item"):
+        cell_elem = item.find("cell")
+        if cell_elem is not None and cell_elem.text:
+            cname = cell_elem.text.strip()
+            if cname in rename_map:
+                cell_elem.text = rename_map[cname]
+
+
 def merge_klayout_drc_reports(input_files: List[str], output_file: str):
     """
     Merges multiple KLayout DRC report XML files into a single XML file.
-
-    Parameters:
-        input_files (List[str]): List of paths to input DRC XML files.
-        output_file (str): Path to write the merged output XML.
-
-    Behavior:
-        - Retains metadata (description, top-cell, etc.) from the first file.
-        - Merges <categories>, <cells>, and <items> from all input files.
-        - Skips any input file that is missing required structure.
     """
-    # Load the first file as the base document
     base_tree = ET.parse(input_files[0])
     base_root = base_tree.getroot()
 
-    # Locate primary mergeable elements in the base document
     base_categories = base_root.find("categories")
     base_cells = base_root.find("cells")
     base_items = base_root.find("items")
@@ -92,57 +163,22 @@ def merge_klayout_drc_reports(input_files: List[str], output_file: str):
             f"Base file '{input_files[0]}' is missing required elements, failed in merging result database."
         )
 
-    # Iterate through the remaining files and merge elements
+    # Merge remaining files
+    existing_keys = {_get_cell_key(c) for c in base_cells.findall("cell")}
     for file_path in input_files[1:]:
         try:
             tree = ET.parse(file_path)
             root = tree.getroot()
-            # Append each <category> from this file
-            categories = root.find("categories")
-            if categories is not None:
-                for category in categories.findall("category"):
-                    base_categories.append(category)
-
-            # Collect existing cell names from base_cells
-            existing_names = set()
-            for cell in base_cells.findall("cell"):
-                name_elem = cell.find("name")
-                cell_variant = cell.find("variant")
-                if name_elem is not None and name_elem.text:
-                    if cell_variant is not None and cell_variant.text:
-                        cell_var_str = f"{name_elem.text.strip()}|{cell_variant.text.strip()}"
-                    else:
-                        cell_var_str = f"{name_elem.text.strip()}|"
-                    
-                    existing_names.add(cell_var_str)
-
-
-            # Append new <cell> only if not already present
-            cells = root.find("cells")
-            if cells is not None:
-                for cell in cells.findall("cell"):
-                    name_elem = cell.find("name")
-                    cell_variant = cell.find("variant")
-                    if name_elem is not None and name_elem.text:
-                        if cell_variant is not None and cell_variant.text:
-                            cell_var_str = f"{name_elem.text.strip()}|{cell_variant.text.strip()}"
-                        else:
-                            cell_var_str = f"{name_elem.text.strip()}|"
-
-                        if cell_var_str not in existing_names:
-                            base_cells.append(cell)
-                            existing_names.add(cell_var_str)
-
-            # Append each <items> from this file
-            items = root.find("items")
-            if items is not None:
-                for item in items.findall("item"):
-                    base_items.append(item)
-
+            _merge_categories(base_categories, root)
+            _merge_cells(base_cells, root, existing_keys)
+            _merge_items(base_items, root)
         except ET.ParseError as e:
             logging.error(f"Error parsing '{file_path}': {e}. Skipping.")
-            continue
-    # Write the merged XML content to output
+
+    # Post-process renaming
+    _rename_plain_variants(base_cells, base_items)
+
+    # Write output
     base_tree.write(output_file, encoding="utf-8", xml_declaration=True)
 
 
@@ -555,6 +591,7 @@ def build_switches_string(sws: dict) -> str:
         A space-separated string of -rd key=value pairs.
     """
     return " ".join(f"-rd {k}='{v}'" for k, v in sws.items())
+
 
 def run_check(
     drc_file: str,

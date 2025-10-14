@@ -29,26 +29,26 @@
   <IProbe Pr1 1 170 360 -26 16 0 0>
   <GND * 1 410 620 0 0 0 0>
   <GND * 1 600 620 0 0 0 0>
-  <Lib rsil2 1 240 550 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rsil" 0 "10u" 1 "40u" 1 "1" 1>
-  <Lib rppd1 1 410 410 25 -1 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rppd" 0 "10u" 1 "25u" 1 "1" 1>
-  <Lib rhigh1 1 600 410 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rhigh" 0 "10u" 1 "30u" 1 "1" 1>
-  <Lib rppd2 1 410 550 25 -1 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rppd" 0 "10u" 1 "25u" 1 "1" 1>
+  <Lib rsil2 1 240 550 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "rsil" 0 "10u" 1 "40u" 1 "1" 1>
+  <Lib rppd1 1 410 410 25 -1 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "rppd" 0 "10u" 1 "25u" 1 "1" 1>
+  <Lib rhigh1 1 600 410 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "rhigh" 0 "10u" 1 "30u" 1 "1" 1>
+  <Lib rppd2 1 410 550 25 -1 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "rppd" 0 "10u" 1 "25u" 1 "1" 1>
   <GND * 1 970 750 0 0 0 0>
   <GND * 1 870 750 0 0 0 0>
   <GND * 1 1200 750 0 0 0 0>
   <GND * 1 1120 750 0 0 0 0>
   <Idc I1 1 870 720 18 -26 0 1 "1 mA" 1>
   <Idc I2 1 1120 720 18 -26 0 1 "1 mA" 1>
-  <Lib ptap1 1 970 700 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "ptap1" 0 "0.78u" 1 "0.78u" 1>
-  <Lib ntap1 1 1200 700 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "ntap1" 0 "0.78u" 1 "0.78u" 1>
-  <Lib ptap4 1 180 730 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "ptap1" 0 "0.78u" 1 "0.78u" 1>
-  <Lib ptap3 1 330 730 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "ptap1" 0 "0.78u" 1 "0.78u" 1>
-  <Lib ptap2 1 510 730 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "ptap1" 0 "0.78u" 1 "0.78u" 1>
+  <Lib ptap1 1 970 700 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "ptap1" 0 "0.78u" 1 "0.78u" 1>
+  <Lib ntap1 1 1200 700 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "ntap1" 0 "0.78u" 1 "0.78u" 1>
+  <Lib ptap4 1 180 730 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "ptap1" 0 "0.78u" 1 "0.78u" 1>
+  <Lib ptap3 1 330 730 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "ptap1" 0 "0.78u" 1 "0.78u" 1>
+  <Lib ptap2 1 510 730 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "ptap1" 0 "0.78u" 1 "0.78u" 1>
   <GND * 1 180 760 0 0 0 0>
   <GND * 1 510 760 0 0 0 0>
   <GND * 1 330 760 0 0 0 0>
-  <Lib rhigh2 1 600 550 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rhigh" 0 "10u" 1 "20u" 1 "1" 1>
-  <Lib rsil1 1 240 410 25 -16 0 0 "$HOME/.qucs/user_lib/IHP_PDK_basic_components" 0 "rsil" 0 "10u" 1 "30u" 1 "1" 1>
+  <Lib rhigh2 1 600 550 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "rhigh" 0 "10u" 1 "20u" 1 "1" 1>
+  <Lib rsil1 1 240 410 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "rsil" 0 "10u" 1 "30u" 1 "1" 1>
 </Components>
 <Wires>
   <100 500 100 620 "" 0 0 0 "">

@@ -81,12 +81,12 @@ logger.info('Loading database to memory is complete.')
 
 if $report
   logger.info("IHP-SG13G2 Klayout DRC runset output at: #{$report}")
-  report('DRC Run Report at', $report)
+  report('Main DRC Run Report at', $report)
 else
   layout_dir = Pathname.new(RBA::CellView.active.filename).parent.realpath
   report_path = layout_dir.join('sg13g2_drc_main.lyrdb').to_s
   logger.info("IHP-SG13G2 Klayout DRC runset output at default location: #{report_path}")
-  report('DRC Run Report at', report_path)
+  report('Main DRC Run Report at', report_path)
 end
 
 #================================================
