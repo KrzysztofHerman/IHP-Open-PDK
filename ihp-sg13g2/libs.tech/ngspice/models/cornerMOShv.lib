@@ -223,6 +223,57 @@
   .include sg13g2_svaricaphv_mod.lib
 .ENDL mos_tt_stat
 
+* Typical with statistical and with mismatch
+.LIB mos_tt_stat_mismatch
+  .param sg13g2_hv_nmos_vfbo_norm   = 1.0
+  .param sg13g2_hv_nmos_rsgo_norm   = 1.0000
+  .param sg13g2_hv_nmos_rsw1_norm   = 0.7886
+  .param sg13g2_hv_nmos_mueo_norm   = 1.0780
+  .param sg13g2_hv_nmos_dphibo_norm = 1.4388
+  .param sg13g2_hv_nmos_dphibl_norm = 1.5299
+  .param sg13g2_hv_nmos_dphibw_norm = 1.0000
+  .param sg13g2_hv_nmos_dphiblw_norm= 0.8712
+  .param sg13g2_hv_nmos_ctl_norm    = 1.0000
+  .param sg13g2_hv_nmos_thesato_norm= 1.0000
+  .param sg13g2_hv_nmos_thesatl_norm= 1.0350
+  .param sg13g2_hv_nmos_thesatw_norm= 1.0000
+  .param sg13g2_hv_nmos_thesatlw_norm= 1.6050
+  .param sg13g2_hv_nmos_toxo_norm   = 1.0000
+  .param sg13g2_hv_nmos_toxovo_norm = 1.0000
+  .param sg13g2_hv_nmos_cjorbot_norm= 1.0000
+  .param sg13g2_hv_nmos_cjorsti_norm= 1.0000
+  .param sg13g2_hv_nmos_cjorgat_norm= 1.0000
+
+  .param sg13g2_hv_pmos_vfbo_norm   = 1.0
+  .param sg13g2_hv_pmos_rsgo_norm   = 1.1110
+  .param sg13g2_hv_pmos_rsw1_norm   = 1.0000
+  .param sg13g2_hv_pmos_mueo_norm   = 0.9605
+  .param sg13g2_hv_pmos_dphibo_norm = 1.0010
+  .param sg13g2_hv_pmos_dphibl_norm = 0.9504
+  .param sg13g2_hv_pmos_dphibw_norm = 1.4080
+  .param sg13g2_hv_pmos_dphiblw_norm= -0.1693
+  .param sg13g2_hv_pmos_bgidlo_norm = 0.8409
+  .param sg13g2_hv_pmos_thesato_norm= 1.0000
+  .param sg13g2_hv_pmos_thesatl_norm= 0.4814
+  .param sg13g2_hv_pmos_thesatw_norm= 5.7745
+  .param sg13g2_hv_pmos_thesatlw_norm= 1.0000
+  .param sg13g2_hv_pmos_csl_norm    = 1.0000
+  .param sg13g2_hv_pmos_toxo_norm   = 1.0000
+  .param sg13g2_hv_pmos_toxovo_norm = 1.0000
+  .param sg13g2_hv_pmos_cjorbot_norm= 1.0000
+  .param sg13g2_hv_pmos_cjorsti_norm= 1.0000
+  .param sg13g2_hv_pmos_cjorgat_norm= 1.0000
+
+  .param sg13g2_hv_svaricap_vfbo_norm  = 1.0
+  .param sg13g2_hv_svaricap_toxo_norm  = 1.0
+  .param sg13g2_hv_svaricap_dlq_norm  = 1.0
+  .param sg13g2_hv_svaricap_dwq_norm  = 1.0
+
+  .include sg13g2_moshv_stat.lib
+  .include sg13g2_moshv_mod_mismatch.lib
+  .include sg13g2_svaricaphv_mod_mismatch.lib
+.ENDL mos_tt_stat_mismatch
+
 **************** CORNER_LIB OF sg13g2_hv SS MODEL ****************
 * Slow n, Slow p
 .LIB mos_ss
