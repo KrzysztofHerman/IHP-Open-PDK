@@ -58,9 +58,14 @@
     if klayout_v_list.size &lt; 1 || klayout_v_list.size &gt; 3
       raise StandardError, "Was not able to get KLayout version properly."
     elsif klayout_v_list.size &gt;= 2 || klayout_v_list.size &lt;= 3
-      if klayout_v_list[1] &lt; 29
+      if klayout_v_list[1] &lt; 30
         puts "Using this KLayout version has not been assessed. Limits are unknown."
-        raise StandardError, "Prerequisites at a minimum: KLayout 0.29.0"
+        raise StandardError, "Prerequisites at a minimum: KLayout 0.30.2"
+      elsif klayout_v_list[1] &lt; 31
+        if klayout_v_list[2] &lt; 2
+          puts "Using this KLayout version has not been assessed. Limits are unknown."
+          raise StandardError, "Prerequisites at a minimum: KLayout 0.30.2"
+        end
       end
     end
 
@@ -180,6 +185,7 @@
     layout.addRow('', create_check_box('No Parallel Resistance', options['no_parallel_res']))
     layout.addRow('', create_check_box('Combine Devices', options['combine_devices']))
     layout.addRow('', create_check_box('Top Level Pins', options['top_lvl_pins']))
+    layout.addRow('', create_check_box('Allow Unmatched Ports', options['allow_unmatched_ports']))
     layout.addRow('', create_check_box('Purge', options['purge']))
     layout.addRow('', create_check_box('Purge Nets', options['purge_nets']))
     layout.addRow('', create_check_box('Verbose', options['verbose']))
@@ -299,9 +305,10 @@
     options['no_parallel_res'] = dialog.layout.itemAt(11).widget.checked
     options['combine_devices'] = dialog.layout.itemAt(12).widget.checked
     options['top_lvl_pins'] = dialog.layout.itemAt(13).widget.checked
-    options['purge'] = dialog.layout.itemAt(14).widget.checked
-    options['purge_nets'] = dialog.layout.itemAt(15).widget.checked
-    options['verbose'] = dialog.layout.itemAt(16).widget.checked
+    options['allow_unmatched_ports'] = dialog.layout.itemAt(14).widget.checked
+    options['purge'] = dialog.layout.itemAt(15).widget.checked
+    options['purge_nets'] = dialog.layout.itemAt(16).widget.checked
+    options['verbose'] = dialog.layout.itemAt(17).widget.checked
   end
 
   # Save options to a YAML file

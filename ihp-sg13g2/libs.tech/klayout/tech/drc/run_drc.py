@@ -23,11 +23,10 @@ import klayout.db
 from datetime import datetime, timezone
 import time
 from subprocess import check_call
-import shutil
 import multiprocessing as mp
 import concurrent.futures
 import traceback
-from typing import Dict, List, Optional, Set, Union, Tuple
+from typing import Dict, List, Set, Union, Tuple
 
 
 def get_rules_with_violations(results_database: Union[str, Path]) -> Set[str]:
@@ -252,101 +251,6 @@ def check_drc_results(
         )
 
 
-def generate_drc_run_template(
-    drc_dir: str, run_dir: Path, run_tables_list: Optional[List[str]] = None
-) -> Path:
-    """
-    Generate the rule deck template to run DRC from individual table files.
-
-    Parameters
-    ----------
-    drc_dir : str
-        Directory containing rule_decks.
-    run_dir : Path
-        Directory where the assembled rule deck will be saved.
-    run_tables_list : List[str], optional
-        List of table base names to include (without ".drc" extension).
-        If None or empty, all tables except the excluded ones will be included.
-
-    Returns
-    -------
-    Path
-        Path to the generated DRC rule deck file.
-    """
-    drc_dir = Path(drc_dir)
-    rule_deck_dir = drc_dir / "rule_decks"
-    run_tables_list = run_tables_list or []
-
-    deck_name = "main"
-    exclude_decks = {
-        "antenna",
-        "density",
-        "sg13g2_maximal",
-        "main",
-        "layers_def",
-        "tail",
-    }
-
-    # Gather all available .drc files in rule_decks/
-    all_drc_files = list(rule_deck_dir.glob("*.drc"))
-    all_drc_names = [f.name for f in all_drc_files]
-
-    # Determine which tables to include
-    if not run_tables_list:
-        # Default: include all except excluded
-        selected_tables = [f.name for f in all_drc_files if f.stem not in exclude_decks]
-
-        # Sort by numeric prefix
-        selected_tables.sort(
-            key=lambda name: tuple(
-                int(part) if part.isdigit() else float("inf")
-                for part in name.replace(".drc", "").split("_")
-            )
-        )
-    else:
-        # Specific tables requested — match against *_<table>.drc
-        selected_tables = []
-        for table in run_tables_list:
-            match = next(
-                (name for name in all_drc_names if name.endswith(f"_{table}.drc")), None
-            )
-            if match:
-                selected_tables.append(match)
-            else:
-                logging.warning(f"Requested table '{table}' not found in rule_decks.")
-
-        if len(run_tables_list) == 1:
-            deck_name = run_tables_list[0]
-
-    logging.info(f"Generating DRC rule deck using tables: {selected_tables}")
-    logging.info(f"DRC output will be written to: {run_dir.resolve()}")
-
-    # Ensure run directory exists
-    run_dir.mkdir(parents=True, exist_ok=True)
-
-    # Copy layers_def.drc to run_dir (needed by main.drc)
-    layers_def_src = rule_deck_dir / "layers_def.drc"
-    layers_def_dst = run_dir / "layers_def.drc"
-    if not layers_def_src.is_file():
-        raise FileNotFoundError(f"layers_def.drc not found at {layers_def_src}")
-    shutil.copyfile(layers_def_src, layers_def_dst)
-
-    # Assemble the full rule deck
-    final_deck_path = run_dir / f"{deck_name}.drc"
-    all_tables = ["main.drc"] + selected_tables + ["tail.drc"]
-
-    with open(final_deck_path, "w") as output_fd:
-        for rule_file in all_tables:
-            full_path = rule_deck_dir / rule_file
-            if full_path.exists():
-                with open(full_path, "r") as input_fd:
-                    shutil.copyfileobj(input_fd, output_fd)
-            else:
-                logging.warning(f"Rule file {rule_file} not found and will be skipped.")
-
-    return final_deck_path
-
-
 def get_top_cell_names(gds_path: str):
     """
     get_top_cell_names get the top cell names from the GDS file.
@@ -368,7 +272,7 @@ def get_top_cell_names(gds_path: str):
     return top_cells
 
 
-def get_list_of_tables(drc_dir: str):
+def get_list_of_tables(drc_dir: str, switches: dict):
     """
     get_list_of_tables get the list of available tables in the drc
 
@@ -376,25 +280,31 @@ def get_list_of_tables(drc_dir: str):
     ----------
     drc_dir : str
         Path to the DRC folder to get the list of tables from.
+    switches : dict
+        Dictionary of switches passed to KLayout.
     """
-    exclude_decks = {
-        "antenna",
-        "density",
-        "sg13g2_maximal",
-        "main",
-        "layers_def",
-        "tail",
-    }
     tables = []
-    for f in (Path(drc_dir) / "rule_decks").glob("*.drc"):
-        parts = f.stem.split("_")
-        if len(parts) >= 3:
-            name = "_".join(parts[2:])
-        else:
-            name = f.stem  # fallback: keep the full name
 
-        if name not in exclude_decks:
+    def add_tables(path, tables):
+        for f in path.glob("*.drc"):
+            parts = f.stem.split("_")
+            if len(parts) >= 3:
+                name = "_".join(parts[2:])
+            else:
+                name = f.stem  # fallback: keep the full name
             tables.append(name)
+
+    if switches["no_feol"] == "false":
+        add_tables(Path(drc_dir) / "rule_decks" / "feol", tables)
+
+    if switches["no_beol"] == "false":
+        add_tables(Path(drc_dir) / "rule_decks" / "beol", tables)
+
+    if switches["no_forbidden"] == "false":
+        add_tables(Path(drc_dir) / "rule_decks" / "forbidden", tables)
+
+    if switches["no_pin"] == "false":
+        add_tables(Path(drc_dir) / "rule_decks" / "pin", tables)
 
     return tables
 
@@ -453,7 +363,7 @@ def generate_klayout_switches(arguments, layout_path: str) -> dict:
     switches = {}
 
     # Number of threads
-    switches["thr"] = arguments.density_thr
+    switches["threads"] = arguments.density_thr
 
     # Locate JSON rule file paths
     script_dir = Path(__file__).resolve().parent
@@ -488,6 +398,8 @@ def generate_klayout_switches(arguments, layout_path: str) -> dict:
     switches["no_beol"] = "true" if arguments.no_beol else "false"
     switches["no_offgrid"] = "true" if arguments.no_offgrid else "false"
     switches["density"] = "false" if arguments.no_density else "true"
+    switches["no_forbidden"] = "false"
+    switches["no_pin"] = "false"
 
     # Set topcell and input layout
     switches["topcell"] = get_run_top_cell_name(arguments, layout_path)
@@ -595,7 +507,7 @@ def build_switches_string(sws: dict) -> str:
 
 def run_check(
     drc_file: str,
-    drc_table: str,
+    drc_tables: List[str],
     layout_path: str,
     run_dir: Path,
     sws: dict,
@@ -607,7 +519,7 @@ def run_check(
     ----------
     drc_file : str
         Full path to the DRC rule deck file to run.
-    drc_table : str
+    drc_tables : str
         Name of the DRC table (used in naming reports).
     layout_path : str
         Full path to the layout (GDS/OAS) file.
@@ -625,18 +537,18 @@ def run_check(
     topcell = sws["topcell"]
 
     logging.info(
-        f"Running IHP-SG13G2 {drc_table} checks on design {layout_path}, topcell: {topcell}"
+        f"Running IHP-SG13G2 {' '.join(drc_tables)} checks on design {layout_path}, topcell: {topcell}"
     )
 
-    report_path = run_dir / f"{layout_name}_{topcell}_{drc_table}.lyrdb"
-    log_path = run_dir / f"{layout_name}_{topcell}_{drc_table}.log"
+    report_path = run_dir / f"{layout_name}_{topcell}_{'_'.join(drc_tables)}.lyrdb"
+    log_path = run_dir / f"{layout_name}_{topcell}_{'_'.join(drc_tables)}.log"
     new_sws = sws.copy()
     new_sws.update(
         {"report": report_path, "log": log_path, "run_mode": sws["run_mode"]}
     )
 
     sws_str = build_switches_string(new_sws)
-    sws_str += f" -rd table_name={drc_table}"
+    sws_str += f" -rd tables=\"{' '.join(drc_tables)}\""
 
     run_cmd = f"klayout -b -r '{drc_file}' {sws_str}"
     check_call(run_cmd, shell=True)
@@ -667,10 +579,6 @@ def run_parallel_run(
     run_dir : Path
         Directory where DRC run output will be stored.
     """
-    if args.macro_gen:
-        generate_drc_run_template(rule_deck_full_path, run_dir)
-        return 0
-
     rule_deck_files = {}
 
     # Optional checks
@@ -686,16 +594,22 @@ def run_parallel_run(
         )
 
     # Main table-based checks
-    table_list = args.table if args.table else get_list_of_tables(rule_deck_full_path)
+    table_list = args.table if args.table else get_list_of_tables(rule_deck_full_path, switches)
     for table in table_list:
-        drc_file = generate_drc_run_template(rule_deck_full_path, run_dir, [table])
-        rule_deck_files[table] = drc_file
+        rule_deck_files[table] = rule_deck_full_path / "ihp-sg13g2.drc"
+
+    # Disable all runset switches after
+    # assembling the table list
+    switches["no_feol"] = "true"
+    switches["no_beol"] = "true"
+    switches["no_forbidden"] = "true"
+    switches["no_pin"] = "true"
 
     result_db_files = []
     with concurrent.futures.ProcessPoolExecutor(max_workers=workers_count) as executor:
         future_to_name = {
             executor.submit(
-                run_check, rule_file, name, layout_path, run_dir, switches
+                run_check, rule_file, [name], layout_path, run_dir, switches
             ): name
             for name, rule_file in rule_deck_files.items()
         }
@@ -737,18 +651,13 @@ def run_single_processor(
     """
     result_dbs: List[str] = []
 
-    # Macro generation mode: generate rule deck and exit
-    if args.macro_gen:
-        generate_drc_run_template(rule_deck_full_path, run_dir)
-        return 0
-
     def run_check_by_flag(flag_enabled: bool, name: str):
         """
         Helper to run an optional DRC check.
         """
         if flag_enabled:
             drc_path = rule_deck_full_path / "rule_decks" / f"{name}.drc"
-            result_dbs.append(run_check(drc_path, name, layout_path, run_dir, switches))
+            result_dbs.append(run_check(drc_path, [name], layout_path, run_dir, switches))
             logging.info(f"Completed running {name.capitalize()} checks.")
 
     # Handle *_only flags (exclusive checks)
@@ -763,9 +672,15 @@ def run_single_processor(
         return 0
 
     # Run primary table check
-    table_name = args.table[0] if args.table else "main"
-    drc_file = generate_drc_run_template(rule_deck_full_path, run_dir, args.table)
-    result_dbs.append(run_check(drc_file, table_name, layout_path, run_dir, switches))
+    tables = args.table if args.table else ["main"]
+    if "main" not in tables:
+        # Disable all runset switches
+        # since only a subset is enabled
+        switches["no_feol"] = "true"
+        switches["no_beol"] = "true"
+        switches["no_forbidden"] = "true"
+        switches["no_pin"] = "true"
+    result_dbs.append(run_check(rule_deck_full_path / "ihp-sg13g2.drc", tables, layout_path, run_dir, switches))
 
     # Run additional checks if requested
     run_check_by_flag(args.antenna, "antenna")
@@ -826,7 +741,7 @@ def parse_args():
             [--topcell=<topcell_name>] [--run_mode=<mode>] [--drc_json=<json_path>]
             [--precheck_drc] [--disable_extra_rules] [--no_feol] [--no_beol] [--no_density]
             [--density_thr=<density_threads>] [--density_only] [--antenna]
-            [--antenna_only] [--no_offgrid] [--macro_gen]
+            [--antenna_only] [--no_offgrid]
     """
 
     parser = argparse.ArgumentParser(
@@ -918,11 +833,6 @@ def parse_args():
     )
     parser.add_argument(
         "--no_offgrid", action="store_true", help="Disable offgrid rule checks."
-    )
-    parser.add_argument(
-        "--macro_gen",
-        action="store_true",
-        help="Only generate the DRC rule deck without running.",
     )
 
     return parser.parse_args()

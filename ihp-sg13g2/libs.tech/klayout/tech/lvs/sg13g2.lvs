@@ -117,6 +117,11 @@ NET_ONLY = bool_check?($net_only)
 
 logger.info("Selected NET_ONLY option: #{NET_ONLY}")
 
+# ALLOW_UNMATCHED_PORTS
+ALLOW_UNMATCHED_PORTS = bool_check?($allow_unmatched_ports)
+
+logger.info("Selected ALLOW_UNMATCHED_PORTS option: #{ALLOW_UNMATCHED_PORTS}")
+
 # TOP_LVL_PINS
 TOP_LVL_PINS = bool_check?($top_lvl_pins)
 
@@ -403,14 +408,19 @@ max_res(1e9)
 min_caps(1e-18)
 
 # === COMPARISON === 
-logger.info('Starting SG13G2 LVS Comparison')
-compare
+if ALLOW_UNMATCHED_PORTS 
+  logger.info('Starting SG13G2 LVS Comparison')
+  success = compare
+else
+  logger.info('Starting SG13G2 LVS Comparison with flag_missing_ports')
+  success = compare && flag_missing_ports
+end
 
 #================================================
 #------------- COMPARISON RESULTS ---------------
 #================================================
 
-if !compare
+if ! success
   logger.info('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
   logger.error("ERROR : Netlists don't match")
   logger.info('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
