@@ -7,9 +7,9 @@
         SG13G2 high R resistor
     </Description>
     <Models>
-        <DefaultModel value="R_IHP">
+        <DefaultModel value="rhigh">
         </DefaultModel>
-        <SpiceModel value="R">
+        <SpiceModel value="rhigh">
         </SpiceModel>
     </Models>
     <Netlists>
