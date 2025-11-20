@@ -7,9 +7,9 @@
         SG13G2 unsalicided resistor
     </Description>
     <Models>
-        <DefaultModel value="R_IHP">
+        <DefaultModel value="rppd">
         </DefaultModel>
-        <SpiceModel value="R">
+        <SpiceModel value="rppd">
         </SpiceModel>
     </Models>
     <Netlists>

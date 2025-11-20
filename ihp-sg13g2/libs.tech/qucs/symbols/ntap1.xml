@@ -7,9 +7,9 @@
         SG13G2 well tap resistor
     </Description>
     <Models>
-        <DefaultModel value="R_IHP">
+        <DefaultModel value="ntap1">
         </DefaultModel>
-        <SpiceModel value="R">
+        <SpiceModel value="ntap1">
         </SpiceModel>
     </Models>
     <Netlists>
