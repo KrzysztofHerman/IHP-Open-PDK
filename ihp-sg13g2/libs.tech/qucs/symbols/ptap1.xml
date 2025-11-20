@@ -7,9 +7,9 @@
         SG13G2 substrate tap resistor
     </Description>
     <Models>
-        <DefaultModel value="R_IHP">
+        <DefaultModel value="ptap1">
         </DefaultModel>
-        <SpiceModel value="R">
+        <SpiceModel value="ptap1">
         </SpiceModel>
     </Models>
     <Netlists>

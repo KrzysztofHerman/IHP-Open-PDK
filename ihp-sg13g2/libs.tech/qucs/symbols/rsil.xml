@@ -7,9 +7,9 @@
         SG13G2 Salicide resistor
     </Description>
     <Models>
-        <DefaultModel value="R_IHP">
+        <DefaultModel value="rsil">
         </DefaultModel>
-        <SpiceModel value="R">
+        <SpiceModel value="rsil">
         </SpiceModel>
     </Models>
     <Netlists>
