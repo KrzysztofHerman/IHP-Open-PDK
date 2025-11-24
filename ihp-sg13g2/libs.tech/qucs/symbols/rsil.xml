@@ -19,7 +19,7 @@
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
-           <File>{QUCS_S_COMPONENTS_LIBRARY}/Resistor.sym</File>
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/ResistorEU.sym</File>
         </Symbol>
     </Symbols>
     <Parameters>

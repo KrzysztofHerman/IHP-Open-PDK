@@ -7,21 +7,20 @@
         SG13G2 nmoscl_4 mosfet clamps
     </Description>
     <Models>
-        <DefaultModel value="MOS_IHP">
+        <DefaultModel value="nmoscl_4">
         </DefaultModel>
         <SpiceModel value="nmoscl_4">
         </SpiceModel>
     </Models>
     <Netlists>
         <NgspiceNetlist value=
-            "{{{Letter}}}::schematic_id='nequal'M{PartCounter} {nets} {{{model}}}::model='nonempty'
-            {{w={w}}}::w='nonempty' {{l={l}}}::l='nonempty' {{ng={ng}}}::ng='nonempty' {{m={m}}}::m='nonempty'">
+            "{{{Letter}}}::schematic_id='nequal'D{PartCounter} {nets} {{{model}}}::model='nonempty' {{m={m}}}::m='nonempty'">
         </NgspiceNetlist>
         <CDLNetlist value="{NgspiceNetlist}"> </CDLNetlist>
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
-           <File>{QUCS_S_COMPONENTS_LIBRARY}/Nmoscl.sym</File>
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/nmoscl.sym</File>
         </Symbol>
     </Symbols>
     <Parameters>
@@ -31,20 +30,8 @@
         <Parameter name="Letter" unit="" default_value="X" show="false">
             <Description>Spice prefix</Description>
         </Parameter>
-        <Parameter name="type" unit="" default_value="nmos" show="false">
-            <Description>Channel type</Description>
-        </Parameter>
-        <Parameter name="w" unit="" default_value="1u" show="true">
-            <Description>Width</Description>
-        </Parameter>
-        <Parameter name="l" unit="" default_value="1u" show="true">
-            <Description>Length</Description>
-        </Parameter>
-        <Parameter name="ng" unit="" default_value="1" show="false">
-            <Description>no. gates</Description>
-        </Parameter>
         <Parameter name="m" unit="" default_value="1" show="false">
-            <Description>no. devices</Description>
+            <Description>No. devices</Description>
         </Parameter>
     </Parameters>
 </Component>

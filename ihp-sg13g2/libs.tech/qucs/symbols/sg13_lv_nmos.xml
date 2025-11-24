@@ -7,7 +7,7 @@
         SG13G2 low voltage nmos transistor
     </Description>
     <Models>
-        <DefaultModel value="MOS_IHP">
+        <DefaultModel value="nmos">
         </DefaultModel>
         <SpiceModel value="sg13_lv_nmos">
         </SpiceModel>
@@ -21,7 +21,7 @@
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
-           <File>{QUCS_S_COMPONENTS_LIBRARY}/Mos.sym</File>
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/MosLV.sym</File>
         </Symbol>
     </Symbols>
     <Parameters>
