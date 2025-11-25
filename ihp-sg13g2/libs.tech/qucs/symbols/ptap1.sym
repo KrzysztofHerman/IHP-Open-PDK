@@ -12,3 +12,5 @@
 
 <PortSym x="30" y="0" type="1" angle="0"/>
 <PortSym x="-30" y="0" type="1" angle="0" />
+<Text x="-40" y="-17" size="12" color="#800000" text="sub" />
+<Text x="20" y="-17" size="12" color="#800000" text="tie" />

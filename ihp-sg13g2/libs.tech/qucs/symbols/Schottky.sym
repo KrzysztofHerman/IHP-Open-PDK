@@ -6,8 +6,9 @@
 <Line x1="6" y1="-9" x2="6" y2="9" color="#000080" width="2" style="1" />
 <Line x1="-6" y1="-9" x2="6" y2="0" color="#000080" width="2" style="1" />
 <Line x1="-6" y1="9" x2="6" y2="0" color="#000080" width="2" style="1" />
-
-<PortSym x="30" y="0" type="1" angle="0" />
 <PortSym x="-30" y="0" type="1" angle="0" />                
-<Text x="-33" y="3" size="12" color="#800000" text="vss" />
-<Text x="12" y="3" size="12" color="#800000" text="vdd" />
+<PortSym x="30" y="0" type="1" angle="0" /> 
+<PortSym x="-20" y="20" type="1" angle="0" /> 
+<Text x="-35" y="-18" size="12" color="#800000" text="plus" />
+<Text x="12" y="-18" size="12" color="#800000" text="minus" />
+<Text x="-30" y="0" size="12" color="#800000" text="tie" />
