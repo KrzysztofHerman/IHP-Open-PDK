@@ -2,20 +2,20 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="pnpMPA" schematic_id = "Q">
+  library="IHP SG13G2 devices" names="pnpMPA" schematic_id = "Q">
     <Description>
         SG13G2 pnpMPA
     </Description>
     <Models>
-        <DefaultModel value="BJT_IHP">
+        <DefaultModel value="pnpMPA">
         </DefaultModel>
-        <SpiceModel value="pnpMPA">
+        <SpiceModel value="Q">
         </SpiceModel>
     </Models>
     <Netlists>
         <NgspiceNetlist value=
             "{{{Letter}}}::schematic_id='nequal'Q{PartCounter} {nets} {{{model}}}::model='nonempty'
-            {{A={A}}}::A='nonempty' {{P={P}}}::P='nonempty'">
+            {{A={A}}}::A='nonempty' {{P={P}}}::P='nonempty' {{m={m}}}::m='nonempty'">
         </NgspiceNetlist>
         <CDLNetlist value="{NgspiceNetlist}"></CDLNetlist>
     </Netlists>
@@ -31,7 +31,7 @@
         <Parameter name="Letter" unit="" default_value="X" show="false">
             <Description>Spice prefix</Description>
         </Parameter>
-        <Parameter name="w" unit="u" default_value="1.0" show="true">
+        <Parameter name="w" unit="u" default_value="0.7" show="true">
             <Description>Width</Description>
         </Parameter>
         <Parameter name="l" unit="u" default_value="2.0" show="true">

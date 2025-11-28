@@ -2,19 +2,19 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="npn13g2l" schematic_id = "Q">
+  library="IHP SG13G2 devices" names="npn13g2l" schematic_id = "Q">
     <Description>
         SG13G2 HBT transistor with configurable emmiter length
     </Description>
     <Models>
-        <DefaultModel value="BJT_IHP">
+        <DefaultModel value="npn13g2">
         </DefaultModel>
         <SpiceModel value="npn13g2">
         </SpiceModel>
     </Models>
     <Netlists>
         <NgspiceNetlist value=
-            "{{{Letter}}}::schematic_id='nequal'Q{PartCounter} {nets} {{{model}}}::model='nonempty'
+            "{{{Letter}}}::schematic_id='nequal'Q{PartCounter} {nets} {bulk} {{{model}}}::model='nonempty'
             {{Nx={Nx}}}::Nx='nonempty' {{El={El}}}::El='nonempty'">
         </NgspiceNetlist>
         <CDLNetlist value="{NgspiceNetlist}"></CDLNetlist>
@@ -36,6 +36,9 @@
         </Parameter>
         <Parameter name="El" unit="" default_value="1" show="true">
             <Description>Emitter length</Description>
+        </Parameter>
+        <Parameter name="bulk" unit="" default_value="sub!" show="false">
+            <Description>Third terminal net name</Description>
         </Parameter>
     </Parameters>
 </Component>

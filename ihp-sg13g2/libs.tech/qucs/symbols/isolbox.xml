@@ -2,7 +2,7 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="dantenna" schematic_id = "D">
+  library="IHP SG13G2 devices" names="isolbox" schematic_id = "D">
     <Description>
         SG13G2 isolation box 
     </Description>
@@ -22,7 +22,7 @@
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="dantenna" show="true">
+        <Parameter name="model" unit="" default_value="isolbox" show="true">
             <Description>Modelname</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">

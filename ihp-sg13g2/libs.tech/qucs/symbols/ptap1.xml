@@ -2,7 +2,7 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="ptap1" schematic_id = "R">
+  library="IHP SG13G2 devices" names="ptap1" schematic_id = "R">
     <Description>
         SG13G2 substrate tap resistor
     </Description>

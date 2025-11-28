@@ -2,7 +2,7 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="diodevss_2kv" schematic_id = "D">
+  library="IHP SG13G2 devices" names="diodevss_2kv" schematic_id = "D">
     <Description>
         SG13G2 ESD 2kV VSS diode 
     </Description>

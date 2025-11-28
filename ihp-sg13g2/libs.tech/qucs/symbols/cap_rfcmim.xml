@@ -2,12 +2,12 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="cap_rfcmim" schematic_id = "C">
+  library="IHP SG13G2 devices" names="cap_rfcmim" schematic_id = "C">
     <Description>
         SG13G2 RFMiM capacitor
     </Description>
     <Models>
-            <DefaultModel value="C_IHP">
+            <DefaultModel value="rfcmim">
             </DefaultModel>
             <SpiceModel value="cmim">
             </SpiceModel>
@@ -15,13 +15,13 @@
     <Netlists>
         <NgspiceNetlist value=
             "{{{Letter}}}::schematic_id='nequal'C{PartCounter} {nets} {bulk} {{{model}}}::model='nonempty'
-            {{w={w}}}::w='nonempty' {{l={l}}}::l='nonempty' wfeed={wfeed} ">
+            {{w={w}}}::w='nonempty' {{l={l}}}::l='nonempty'  {{wfeed={wfeed}}}::wfeed='nonempty'  {{m={m}}}::m='nonempty' ">
         </NgspiceNetlist>
         <CDLNetlist value="{NgspiceNetlist}"></CDLNetlist>
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
-            <File>{QUCS_S_COMPONENTS_LIBRARY}/Capacitor.sym</File>
+            <File>{QUCS_S_COMPONENTS_LIBRARY}/rfcmim.sym</File>
         </Symbol>
     </Symbols>
     <Parameters>
@@ -31,20 +31,23 @@
         <Parameter name="Letter" unit="" default_value="X" show="false">
             <Description>Spice prefix</Description>
         </Parameter>
-        <Parameter name="w" unit="u" default_value="10.0" show="true">
+        <Parameter name="w" unit="u" default_value="7.0" show="true">
             <Description>Width</Description>
         </Parameter>
-        <Parameter name="l" unit="u" default_value="10.0" show="true">
+        <Parameter name="l" unit="u" default_value="7.0" show="true">
             <Description>Length</Description>
         </Parameter>
         <Parameter name="bulk" unit="" default_value="sub!" show="false">
             <Description>Third terminal net name</Description>
         </Parameter>
-        <Parameter name="wfeed" unit="um" default_value="5.0" show="true">
+        <Parameter name="wfeed" unit="u" default_value="3.0" show="true">
             <Description>Feed line length</Description>
         </Parameter>
         <Parameter name="C" unit="F" equation="m*((w*l*1.e-3) + 2*(w+l)*40e-12)" show="true">
             <Description>Capacitance value</Description>
+        </Parameter>
+        <Parameter name="m" unit="" default_value="1" show="false">
+            <Description>Multiplier</Description>
         </Parameter>
     </Parameters>
 </Component>

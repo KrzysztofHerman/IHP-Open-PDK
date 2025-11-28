@@ -2,14 +2,14 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="sg13_hv_pmos" schematic_id = "M">
+  library="IHP SG13G2 devices" names="sg13_hv_nmos" schematic_id = "M">
     <Description>
-        SG13G2 high voltage pmos transistor
+        SG13G2 high voltage nmos transistor
     </Description>
     <Models>
-        <DefaultModel value="pmosHV">
+        <DefaultModel value="nmosHV">
         </DefaultModel>
-        <SpiceModel value="sg13_hv_pmos">
+        <SpiceModel value="sg13_hv_nmos">
         </SpiceModel>
     </Models>
     <Netlists>
@@ -25,26 +25,29 @@
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="sg13_hv_pmos" show="true">
+        <Parameter name="model" unit="" default_value="sg13_hv_nmos" show="true">
             <Description>Model name</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">
             <Description>Spice prefix</Description>
         </Parameter>
-        <Parameter name="type" unit="" default_value="pmos" show="false">
+        <Parameter name="type" unit="" default_value="nmos" show="false">
             <Description>Channel type</Description>
         </Parameter>
-        <Parameter name="w" unit="" default_value="1u" show="true">
+        <Parameter name="w" unit="" default_value="0.3u" show="true">
             <Description>Width</Description>
         </Parameter>
-        <Parameter name="l" unit="" default_value="1u" show="true">
+        <Parameter name="l" unit="" default_value="0.45u" show="true">
             <Description>Length</Description>
         </Parameter>
         <Parameter name="ng" unit="" default_value="1" show="false">
             <Description>no. gates</Description>
         </Parameter>
+        <Parameter name="rfmode" unit="" default_value="0" show="false">
+            <Description>RF mode switch</Description>
+        </Parameter>
         <Parameter name="m" unit="" default_value="1" show="false">
-            <Description>no. devices</Description>
+            <Description>Multiplier</Description>
         </Parameter>
     </Parameters>
 </Component>

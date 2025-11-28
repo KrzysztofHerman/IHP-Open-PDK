@@ -2,12 +2,12 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="sub" schematic_id = "SUB">
+  library="IHP SG13G2 devices" names="sub" schematic_id = "SUB">
     <Description>
-        SG13G2 substrate tap resistor
+        SG13G2 substrate global net
     </Description>
     <Models>
-        <DefaultModel value="SUB_IHP">
+        <DefaultModel value="SUB">
         </DefaultModel>
         <SpiceModel value="SUB">
         </SpiceModel>
@@ -22,9 +22,6 @@
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="" show="true">
-            <Description>Model name</Description>
-        </Parameter>
         <Parameter name="net" unit="" default_value="sub!" show="false">
             <Description>Substrate net name</Description>
         </Parameter>

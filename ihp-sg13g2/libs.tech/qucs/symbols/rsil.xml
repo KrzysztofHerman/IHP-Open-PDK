@@ -2,7 +2,7 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="rsil" schematic_id = "R">
+  library="IHP SG13G2 devices" names="rsil" schematic_id = "R">
     <Description>
         SG13G2 Salicide resistor
     </Description>

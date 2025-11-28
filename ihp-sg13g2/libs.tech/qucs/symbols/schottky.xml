@@ -2,7 +2,7 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="schottky_nbl1" schematic_id = "D">
+  library="IHP SG13G2 devices" names="schottky_nbl1" schematic_id = "D">
     <Description>
         SG13G2 Schottky diode 
     </Description>
@@ -36,7 +36,7 @@
             <Description>Length</Description>
         </Parameter>
         <Parameter name="m" unit="" default_value="1" show="false">
-            <Description>No. devices</Description>
+            <Description>Multiplier</Description>
         </Parameter>
     </Parameters>
 </Component>

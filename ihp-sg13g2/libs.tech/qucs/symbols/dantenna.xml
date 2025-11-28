@@ -2,7 +2,7 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="dantenna" schematic_id = "D">
+  library="IHP SG13G2 devices" names="dantenna" schematic_id = "D">
     <Description>
         SG13G2 dantenna diode 
     </Description>
@@ -13,7 +13,7 @@
         </SpiceModel>
     </Models>
     <Netlists>
-        <NgspiceNetlist value = "{{{Letter}}}::schematic_id='nequal'D{PartCounter} {nets} {model} {{w={w}}}::w='nonempty' {{l={l}}}::l='nonempty'"> </NgspiceNetlist>
+        <NgspiceNetlist value = "{{{Letter}}}::schematic_id='nequal'D{PartCounter} {nets} {model} {{w={w}}}::w='nonempty' {{l={l}}}::l='nonempty' {{m={m}}}::m='nonempty'"> </NgspiceNetlist>
         <CDLNetlist value = "{NgspiceNetlist}"> </CDLNetlist>
     </Netlists>
     <Symbols>
@@ -33,6 +33,9 @@
         </Parameter>
         <Parameter name="l" unit="u" default_value="0.78" show="true">
             <Description>Length</Description>
+        </Parameter>
+        <Parameter name="m" unit="" default_value="1" show="false">
+            <Description>Multiplier</Description>
         </Parameter>
     </Parameters>
 </Component>

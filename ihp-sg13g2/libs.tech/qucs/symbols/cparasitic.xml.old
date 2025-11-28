@@ -2,7 +2,7 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP 130 BiCMOS components" names="cparasitic" schematic_id = "C">
+  library="IHP SG13G2 devices" names="cparasitic" schematic_id = "C">
     <Description>
         SG13G2 parasitic capacitor
     </Description>
