@@ -70,6 +70,9 @@ if __name__ == "__main__":
     
     program_name = "openvaf"
     if is_program_installed(program_name):
+        command = "openvaf psp103.va --output " + destination_directory + "/psp103.osdi"    
+        print(f"{program_name} is installed and about to run the command '{command}' in a location: {source_directory} ")	
+        exec_app_in_directory(command, source_directory + "/psp103")
         command = "openvaf psp103_nqs.va --output " + destination_directory + "/psp103_nqs.osdi"    
         print(f"{program_name} is installed and about to run the command '{command}' in a location: {source_directory} ")	
         exec_app_in_directory(command, source_directory + "/psp103")

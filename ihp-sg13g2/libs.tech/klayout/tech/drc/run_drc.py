@@ -27,6 +27,7 @@ import multiprocessing as mp
 import concurrent.futures
 import traceback
 from typing import Dict, List, Set, Union, Tuple
+import sys
 
 
 def get_rules_with_violations(results_database: Union[str, Path]) -> Set[str]:
@@ -239,16 +240,18 @@ def check_drc_results(
             "=================================================================================="
         )
         logging.error(f"Violated rules are : {str(violating_rules)}\n")
-    else:
-        logging.info(
-            "====================================================================================="
-        )
-        logging.info(
-            "✅ --- KLayout DRC Check Passed: No DRC violations detected in the layout. --- ✅"
-        )
-        logging.info(
-            "====================================================================================="
-        )
+        return 1
+
+    logging.info(
+        "====================================================================================="
+    )
+    logging.info(
+        "✅ --- KLayout DRC Check Passed: No DRC violations detected in the layout. --- ✅"
+    )
+    logging.info(
+        "====================================================================================="
+    )
+    return 0
 
 
 def get_top_cell_names(gds_path: str):
@@ -400,6 +403,7 @@ def generate_klayout_switches(arguments, layout_path: str) -> dict:
     switches["density"] = "false" if arguments.no_density else "true"
     switches["no_forbidden"] = "false"
     switches["no_pin"] = "false"
+    switches["no_recommended"] = "true" if arguments.no_recommended else "false"
 
     # Set topcell and input layout
     switches["topcell"] = get_run_top_cell_name(arguments, layout_path)
@@ -622,8 +626,7 @@ def run_parallel_run(
                 logging.error(f"{name} generated an exception: {e}")
                 traceback.print_exc()
 
-    check_drc_results(result_db_files, run_dir, layout_path, switches)
-    return 0
+    return check_drc_results(result_db_files, run_dir, layout_path, switches)
 
 
 def run_single_processor(
@@ -663,13 +666,11 @@ def run_single_processor(
     # Handle *_only flags (exclusive checks)
     if args.antenna_only:
         run_check_by_flag(True, "antenna")
-        check_drc_results(result_dbs, run_dir, layout_path, switches)
-        return 0
+        return check_drc_results(result_dbs, run_dir, layout_path, switches)
 
     if args.density_only:
         run_check_by_flag(True, "density")
-        check_drc_results(result_dbs, run_dir, layout_path, switches)
-        return 0
+        return check_drc_results(result_dbs, run_dir, layout_path, switches)
 
     # Run primary table check
     tables = args.table if args.table else ["main"]
@@ -688,8 +689,7 @@ def run_single_processor(
     run_check_by_flag(not args.disable_extra_rules, "sg13g2_maximal")
 
     # Final result verification
-    check_drc_results(result_dbs, run_dir, layout_path, switches)
-    return 0
+    return check_drc_results(result_dbs, run_dir, layout_path, switches)
 
 
 def main(run_dir: Path, args):
@@ -728,9 +728,9 @@ def main(run_dir: Path, args):
 
     # Choose between single-core and multi-core run
     if workers_count == 1 or args.antenna_only or args.density_only:
-        run_single_processor(args, rule_deck_full_path, layout_path, switches, run_dir)
+        return run_single_processor(args, rule_deck_full_path, layout_path, switches, run_dir)
     else:
-        run_parallel_run(args, rule_deck_full_path, layout_path, switches, run_dir)
+        return run_parallel_run(args, rule_deck_full_path, layout_path, switches, run_dir)
 
 
 def parse_args():
@@ -741,7 +741,7 @@ def parse_args():
             [--topcell=<topcell_name>] [--run_mode=<mode>] [--drc_json=<json_path>]
             [--precheck_drc] [--disable_extra_rules] [--no_feol] [--no_beol] [--no_density]
             [--density_thr=<density_threads>] [--density_only] [--antenna]
-            [--antenna_only] [--no_offgrid]
+            [--antenna_only] [--no_offgrid] [--no_recommended]
     """
 
     parser = argparse.ArgumentParser(
@@ -834,6 +834,9 @@ def parse_args():
     parser.add_argument(
         "--no_offgrid", action="store_true", help="Disable offgrid rule checks."
     )
+    parser.add_argument(
+        "--no_recommended", action="store_true", help="Disable recommended rule checks."
+    )
 
     return parser.parse_args()
 
@@ -876,10 +879,11 @@ if __name__ == "__main__":
     time_start = time.time()
 
     # Execute main flow
-    main(run_dir, args)
+    res = main(run_dir, args)
 
     # Log total execution time
     elapsed_time = time.time() - time_start
     logging.info(
         f"Total DRC Run time: {elapsed_time:.2f} seconds (including execution, analysis, and reporting)"
     )
+    sys.exit(res)

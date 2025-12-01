@@ -145,6 +145,10 @@ logger.info("PIN enabled: #{PIN}")
 FORBIDDEN = !bool_check?($no_forbidden)
 logger.info("FORBIDDEN enabled: #{FORBIDDEN}")
 
+# RECOMMENDED
+RECOMMENDED = !bool_check?($no_recommended)
+logger.info("RECOMMENDED enabled: #{RECOMMENDED}")
+
 # PreCheck DRC
 PRECHECK_DRC = bool_check?($precheck_drc)
 logger.info("PreCheck DRC enabled: #{PRECHECK_DRC}")

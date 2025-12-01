@@ -118,8 +118,8 @@ logger.info("#{$run_mode} mode is enabled for sg13g2_maximal runset.")
 # Tech switches
 # Initial definitions of control flow variables
 # Strings from the command line have to be converted
-if defined? $offGridRules
-    $offGridRules = $offGridRules.to_s.downcase == "true"
+if defined? $no_offgrid
+    $offGridRules = $no_offgrid.to_s.downcase == "true"
 else
     $offGridRules = true
 end
@@ -136,8 +136,8 @@ else
     $latchUpRules = true
 end
 
-if defined? $recommendedRules
-    $recommendedRules = $recommendedRules.to_s.downcase == "true"
+if defined? $no_recommended
+    $recommendedRules = $no_recommended.to_s.downcase == "false"
 else
     $recommendedRules = true
 end

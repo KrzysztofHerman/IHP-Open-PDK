@@ -627,4 +627,20 @@ templates = [
         ],
         "default_params": {"model": "nmoscl_4", "m": 1},
     },
+    {
+        "regex": re.compile(r"^.*schottky_nbl1(?=.*Nx=(?P<Nx>\d+))(?=.*Ny=(?P<Ny>\d+)).*$"),
+        "pcell_library": "SG13_dev",
+        "pcell_name": "schottky",
+        "params": [
+            {
+                "name": "Nx",
+                "type": "int",
+            },
+            {
+                "name": "Ny",
+                "type": "int",
+            },
+        ],
+        "default_params": {"Nx": 1, "Ny": 1},
+    },
 ]
