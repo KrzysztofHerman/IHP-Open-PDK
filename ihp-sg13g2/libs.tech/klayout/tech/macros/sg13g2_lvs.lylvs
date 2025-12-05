@@ -76,6 +76,7 @@ def set_default_options(yaml_file_path)
     'no_parallel_res' => false,
     'combine_devices' => false,
     'top_lvl_pins' => false,
+    'allow_unmatched_ports' => false,
     'purge' => false,
     'purge_nets' => false,
     'verbose' => false,
@@ -149,6 +150,7 @@ $no_series_res = options['no_series_res'].to_s
 $no_parallel_res = options['no_parallel_res'].to_s
 $combine_devices = options['combine_devices'].to_s
 $top_lvl_pins = options['top_lvl_pins'].to_s
+$allow_unmatched_ports = options['allow_unmatched_ports'].to_s
 $purge = options['purge'].to_s
 $purge_nets = options['purge_nets'].to_s
 $verbose = options['verbose'].to_s

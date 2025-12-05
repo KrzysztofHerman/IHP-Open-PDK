@@ -628,9 +628,9 @@ def parse_existing_rules(
     rules_vars = RULES_VAR or {}
 
     if target_table is None:
-        drc_files = list((rule_deck_path / "rule_decks").glob("*.drc"))
+        drc_files = list((rule_deck_path / "rule_decks").glob("**/*.drc"))
     else:
-        matched_files = list((rule_deck_path / "rule_decks").glob(f"*{target_table}.drc"))
+        matched_files = list((rule_deck_path / "rule_decks").glob(f"**/*{target_table}.drc"))
 
         if not matched_files:
             logging.error(f"No DRC rule deck matched the table name: '{target_table}'")

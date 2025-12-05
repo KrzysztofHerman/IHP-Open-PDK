@@ -476,7 +476,7 @@ class rhigh(DloGen):
         # create virtuel l for CbResCalc
         lcalc = (l*stripes+contactpush*2+lcor)/stripes
         resistance = CbResCalc('R', 0, lcalc*1e-6, w*1e-6, b, ps*1e-6, Cell)
-        labeltext = 'rpnd r={0:.3f}'.format(resistance)
+        labeltext = 'rhigh r={0:.3f}'.format(resistance)
         labelpos = Point(w/2, l/2)
         labelheight = 0.1
         if w > l :

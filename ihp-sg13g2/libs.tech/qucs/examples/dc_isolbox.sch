@@ -22,7 +22,7 @@
   <.SW SW1 1 90 280 0 70 0 0 "DC1" 1 "lin" 1 "I1" 1 "-1m" 1 "1m" 1 "2001" 1>
   <.DC DC1 1 90 170 0 41 0 0 "26.85" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "no" 0 "150" 0 "no" 0 "none" 0 "CroutLU" 0>
   <GND * 1 120 850 0 0 0 0>
-  <Lib isolbox1 1 300 750 20 -60 0 0 "/home/herman/.qucs/user_lib/IHP_PDK_nonlinear_components" 0 "isolbox" 0 "{size}" 1 "{size}" 1>
+  <Lib isolbox1 1 300 750 20 -60 0 0 "/home/herman/<qucs_workspace>/user_lib/IHP_PDK_nonlinear_components" 0 "isolbox" 0 "{size}" 1 "{size}" 1>
   <SpicePar SpicePar1 1 310 170 -28 18 0 0 "size=3u" 1>
   <.SW SW2 1 270 280 0 70 0 0 "SW1" 1 "list" 1 "size" 1 "3u" 0 "300u" 0 "[3u;10u;100u;300u]" 0>
 </Components>

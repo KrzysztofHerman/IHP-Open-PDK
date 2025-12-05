@@ -27,6 +27,13 @@ release was derived have been used to create many designs that have been
 successfully manufactured in significant quantities, the open source PDK
 is not intended to be used for production at this moment.
 
+# Documentation
+
+Comprehensive documentation for the IHP Open Source PDK is available on [ReadTheDocs](https://ihp-open-pdk-docs.readthedocs.io/en/latest/).
+For building or contributing, visit the [IHP-Open-PDK-docs repository](https://github.com/IHP-GmbH/IHP-Open-PDK-docs).
+
+The documentation provides detailed information on PDK installation, setup for supported EDA tools, device libraries, layout rules, process specifications and design flow examples. It is the recommended starting point for users who want to explore the PDK structure, simulation models, layout design environments, etc.
+
 # SG13G2 Process Node
 
 SG13G2 is a high performance BiCMOS technology with a 0.13 μm CMOS process. It contains bipolar
@@ -62,10 +69,15 @@ backend option offers 5 thin metal layers, two thick metal layers (2 and 3 μm t
     * GDSII
 * KLayout tool data:
     * layer property and tech files
-    * DRC rules (minimal/maximal set)
+    * DRC rules
     * LVS rules
-    * PyCells (1st priority)
+    * PyCells
     * XSection initial settings
+    * 2.5D viewer configuration
+* Magic tool data:
+    * tech files, parasitic extraction rules
+    * DRC rules
+    * LVS rules
 * MOS/HBT/Passive device models for ngspice/Xyce
 * xschem: primitive device symbols, settings and testbenches
 * Qucs-S: primitive device symbols, settings and testbenches
@@ -91,12 +103,17 @@ backend option offers 5 thin metal layers, two thick metal layers (2 and 3 μm t
 * KLayout
     * Download: https://www.klayout.de/build.html
     * Source: https://github.com/KLayout/klayout
+* Magic
+    * Download: http://opencircuitdesign.com/magic/download.html
+    * Source: https://github.com/RTimothyEdwards/magic
 * OpenEMS
     * Source: https://github.com/thliebig/openEMS-Project
 * OpenROAD
     * Source: https://github.com/The-OpenROAD-Project/OpenROAD
 * OpenROAD-flow-scripts
     * Source: https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts
+* LibreLane
+    * Source: https://github.com/librelane/librelane
  
 ## Tool versions (tested with)
 [versions.txt](versions.txt)

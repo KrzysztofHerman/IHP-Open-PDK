@@ -105,21 +105,20 @@ if __name__ == "__main__":
     if pdk_root == None:
         logging.error("Setup PDK_ROOT environment variable to IHP-Open-PDK location")
         exit(1)
-    else:
-        source_directory = pdk_root + "/ihp-sg13g2/libs.tech/qucs/user_lib"
 
     userhome = os.environ.get("HOME")
-    
-    # Check if the source directory exists
-    if not os.path.exists(source_directory):
-        logging.error(f"Source directory '{source_directory}' does not exist.")
-        exit(1)    
     
     # Supporting two variants of Qucs-S default workspace
     for qucs_workspace in ['/.qucs/', '/QucsWorkspace/']:
     
         print(f"Preparing $HOME{qucs_workspace} directory ...")
         print("#############################################\n")
+        
+        source_directory = pdk_root + "/ihp-sg13g2/libs.tech/qucs/user_lib"
+        # Check if the source directory exists
+        if not os.path.exists(source_directory):
+            logging.error(f"Source directory '{source_directory}' does not exist.")
+            exit(1)
         
         destination_directory = userhome + qucs_workspace + "user_lib"
         
@@ -128,8 +127,8 @@ if __name__ == "__main__":
             os.makedirs(destination_directory)
             print(f"Destination directory '{destination_directory}' created.")
         
-        #copy_files(source_directory, destination_directory)
         create_symlinks(source_directory, destination_directory)
+        
         # Copy examples to "Qucs Home" (<userhome>/[.qucs|QucsWorkspace]/)
         print("Copying examples into Qucs-S Home...")
         source_directory = pdk_root + "/ihp-sg13g2/libs.tech/qucs/examples"
@@ -139,6 +138,7 @@ if __name__ == "__main__":
             os.makedirs(destination_directory)
 
         copy_files(source_directory, destination_directory)
+        
         print("Examples copied")
         print("\n\n#############################################")
         print("              IMPORTANT NOTE")
@@ -163,22 +163,21 @@ if __name__ == "__main__":
         if not os.path.exists(symbolic_link):
             try:
                 os.symlink(original_file, symbolic_link)
-                print(f"Symbolic link '{symbolic_link}' created successfully.")
+                print(f"Symbolic link '{symbolic_link}' created successfully.\n")
             except OSError as e:
                 print(f"Failed to create symbolic link: {e}")
         
         # Post-processing example schematics
         program_name = "sed"
         if is_program_installed(program_name):
-            userhome_escaped = userhome.replace('/', '\\/')
-            command = f"sed -i 's/<userhome>/{userhome_escaped}/;s/<qucs_workspace>{qucs_workspace}' *.sch"
+            command = f"sed -i 's/<qucs_workspace>{qucs_workspace}' *.sch"
             exec_app_in_directory(command, destination_directory)
         else:
             logging.error(f"{program_name} is not installed.")
             exit(1)
                 
     # Compiling Verilog-A models
-    print("\nCompiling Verilog-A models ...")
+    print("Compiling Verilog-A models ...")
     destination_directory = pdk_root + "/ihp-sg13g2/libs.tech/ngspice/osdi"
     
     if not os.path.exists(destination_directory):

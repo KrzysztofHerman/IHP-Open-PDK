@@ -5,3 +5,4 @@ klayout
 pyyaml
 gdstk
 tqdm
+termcolor

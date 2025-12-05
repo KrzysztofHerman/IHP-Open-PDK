@@ -114,7 +114,7 @@ D3 1 2 dpcorner area=DEV_C
 +l=3u
 +w=3u
 +aw=(w-2.1u)*(l-2.1u)
-+pw=(w+l)*2 - 8*1.05u
++pw=(w+l)*2-8*1.05u
 +ab=(w*l)
 +pb=(w+l)*2
 +xd=0
@@ -154,7 +154,7 @@ xdnwpsub NWell bn ddnwpsub l='l' w='w'
 +l=3u
 +w=3u
 +aw=(w-2.1u)*(l-2.1u)
-+pw=(w+l)*2 - 8*1.05u
++pw=(w+l)*2-8*1.05u
 +xd=0
 +mf=1
 +scaling=1e-6
