@@ -14,13 +14,13 @@
 <Line x1="10" y1="0" x2="20" y2="0" color="#000080" width="2" style="1" />
 <Line x1="-10" y1="0" x2="10" y2="0" color="#000080" width="2" style="1" />
 
-<Line x1="-9" y1="0" x2="-4" y2="-5" color="#000080" width="2" style="1" condition="type=nmos"/>
-<Line x1="-9" y1="0" x2="-4" y2="5" color="#000080" width="2" style="1" condition="type=nmos"/>
+<Line x1="0" y1="5" x2="-3" y2="7" color="#000080" width="2" style="1" condition="type=nmos"/>
+<Line x1="0" y1="5" x2="-3" y2="2" color="#000080" width="2" style="1" condition="type=nmos"/>
 
-<Line x1="-1" y1="0" x2="-6" y2="-5" color="#000080" width="2" style="1" condition="type=pmos"/>
-<Line x1="-1" y1="0" x2="-6" y2="5" color="#000080" width="2" style="1" condition="type=pmos"/>
+<Line x1="-10" y1="5" x2="-7" y2="7" color="#000080" width="2" style="1" condition="type=pmos"/>
+<Line x1="-10" y1="5" x2="-7" y2="2" color="#000080" width="2" style="1" condition="type=pmos"/>
 
 <PortSym x="0" y="-30" type="1" angle="0"/> <!--D-->
 <PortSym x="-30" y="0" type="1" angle="0"/> <!--G-->
 <PortSym x="0" y="30" type="1" angle="0"/> <!--S-->
-<PortSym x="20" y="0" type="1" angle="0"/> <!--B-->
+<PortSym x="0" y="5" type="1" angle="0"/> <!--B-->
