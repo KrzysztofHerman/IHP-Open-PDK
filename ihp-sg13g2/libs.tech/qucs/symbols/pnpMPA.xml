@@ -21,11 +21,11 @@
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
-           <File>{QUCS_S_COMPONENTS_LIBRARY}/pnpMPA.sym</File>
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Bjt.sym</File>
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="pnpMPA" show="true">
+        <Parameter name="model" unit="" default_value="pnpMPA" show="false">
             <Description>Model name</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">
@@ -45,6 +45,9 @@
         </Parameter>
         <Parameter name="m" unit="" default_value="1" show="false">
             <Description>Multiplier</Description>
+        </Parameter>
+        <Parameter name="type" unit="" default_value="pnp" show="false">
+            <Description>Device type</Description>
         </Parameter>
     </Parameters>
 </Component>

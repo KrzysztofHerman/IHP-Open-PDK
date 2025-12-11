@@ -2,7 +2,7 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP SG13G2 devices" names="nmoscl_2" schematic_id = "D">
+  library="IHP SG13G2 devices" names="nmoscl_2, nmoscl_4" schematic_id = "D">
     <Description>
         SG13G2 nmoscl_2 mosfet clamps
     </Description>
@@ -24,7 +24,7 @@
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="nmoscl_2" show="true">
+        <Parameter name="model" unit="" default_value="nmoscl_2" show="false">
             <Description>Model name</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">

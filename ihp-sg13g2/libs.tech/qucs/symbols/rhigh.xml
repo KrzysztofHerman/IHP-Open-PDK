@@ -23,7 +23,7 @@
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="rhigh" show="true">
+        <Parameter name="model" unit="" default_value="rhigh" show="false">
             <Description>Model name</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">

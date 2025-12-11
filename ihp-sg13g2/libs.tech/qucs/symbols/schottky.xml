@@ -23,7 +23,7 @@
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="schottky_nbl1" show="true">
+        <Parameter name="model" unit="" default_value="schottky_nbl1" show="false">
             <Description>Modelname</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">

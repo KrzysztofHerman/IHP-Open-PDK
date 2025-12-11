@@ -2,7 +2,7 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP SG13G2 devices" names="sg13_lv_nmos" schematic_id = "M">
+  library="IHP SG13G2 devices" names="nmos" schematic_id = "M">
     <Description>
         SG13G2 low voltage nmos transistor
     </Description>
@@ -21,11 +21,11 @@
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
-           <File>{QUCS_S_COMPONENTS_LIBRARY}/MosLV.sym</File>
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Mos.sym</File>
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="sg13_lv_nmos" show="true">
+        <Parameter name="model" unit="" default_value="sg13_lv_nmos" show="false">
             <Description>Model name</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">

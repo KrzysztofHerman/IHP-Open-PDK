@@ -27,7 +27,7 @@
         <Parameter name="Letter" unit="" default_value="X" show="false">
             <Description>Spice prefix</Description>
         </Parameter>
-        <Parameter name="model" unit="" default_value="sg13g2_inv_1" show="true">
+        <Parameter name="model" unit="" default_value="{names}" show="false">
             <Description>[sg13g2_inv_1,sg13g2_inv_2,sg13g2_inv_4,sg13g2_inv_8]</Description>
         </Parameter>
         <Parameter name="VDD" unit="" default_value="VDD" show="false">

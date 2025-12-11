@@ -25,7 +25,7 @@
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="cap_rfcmim" show="true">
+        <Parameter name="model" unit="" default_value="cap_rfcmim" show="false">
             <Description>Model name</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">

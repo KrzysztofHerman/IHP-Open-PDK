@@ -2,14 +2,14 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    library="IHP SG13G2 devices" names="rfpmos" schematic_id = "M">
+    library="IHP SG13G2 devices" names="rfnmosHV" schematic_id = "M">
     <Description>
-        SG13G2 low voltage pmos transistor for RF
+        SG13G2 high voltage nmos transistor for RF
     </Description>
     <Models>
-        <DefaultModel value="rfpmos">
+        <DefaultModel value="rfnmosHV">
         </DefaultModel>
-        <SpiceModel value="sg13_lv_pmos">
+        <SpiceModel value="sg13_hv_nmos">
         </SpiceModel>
     </Models>
     <Netlists>
@@ -25,13 +25,13 @@
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="sg13_lv_pmos" show="false">
+        <Parameter name="model" unit="" default_value="sg13_hv_nmos" show="false">
             <Description>Model name</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">
             <Description>Spice prefix</Description>
         </Parameter>
-        <Parameter name="type" unit="" default_value="pmos" show="false">
+        <Parameter name="type" unit="" default_value="nmos" show="false">
             <Description>Channel type</Description>
         </Parameter>
         <Parameter name="w" unit="" default_value="0.15u" show="true">

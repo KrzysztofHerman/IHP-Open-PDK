@@ -25,7 +25,7 @@
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="sg13_hv_svaricap" show="true">
+        <Parameter name="model" unit="" default_value="sg13_hv_svaricap" show="false">
             <Description>Model name</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">

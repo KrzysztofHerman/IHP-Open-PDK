@@ -2,7 +2,7 @@
 <Component
   xsi:noNamespaceSchemaLocation="Component.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  library="IHP SG13G2 devices" names="sg13_hv_nmos" schematic_id = "M">
+  library="IHP SG13G2 devices" names="nmosHV" schematic_id = "M">
     <Description>
         SG13G2 high voltage nmos transistor
     </Description>
@@ -21,11 +21,11 @@
     </Netlists>
     <Symbols>
         <Symbol id="Standard">
-           <File>{QUCS_S_COMPONENTS_LIBRARY}/MosHV.sym</File>
+           <File>{QUCS_S_COMPONENTS_LIBRARY}/Mos.sym</File>
         </Symbol>
     </Symbols>
     <Parameters>
-        <Parameter name="model" unit="" default_value="sg13_hv_nmos" show="true">
+        <Parameter name="model" unit="" default_value="sg13_hv_nmos" show="false">
             <Description>Model name</Description>
         </Parameter>
         <Parameter name="Letter" unit="" default_value="X" show="false">
@@ -42,9 +42,6 @@
         </Parameter>
         <Parameter name="ng" unit="" default_value="1" show="false">
             <Description>no. gates</Description>
-        </Parameter>
-        <Parameter name="rfmode" unit="" default_value="0" show="false">
-            <Description>RF mode switch</Description>
         </Parameter>
         <Parameter name="m" unit="" default_value="1" show="false">
             <Description>Multiplier</Description>
