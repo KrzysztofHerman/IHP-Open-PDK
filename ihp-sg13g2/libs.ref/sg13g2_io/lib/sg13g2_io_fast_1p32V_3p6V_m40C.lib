@@ -300,6 +300,8 @@ library (sg13g2_io_fast_1p32V_3p6V_m40C) {
  cell (sg13g2_IOPadIn) {
     pad_cell : true;
     area : 14400;
+    dont_touch : true;
+    dont_use : true;
     cell_footprint : "input";
     pad_drivers : 1;
     bond_pads : 1;
@@ -490,6 +492,8 @@ library (sg13g2_io_fast_1p32V_3p6V_m40C) {
  cell (sg13g2_IOPadInOut16mA) {
     pad_cell : true;
     area : 14400;
+    dont_touch : true;
+    dont_use : true;
     cell_footprint : "inout";
     pad_drivers : 1;
     bond_pads : 1;
@@ -1184,6 +1188,8 @@ library (sg13g2_io_fast_1p32V_3p6V_m40C) {
  cell (sg13g2_IOPadInOut30mA) {
     pad_cell : true;
     area : 14400;
+    dont_touch : true;
+    dont_use : true;
     cell_footprint : "inout";
     pad_drivers : 1;
     bond_pads : 1;
@@ -1878,6 +1884,8 @@ library (sg13g2_io_fast_1p32V_3p6V_m40C) {
  cell (sg13g2_IOPadInOut4mA) {
     pad_cell : true;
     area : 14400;
+    dont_touch : true;
+    dont_use : true;
     cell_footprint : "inout";
     pad_drivers : 1;
     bond_pads : 1;
@@ -2572,6 +2580,8 @@ library (sg13g2_io_fast_1p32V_3p6V_m40C) {
  cell (sg13g2_IOPadOut16mA) {
     pad_cell : true;
     area : 14400;
+    dont_touch : true;
+    dont_use : true;
     cell_footprint : "inout";
     pad_drivers : 1;
     bond_pads : 1;
@@ -2763,6 +2773,8 @@ library (sg13g2_io_fast_1p32V_3p6V_m40C) {
  cell (sg13g2_IOPadOut30mA) {
     pad_cell : true;
     area : 14400;
+    dont_touch : true;
+    dont_use : true;
     cell_footprint : "inout";
     pad_drivers : 1;
     bond_pads : 1;
@@ -2954,6 +2966,8 @@ library (sg13g2_io_fast_1p32V_3p6V_m40C) {
  cell (sg13g2_IOPadOut4mA) {
     pad_cell : true;
     area : 14400;
+    dont_touch : true;
+    dont_use : true;
     cell_footprint : "inout";
     pad_drivers : 1;
     bond_pads : 1;
@@ -3145,6 +3159,8 @@ library (sg13g2_io_fast_1p32V_3p6V_m40C) {
  cell (sg13g2_IOPadTriOut16mA) {
     pad_cell : true;
     area : 14400;
+    dont_touch : true;
+    dont_use : true;
     cell_footprint : "tri_out";
     pad_drivers : 1;
     bond_pads : 1;
@@ -3611,6 +3627,8 @@ library (sg13g2_io_fast_1p32V_3p6V_m40C) {
  cell (sg13g2_IOPadTriOut30mA) {
     pad_cell : true;
     area : 14400;
+    dont_touch : true;
+    dont_use : true;
     cell_footprint : "tri_out";
     pad_drivers : 1;
     bond_pads : 1;
@@ -4077,6 +4095,8 @@ library (sg13g2_io_fast_1p32V_3p6V_m40C) {
  cell (sg13g2_IOPadTriOut4mA) {
     pad_cell : true;
     area : 14400;
+    dont_touch : true;
+    dont_use : true;
     cell_footprint : "tri_out";
     pad_drivers : 1;
     bond_pads : 1;

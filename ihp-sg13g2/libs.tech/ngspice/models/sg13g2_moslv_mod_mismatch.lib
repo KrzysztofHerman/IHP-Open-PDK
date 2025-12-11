@@ -85,7 +85,7 @@
               + dta=trise
               + ngcon=2
               + delvto='agauss(0, sg13g2_lv_nmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-              + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+              + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
         .else
             Nsg13_lv_nmos d g s b sg13g2_lv_nmos_psp
               + w='agauss(w, sg13g2_lv_nmos_dw_mm, (mm_ok != 1 ? 0 : 1))'
@@ -98,7 +98,7 @@
               + dta=trise
               + ngcon=2
               + delvto='agauss(0, sg13g2_lv_nmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-              + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+              + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
         .endif
     .else
         Nsg13_lv_nmos d g s b sg13g2_lv_nmos_psp
@@ -108,7 +108,7 @@
           + dta=trise
           + ngcon=2
           + delvto='agauss(0, sg13g2_lv_nmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-          + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+          + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
     .endif
 .else
     .if (as <= 1e-50)
@@ -124,7 +124,7 @@
               + dta=trise
               + ngcon=2
               + delvto='agauss(0, sg13g2_lv_nmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-              + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+              + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
         .else
             Nsg13_lv_nmos d g s b sg13g2_lv_nmos_psp_rf
               + w='agauss(w, sg13g2_lv_nmos_dw_mm, (mm_ok != 1 ? 0 : 1))'
@@ -137,7 +137,7 @@
               + dta=trise
               + ngcon=2
               + delvto='agauss(0, sg13g2_lv_nmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-              + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+              + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
         .endif
     .else
         Nsg13_lv_nmos d g s b sg13g2_lv_nmos_psp_rf
@@ -147,7 +147,7 @@
           + dta=trise
           + ngcon=2
           + delvto='agauss(0, sg13g2_lv_nmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-          + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+          + factuo='agauss(1, sg13g2_lv_nmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
     .endif
 .endif
 .ends
@@ -171,7 +171,7 @@
               + dta=trise
               + ngcon=2
               + delvto='agauss(0, sg13g2_lv_pmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-              + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+              + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
         .else
             Nsg13_lv_pmos d g s b sg13g2_lv_pmos_psp
               + w='agauss(w, sg13g2_lv_pmos_dw_mm, (mm_ok != 1 ? 0 : 1))'
@@ -184,7 +184,7 @@
               + dta=trise
               + ngcon=2
               + delvto='agauss(0, sg13g2_lv_pmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-              + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+              + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
         .endif
     .else
         Nsg13_lv_pmos d g s b sg13g2_lv_pmos_psp
@@ -194,7 +194,7 @@
           + dta=trise
           + ngcon=2
           + delvto='agauss(0, sg13g2_lv_pmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-          + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+          + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
     .endif
 .else
     .if (as <= 1e-50)
@@ -210,7 +210,7 @@
               + dta=trise
               + ngcon=2
               + delvto='agauss(0, sg13g2_lv_pmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-              + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+              + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
         .else
             Nsg13_lv_pmos d g s b sg13g2_lv_pmos_psp_rf
               + w='agauss(w, sg13g2_lv_pmos_dw_mm, (mm_ok != 1 ? 0 : 1))'
@@ -223,7 +223,7 @@
               + dta=trise
               + ngcon=2
               + delvto='agauss(0, sg13g2_lv_pmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-              + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+              + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
         .endif
     .else
         Nsg13_lv_pmos d g s b sg13g2_lv_pmos_psp_rf
@@ -233,7 +233,7 @@
           + dta=trise
           + ngcon=2
           + delvto='agauss(0, sg13g2_lv_pmos_delvto_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
-          + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm, (mm_ok != 1 ? 0 : 1))'
+          + factuo='agauss(1, sg13g2_lv_pmos_factuo_mm/sqrt(m*l*w*1e12), (mm_ok != 1 ? 0 : 1))'
     .endif
 .endif
 .ends
