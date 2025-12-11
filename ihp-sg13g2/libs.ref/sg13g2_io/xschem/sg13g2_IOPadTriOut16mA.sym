@@ -1,0 +1,46 @@
+v {xschem version=3.4.4 file_version=1.2
+}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+template="name=x1"
+}
+V {}
+S {}
+E {}
+
+L 4 -105 -40 105 -40 {}
+L 4 -105 40 105 40 {}
+L 4 -105 -40 -105 40 {}
+L 4 105 -40 105 40 {}
+
+L 7 -105 -30 -120 -30 {}
+L 7 -105 -20 -120 -20 {}
+L 7 -105 -10 -120 -10 {}
+L 7 -105 10  -120 10 {}
+L 7 -105 20  -120 20 {}
+L 7 -105 30  -120 30 {}
+
+L 7 105 0 120 0 {}
+
+B 5 -122.5 -32.5 -117.5 -27.5 {name=iovdd dir=inout}
+B 5 -122.5 -22.5 -117.5 -17.5 {name=iovss dir=inout}
+B 5 -122.5 -12.5 -117.5  -7.5 {name=c2p dir=inout}
+B 5 -122.5   7.5 -117.5  12.5 {name=c2p_en dir=inout}
+B 5 -122.5  17.5 -117.5  22.5 {name=vss dir=inout}
+B 5 -122.5  27.5 -117.5  32.5 {name=vdd dir=inout}
+
+B 5 117.5 -2.5 122.5 2.5 {name=pad dir=inout}
+
+T {sg13g2_IOPadTriOut16mA} -55 -8 0 0 0.2 0.2 {}
+T {@name} 65 -52 0 0 0.2 0.2 {}
+
+T {iovdd} -95 -34 0 0 0.2 0.2 {}
+T {iovss} -95 -24 0 0 0.2 0.2 {}
+T {c2p}   -95 -14 0 0 0.2 0.2 {}
+T {c2p_en} -95 6  0 0 0.2 0.2 {}
+T {vss}   -95 16  0 0 0.2 0.2 {}
+T {vdd}   -95 26  0 0 0.2 0.2 {}
+
+T {pad} 85 -8 0 0 0.2 0.2 {}
+

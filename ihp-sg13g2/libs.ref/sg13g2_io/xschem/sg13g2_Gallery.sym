@@ -1,0 +1,78 @@
+v {xschem version=3.4.6 file_version=1.2}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+template="name=x1"
+}
+V {}
+S {}
+E {}
+L 4 120 -150 140 -150 {}
+L 4 -150 -20 -130 -20 {}
+L 4 120 -90 140 -90 {}
+L 4 120 -70 140 -70 {}
+L 4 120 -50 140 -50 {}
+L 4 120 -30 140 -30 {}
+L 4 -150 0 -130 0 {}
+L 4 120 -10 140 -10 {}
+L 4 120 10 140 10 {}
+L 4 -150 20 -130 20 {}
+L 4 120 30 140 30 {}
+L 4 120 50 140 50 {}
+L 4 120 70 140 70 {}
+L 4 120 90 140 90 {}
+L 4 120 110 140 110 {}
+L 4 120 130 140 130 {}
+L 7 -20 160 -20 180 {}
+L 7 20 160 20 180 {}
+L 7 120 -130 140 -130 {}
+L 7 120 -110 140 -110 {}
+L 7 -20 -210 -20 -190 {}
+L 7 20 -210 20 -190 {}
+B 5 -22.5 177.5 -17.5 182.5 {name=vss dir=inout}
+B 5 17.5 177.5 22.5 182.5 {name=iovss dir=inout}
+B 5 137.5 -152.5 142.5 -147.5 {name=PadInp2c dir=out}
+B 5 -152.5 -22.5 -147.5 -17.5 {name=PadIn dir=in}
+B 5 137.5 -132.5 142.5 -127.5 {name=ana_out dir=inout}
+B 5 137.5 -112.5 142.5 -107.5 {name=ana_outres dir=inout}
+B 5 137.5 -92.5 142.5 -87.5 {name=PadOut4mA dir=out}
+B 5 137.5 -72.5 142.5 -67.5 {name=PadOut16mA dir=out}
+B 5 137.5 -52.5 142.5 -47.5 {name=PadOut30mA dir=out}
+B 5 137.5 -32.5 142.5 -27.5 {name=PadTriOut4mA dir=out}
+B 5 -152.5 -2.5 -147.5 2.5 {name=c2p dir=in}
+B 5 137.5 -12.5 142.5 -7.5 {name=PadTriOut16mA dir=out}
+B 5 137.5 7.5 142.5 12.5 {name=PadTriOut30mA dir=out}
+B 5 -152.5 17.5 -147.5 22.5 {name=c2p_en dir=in}
+B 5 137.5 27.5 142.5 32.5 {name=PadInOut4mA dir=out}
+B 5 137.5 47.5 142.5 52.5 {name=PadP2C4mA dir=out}
+B 5 137.5 67.5 142.5 72.5 {name=PadInOut16mA dir=out}
+B 5 137.5 87.5 142.5 92.5 {name=PadP2C16mA dir=out}
+B 5 137.5 107.5 142.5 112.5 {name=PadInOut30mA dir=out}
+B 5 137.5 127.5 142.5 132.5 {name=PadP2C30mA dir=out}
+B 5 -22.5 -212.5 -17.5 -207.5 {name=vdd dir=inout}
+B 5 17.5 -212.5 22.5 -207.5 {name=iovdd dir=inout}
+P 4 5 130 -190 -130 -190 -130 160 130 160 130 -190 {}
+T {@symname} -71 -16 0 0 0.3 0.3 {}
+T {@name} 135 -202 0 0 0.2 0.2 {}
+T {vss} -15 156 1 1 0.2 0.2 {}
+T {iovss} 25 156 1 1 0.2 0.2 {}
+T {PadInp2c} 115 -154 0 1 0.2 0.2 {}
+T {PadIn} -125 -24 0 0 0.2 0.2 {}
+T {ana_out} 115 -134 0 1 0.2 0.2 {}
+T {ana_outres} 115 -114 0 1 0.2 0.2 {}
+T {PadOut4mA} 115 -94 0 1 0.2 0.2 {}
+T {PadOut16mA} 115 -74 0 1 0.2 0.2 {}
+T {PadOut30mA} 115 -54 0 1 0.2 0.2 {}
+T {PadTriOut4mA} 115 -34 0 1 0.2 0.2 {}
+T {c2p} -125 -4 0 0 0.2 0.2 {}
+T {PadTriOut16mA} 115 -14 0 1 0.2 0.2 {}
+T {PadTriOut30mA} 115 6 0 1 0.2 0.2 {}
+T {c2p_en} -125 16 0 0 0.2 0.2 {}
+T {PadInOut4mA} 115 26 0 1 0.2 0.2 {}
+T {PadP2C4mA} 115 46 0 1 0.2 0.2 {}
+T {PadInOut16mA} 115 66 0 1 0.2 0.2 {}
+T {PadP2C16mA} 115 86 0 1 0.2 0.2 {}
+T {PadInOut30mA} 115 106 0 1 0.2 0.2 {}
+T {PadP2C30mA} 115 126 0 1 0.2 0.2 {}
+T {vdd} -15 -164 1 1 0.2 0.2 {}
+T {iovdd} 25 -154 1 1 0.2 0.2 {}
