@@ -469,7 +469,7 @@ module sg13g2_or2_1 (X, A, B);
     parameter real td = 0 from [0:inf);
     parameter real tt = 0 from [0:inf);
 analog begin
-    @(cross(V(A)-vth) or cross(V(B)-vth));
+    @(cross(V(A) - vth) or cross(V(B) - vth));
 
     V(X) <+ transition(((V(A) > vth) || (V(B) > vth)) ? vh : vl, td, tt);
 end
@@ -486,7 +486,7 @@ module sg13g2_or2_2 (X, A, B);
     parameter real td = 0 from [0:inf);
     parameter real tt = 0 from [0:inf);
 analog begin
-    @(cross(V(A)-vth) or cross(V(B)-vth));
+    @(cross(V(A) - vth) or cross(V(B) - vth));
 
     V(X) <+ transition(((V(A) > vth) || (V(B) > vth)) ? vh : vl, td, tt);
 end
@@ -503,7 +503,7 @@ module sg13g2_or3_1 (X, A, B, C);
     parameter real td = 0 from [0:inf);
     parameter real tt = 0 from [0:inf);
 analog begin
-    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth));
+    @(cross(V(A) - vth) or cross(V(B) - vth) or cross(V(C) - vth));
 
     V(X) <+ transition(((V(A) > vth) || (V(B) > vth) || (V(C) > vth)) ? vh : vl, td, tt);
 end
@@ -520,7 +520,7 @@ module sg13g2_or3_2 (X, A, B, C);
     parameter real td = 0 from [0:inf);
     parameter real tt = 0 from [0:inf);
 analog begin
-    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth));
+    @(cross(V(A) - vth) or cross(V(B) - vth) or cross(V(C) - vth));
 
     V(X) <+ transition(((V(A) > vth) || (V(B) > vth) || (V(C) > vth)) ? vh : vl, td, tt);
 end
@@ -537,7 +537,7 @@ module sg13g2_or4_1 (X, A, B, C, D);
     parameter real td = 0 from [0:inf);
     parameter real tt = 0 from [0:inf);
 analog begin
-    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth) or cross(V(D)-vth));
+    @(cross(V(A) - vth) or cross(V(B) - vth) or cross(V(C) - vth) or cross(V(D) - vth));
 
     V(X) <+ transition(((V(A) > vth) || (V(B) > vth) || (V(C) > vth) || (V(D) > vth)) ? vh : vl, td, tt);
 end
@@ -554,7 +554,7 @@ module sg13g2_or4_2 (X, A, B, C, D);
     parameter real td = 0 from [0:inf);
     parameter real tt = 0 from [0:inf);
 analog begin
-    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth) or cross(V(D)-vth));
+    @(cross(V(A) - vth) or cross(V(B) - vth) or cross(V(C) - vth) or cross(V(D) - vth));
 
     V(X) <+ transition(((V(A) > vth) || (V(B) > vth) || (V(C) > vth) || (V(D) > vth)) ? vh : vl, td, tt);
 end
