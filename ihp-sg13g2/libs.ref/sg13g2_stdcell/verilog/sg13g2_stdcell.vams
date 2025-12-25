@@ -17,15 +17,37 @@
 // Analog behavior parameters are declared per cell to mirror digital functionality
 
 // Basic combinational helpers
-module sg13g2_buf_base #(parameter real vh = 1.2, parameter real vl = 0, parameter real vth = (vh + vl)/2, parameter real td = 0 from [0:inf), parameter real tt = 0 from [0:inf)) (output electrical X, input electrical A);
+module sg13g2_buf_base (X, A);
+    output X;
+    electrical X;
+    input A;
+    electrical A;
+    parameter real vh = 1.2; /* high level */
+    parameter real vl = 0;   /* low level */
+    parameter real vth = (vh + vl)/2;
+    parameter real td = 0 from [0:inf);
+    parameter real tt = 0 from [0:inf);
 analog begin
-    @(cross(V(A) - vth)) V(X) <+ transition((V(A) > vth) ? vh : vl, td, tt);
+    @(cross(V(A) - vth));
+
+    V(X) <+ transition((V(A) > vth) ? vh : vl, td, tt);
 end
 endmodule
 
-module sg13g2_inv_base #(parameter real vh = 1.2, parameter real vl = 0, parameter real vth = (vh + vl)/2, parameter real td = 0 from [0:inf), parameter real tt = 0 from [0:inf)) (output electrical Y, input electrical A);
+module sg13g2_inv_base (Y, A);
+    output Y;
+    electrical Y;
+    input A;
+    electrical A;
+    parameter real vh = 1.2; /* high level */
+    parameter real vl = 0;   /* low level */
+    parameter real vth = (vh + vl)/2;
+    parameter real td = 0 from [0:inf);
+    parameter real tt = 0 from [0:inf);
 analog begin
-    @(cross(V(A) - vth)) V(Y) <+ transition(!(V(A) > vth) ? vh : vl, td, tt);
+    @(cross(V(A) - vth));
+
+    V(Y) <+ transition(!(V(A) > vth) ? vh : vl, td, tt);
 end
 endmodule
 
