@@ -1,12 +1,11 @@
-
 // Copyright 2024 IHP PDK Authors
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //    https://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,57 +14,730 @@
 
 `include "disciplines.vams"
 
-module sg13g2_nand2_1(Y, A, B);
+// Shared parameters and helpers for the simple behavioral models
+`define SG13_STD_PARAMS \
+    parameter real vh = 1.2; /* high level */ \
+    parameter real vl = 0;   /* low level */ \
+    parameter real vth = (vh + vl)/2; \
+    parameter real td = 0 from [0:inf); \
+    parameter real tt = 0 from [0:inf);
 
-input A, B; 
-output Y; 
-electrical Y;
-electrical A, B;
-parameter real vh = 1.2;			// output electrical in high state
-parameter real vl = 0;			    // output electrical in low state
-parameter real vth = (vh + vl)/2;	// threshold electrical at inputs
-parameter real td = 0 from [0:inf);	// delay to start of output transition
-parameter real tt = 0 from [0:inf);	// transition time of output signals
+`define SG13_LOGIC(sig) (V(sig) > vth)
 
+// Basic combinational helpers
+module sg13g2_buf_base #( `SG13_STD_PARAMS ) (output electrical X, input electrical A);
 analog begin
-    @(cross(V(A) - vth) or cross(V(B) - vth));
-
-    V(Y) <+ transition( !((V(A) > vth) && (V(B) > vth)) ? vh : vl, td, tt );
+    @(cross(V(A) - vth)) V(X) <+ transition(`SG13_LOGIC(A) ? vh : vl, td, tt);
 end
 endmodule
 
-
-module sg13g2_dfrbpq_1 (Q, D, RESET_B, CLK);
-
-output Q; 
-electrical Q;	// Q output
-input D; 
-electrical D;	// D input
-input RESET_B; 
-electrical RESET_B;	// Clock input (edge triggered)
-input CLK; 
-electrical CLK;	// D input
-parameter real td = 0 from [0:inf);	// delay from clock to q
-parameter real tt = 0 from [0:inf);	// transition time of output signals
-parameter real vh = 1.2;			// output voltage in high state
-parameter real vl = 0;			// output voltage in low state
-parameter real vth = (vh + vl)/2;	// threshold voltage at inputs
-parameter integer dir = +1 from [-1:+1] exclude 0;
-			// if dir=+1, rising clock edge triggers flip flop 
-			// if dir=-1, falling clock edge triggers flip flop 
-real state;
-
+module sg13g2_inv_base #( `SG13_STD_PARAMS ) (output electrical Y, input electrical A);
 analog begin
-    @(cross(V(CLK) - vth, dir))
-	state = (V(D) > vth);
-    if (V(RESET_B) < vth) 
-        state = 0;
-    V(Q) <+ transition( state ? vh : vl, td, tt );
+    @(cross(V(A) - vth)) V(Y) <+ transition(!`SG13_LOGIC(A) ? vh : vl, td, tt);
 end
 endmodule
 
+// Combinational cells
+module sg13g2_a21o_1 (output electrical X, input electrical A1, A2, B1);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A1)-vth) or cross(V(A2)-vth) or cross(V(B1)-vth))
+        V(X) <+ transition((`SG13_LOGIC(A1) && `SG13_LOGIC(A2)) || `SG13_LOGIC(B1) ? vh : vl, td, tt);
+end
+endmodule
 
+module sg13g2_a21o_2 (output electrical X, input electrical A1, A2, B1);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A1)-vth) or cross(V(A2)-vth) or cross(V(B1)-vth))
+        V(X) <+ transition((`SG13_LOGIC(A1) && `SG13_LOGIC(A2)) || `SG13_LOGIC(B1) ? vh : vl, td, tt);
+end
+endmodule
 
+module sg13g2_a21oi_1 (output electrical Y, input electrical A1, A2, B1);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A1)-vth) or cross(V(A2)-vth) or cross(V(B1)-vth))
+        V(Y) <+ transition(!((`SG13_LOGIC(A1) && `SG13_LOGIC(A2)) || `SG13_LOGIC(B1)) ? vh : vl, td, tt);
+end
+endmodule
 
+module sg13g2_a21oi_2 (output electrical Y, input electrical A1, A2, B1);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A1)-vth) or cross(V(A2)-vth) or cross(V(B1)-vth))
+        V(Y) <+ transition(!((`SG13_LOGIC(A1) && `SG13_LOGIC(A2)) || `SG13_LOGIC(B1)) ? vh : vl, td, tt);
+end
+endmodule
 
+module sg13g2_a221oi_1 (output electrical Y, input electrical A1, A2, B1, B2, C1);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A1)-vth) or cross(V(A2)-vth) or cross(V(B1)-vth) or cross(V(B2)-vth) or cross(V(C1)-vth))
+        V(Y) <+ transition(!((`SG13_LOGIC(A1)&&`SG13_LOGIC(A2)) || (`SG13_LOGIC(B1)&&`SG13_LOGIC(B2)) || `SG13_LOGIC(C1)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_a22oi_1 (output electrical Y, input electrical A1, A2, B1, B2);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A1)-vth) or cross(V(A2)-vth) or cross(V(B1)-vth) or cross(V(B2)-vth))
+        V(Y) <+ transition(!((`SG13_LOGIC(A1)&&`SG13_LOGIC(A2)) || (`SG13_LOGIC(B1)&&`SG13_LOGIC(B2))) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_and2_1 (output electrical X, input electrical A, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A) && `SG13_LOGIC(B) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_and2_2 (output electrical X, input electrical A, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A) && `SG13_LOGIC(B) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_and3_1 (output electrical X, input electrical A, B, C);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A) && `SG13_LOGIC(B) && `SG13_LOGIC(C) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_and3_2 (output electrical X, input electrical A, B, C);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A) && `SG13_LOGIC(B) && `SG13_LOGIC(C) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_and4_1 (output electrical X, input electrical A, B, C, D);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth) or cross(V(D)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A) && `SG13_LOGIC(B) && `SG13_LOGIC(C) && `SG13_LOGIC(D) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_and4_2 (output electrical X, input electrical A, B, C, D);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth) or cross(V(D)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A) && `SG13_LOGIC(B) && `SG13_LOGIC(C) && `SG13_LOGIC(D) ? vh : vl, td, tt);
+end
+endmodule
+
+// Antenna/filler/decap cells do not drive signals
+module sg13g2_antennanp (input electrical A);
+endmodule
+module sg13g2_fill_1(); endmodule
+module sg13g2_fill_2(); endmodule
+module sg13g2_fill_4(); endmodule
+module sg13g2_fill_8(); endmodule
+module sg13g2_decap_4(); endmodule
+module sg13g2_decap_8(); endmodule
+
+// Buffers and inverters
+module sg13g2_buf_1 (output electrical X, input electrical A);
+    sg13g2_buf_base buf_i(.X(X), .A(A));
+endmodule
+module sg13g2_buf_2 (output electrical X, input electrical A);
+    sg13g2_buf_base buf_i(.X(X), .A(A));
+endmodule
+module sg13g2_buf_4 (output electrical X, input electrical A);
+    sg13g2_buf_base buf_i(.X(X), .A(A));
+endmodule
+module sg13g2_buf_8 (output electrical X, input electrical A);
+    sg13g2_buf_base buf_i(.X(X), .A(A));
+endmodule
+module sg13g2_buf_16 (output electrical X, input electrical A);
+    sg13g2_buf_base buf_i(.X(X), .A(A));
+endmodule
+
+module sg13g2_inv_1 (output electrical Y, input electrical A);
+    sg13g2_inv_base inv_i(.Y(Y), .A(A));
+endmodule
+module sg13g2_inv_2 (output electrical Y, input electrical A);
+    sg13g2_inv_base inv_i(.Y(Y), .A(A));
+endmodule
+module sg13g2_inv_4 (output electrical Y, input electrical A);
+    sg13g2_inv_base inv_i(.Y(Y), .A(A));
+endmodule
+module sg13g2_inv_8 (output electrical Y, input electrical A);
+    sg13g2_inv_base inv_i(.Y(Y), .A(A));
+endmodule
+module sg13g2_inv_16 (output electrical Y, input electrical A);
+    sg13g2_inv_base inv_i(.Y(Y), .A(A));
+endmodule
+
+// Multiplexers
+module sg13g2_mux2_1 (output electrical X, input electrical A0, A1, S);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A0)-vth) or cross(V(A1)-vth) or cross(V(S)-vth))
+        V(X) <+ transition(`SG13_LOGIC(S) ? (`SG13_LOGIC(A1)?vh:vl) : (`SG13_LOGIC(A0)?vh:vl), td, tt);
+end
+endmodule
+
+module sg13g2_mux2_2 (output electrical X, input electrical A0, A1, S);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A0)-vth) or cross(V(A1)-vth) or cross(V(S)-vth))
+        V(X) <+ transition(`SG13_LOGIC(S) ? (`SG13_LOGIC(A1)?vh:vl) : (`SG13_LOGIC(A0)?vh:vl), td, tt);
+end
+endmodule
+
+module sg13g2_mux4_1 (output electrical X, input electrical A0, A1, A2, A3, S0, S1);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A0)-vth) or cross(V(A1)-vth) or cross(V(A2)-vth) or cross(V(A3)-vth) or cross(V(S0)-vth) or cross(V(S1)-vth)) begin
+        integer sel0, sel1;
+        sel0 = `SG13_LOGIC(S0);
+        sel1 = `SG13_LOGIC(S1);
+        if (!sel1 && !sel0)
+            V(X) <+ transition(`SG13_LOGIC(A0)?vh:vl, td, tt);
+        else if (!sel1 && sel0)
+            V(X) <+ transition(`SG13_LOGIC(A1)?vh:vl, td, tt);
+        else if (sel1 && !sel0)
+            V(X) <+ transition(`SG13_LOGIC(A2)?vh:vl, td, tt);
+        else
+            V(X) <+ transition(`SG13_LOGIC(A3)?vh:vl, td, tt);
+    end
+end
+endmodule
+
+// NAND / NOR variations
+module sg13g2_nand2_1 (output electrical Y, input electrical A, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A) && `SG13_LOGIC(B)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nand2_2 (output electrical Y, input electrical A, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A) && `SG13_LOGIC(B)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nand2b_1 (output electrical Y, input electrical A_N, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A_N)-vth) or cross(V(B)-vth))
+        V(Y) <+ transition(!((!`SG13_LOGIC(A_N)) && `SG13_LOGIC(B)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nand2b_2 (output electrical Y, input electrical A_N, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A_N)-vth) or cross(V(B)-vth))
+        V(Y) <+ transition(!((!`SG13_LOGIC(A_N)) && `SG13_LOGIC(B)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nand3_1 (output electrical Y, input electrical A, B, C);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A)&&`SG13_LOGIC(B)&&`SG13_LOGIC(C)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nand3b_1 (output electrical Y, input electrical A_N, B, C);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A_N)-vth) or cross(V(B)-vth) or cross(V(C)-vth))
+        V(Y) <+ transition(!((!`SG13_LOGIC(A_N))&&`SG13_LOGIC(B)&&`SG13_LOGIC(C)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nand4_1 (output electrical Y, input electrical A, B, C, D);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth) or cross(V(D)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A)&&`SG13_LOGIC(B)&&`SG13_LOGIC(C)&&`SG13_LOGIC(D)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nor2_1 (output electrical Y, input electrical A, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A) || `SG13_LOGIC(B)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nor2_2 (output electrical Y, input electrical A, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A) || `SG13_LOGIC(B)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nor2b_1 (output electrical Y, input electrical A, B_N);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B_N)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A) || !`SG13_LOGIC(B_N)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nor2b_2 (output electrical Y, input electrical A, B_N);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B_N)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A) || !`SG13_LOGIC(B_N)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nor3_1 (output electrical Y, input electrical A, B, C);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A)||`SG13_LOGIC(B)||`SG13_LOGIC(C)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nor3_2 (output electrical Y, input electrical A, B, C);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A)||`SG13_LOGIC(B)||`SG13_LOGIC(C)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nor4_1 (output electrical Y, input electrical A, B, C, D);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth) or cross(V(D)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A)||`SG13_LOGIC(B)||`SG13_LOGIC(C)||`SG13_LOGIC(D)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_nor4_2 (output electrical Y, input electrical A, B, C, D);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth) or cross(V(D)-vth))
+        V(Y) <+ transition(!(`SG13_LOGIC(A)||`SG13_LOGIC(B)||`SG13_LOGIC(C)||`SG13_LOGIC(D)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_o21ai_1 (output electrical Y, input electrical A1, A2, B1);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A1)-vth) or cross(V(A2)-vth) or cross(V(B1)-vth))
+        V(Y) <+ transition(!((`SG13_LOGIC(A1)||`SG13_LOGIC(A2)) && `SG13_LOGIC(B1)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_or2_1 (output electrical X, input electrical A, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A) || `SG13_LOGIC(B) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_or2_2 (output electrical X, input electrical A, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A) || `SG13_LOGIC(B) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_or3_1 (output electrical X, input electrical A, B, C);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A)||`SG13_LOGIC(B)||`SG13_LOGIC(C) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_or3_2 (output electrical X, input electrical A, B, C);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A)||`SG13_LOGIC(B)||`SG13_LOGIC(C) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_or4_1 (output electrical X, input electrical A, B, C, D);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth) or cross(V(D)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A)||`SG13_LOGIC(B)||`SG13_LOGIC(C)||`SG13_LOGIC(D) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_or4_2 (output electrical X, input electrical A, B, C, D);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth) or cross(V(C)-vth) or cross(V(D)-vth))
+        V(X) <+ transition(`SG13_LOGIC(A)||`SG13_LOGIC(B)||`SG13_LOGIC(C)||`SG13_LOGIC(D) ? vh : vl, td, tt);
+end
+endmodule
+
+// Exclusive gates
+module sg13g2_xor2_1 (output electrical X, input electrical A, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth))
+        V(X) <+ transition((`SG13_LOGIC(A) ^ `SG13_LOGIC(B)) ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_xnor2_1 (output electrical Y, input electrical A, B);
+    `SG13_STD_PARAMS
+analog begin
+    @(cross(V(A)-vth) or cross(V(B)-vth))
+        V(Y) <+ transition((`SG13_LOGIC(A) ~^ `SG13_LOGIC(B)) ? vh : vl, td, tt);
+end
+endmodule
+
+// Tri-state and enable inverters
+module sg13g2_ebufn_2 (inout electrical Z, input electrical A, TE_B);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(A)-vth) or cross(V(TE_B)-vth)) begin
+        if (!`SG13_LOGIC(TE_B))
+            state = `SG13_LOGIC(A);
+    end
+    V(Z) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+module sg13g2_ebufn_4 (inout electrical Z, input electrical A, TE_B);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(A)-vth) or cross(V(TE_B)-vth)) begin
+        if (!`SG13_LOGIC(TE_B))
+            state = `SG13_LOGIC(A);
+    end
+    V(Z) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+module sg13g2_ebufn_8 (inout electrical Z, input electrical A, TE_B);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(A)-vth) or cross(V(TE_B)-vth)) begin
+        if (!`SG13_LOGIC(TE_B))
+            state = `SG13_LOGIC(A);
+    end
+    V(Z) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_einvn_2 (inout electrical Z, input electrical A, TE_B);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(A)-vth) or cross(V(TE_B)-vth)) begin
+        if (!`SG13_LOGIC(TE_B))
+            state = !`SG13_LOGIC(A);
+    end
+    V(Z) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+module sg13g2_einvn_4 (inout electrical Z, input electrical A, TE_B);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(A)-vth) or cross(V(TE_B)-vth)) begin
+        if (!`SG13_LOGIC(TE_B))
+            state = !`SG13_LOGIC(A);
+    end
+    V(Z) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+module sg13g2_einvn_8 (inout electrical Z, input electrical A, TE_B);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(A)-vth) or cross(V(TE_B)-vth)) begin
+        if (!`SG13_LOGIC(TE_B))
+            state = !`SG13_LOGIC(A);
+    end
+    V(Z) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+// Tie cells
+module sg13g2_tiehi (output electrical L_HI);
+    `SG13_STD_PARAMS
+analog begin
+    V(L_HI) <+ transition(vh, td, tt);
+end
+endmodule
+
+module sg13g2_tielo (output electrical L_LO);
+    `SG13_STD_PARAMS
+analog begin
+    V(L_LO) <+ transition(vl, td, tt);
+end
+endmodule
+
+// Clock gating helpers
+module sg13g2_lgcp_1 (output electrical GCLK, input electrical GATE, CLK);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(GATE)-vth) or cross(V(CLK)-vth)) begin
+        state = `SG13_LOGIC(GATE) && `SG13_LOGIC(CLK);
+    end
+    V(GCLK) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_slgcp_1 (output electrical GCLK, input electrical GATE, SCE, CLK);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(GATE)-vth) or cross(V(SCE)-vth) or cross(V(CLK)-vth)) begin
+        state = ((`SG13_LOGIC(GATE) && !`SG13_LOGIC(SCE)) || `SG13_LOGIC(SCE)) && `SG13_LOGIC(CLK);
+    end
+    V(GCLK) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+// Latches
+module sg13g2_dlhq_1 (output electrical Q, input electrical D, GATE);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(D)-vth) or cross(V(GATE)-vth)) begin
+        if (`SG13_LOGIC(GATE))
+            state = `SG13_LOGIC(D);
+    end
+    V(Q) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_dlhr_1 (output electrical Q, Q_N, input electrical D, RESET_B, GATE);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(D)-vth) or cross(V(RESET_B)-vth) or cross(V(GATE)-vth)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (`SG13_LOGIC(GATE))
+            state = `SG13_LOGIC(D);
+    end
+    V(Q)   <+ transition(state ? vh : vl, td, tt);
+    V(Q_N) <+ transition(!state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_dlhrq_1 (output electrical Q, input electrical D, RESET_B, GATE);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(D)-vth) or cross(V(RESET_B)-vth) or cross(V(GATE)-vth)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (`SG13_LOGIC(GATE))
+            state = `SG13_LOGIC(D);
+    end
+    V(Q) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_dllr_1 (output electrical Q, Q_N, input electrical D, RESET_B, GATE_N);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(D)-vth) or cross(V(RESET_B)-vth) or cross(V(GATE_N)-vth)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (!`SG13_LOGIC(GATE_N))
+            state = `SG13_LOGIC(D);
+    end
+    V(Q)   <+ transition(state ? vh : vl, td, tt);
+    V(Q_N) <+ transition(!state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_dllrq_1 (output electrical Q, input electrical D, RESET_B, GATE_N);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(D)-vth) or cross(V(RESET_B)-vth) or cross(V(GATE_N)-vth)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (!`SG13_LOGIC(GATE_N))
+            state = `SG13_LOGIC(D);
+    end
+    V(Q) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+// D flip-flops
+module sg13g2_dfrbp_1 (output electrical Q, Q_N, input electrical D, RESET_B, CLK);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(RESET_B)-vth) or cross(V(CLK)-vth, +1) or cross(V(D)-vth)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (cross(V(CLK)-vth, +1))
+            state = `SG13_LOGIC(D);
+    end
+    V(Q)   <+ transition(state ? vh : vl, td, tt);
+    V(Q_N) <+ transition(!state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_dfrbp_2 (output electrical Q, Q_N, input electrical D, RESET_B, CLK);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(RESET_B)-vth) or cross(V(CLK)-vth, +1) or cross(V(D)-vth)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (cross(V(CLK)-vth, +1))
+            state = `SG13_LOGIC(D);
+    end
+    V(Q)   <+ transition(state ? vh : vl, td, tt);
+    V(Q_N) <+ transition(!state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_dfrbpq_1 (output electrical Q, input electrical D, RESET_B, CLK);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(RESET_B)-vth) or cross(V(CLK)-vth, +1) or cross(V(D)-vth)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (cross(V(CLK)-vth, +1))
+            state = `SG13_LOGIC(D);
+    end
+    V(Q) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_dfrbpq_2 (output electrical Q, input electrical D, RESET_B, CLK);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(RESET_B)-vth) or cross(V(CLK)-vth, +1) or cross(V(D)-vth)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (cross(V(CLK)-vth, +1))
+            state = `SG13_LOGIC(D);
+    end
+    V(Q) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+// Scan DFF with reset and optional set
+module sg13g2_sdfbbp_1 (output electrical Q, Q_N, input electrical D, SCD, SCE, RESET_B, SET_B, CLK);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(D)-vth) or cross(V(SCD)-vth) or cross(V(SCE)-vth) or cross(V(RESET_B)-vth) or cross(V(SET_B)-vth) or cross(V(CLK)-vth, +1)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (!`SG13_LOGIC(SET_B))
+            state = 1;
+        else if (cross(V(CLK)-vth, +1))
+            state = `SG13_LOGIC(SCE) ? `SG13_LOGIC(SCD) : `SG13_LOGIC(D);
+    end
+    V(Q)   <+ transition(state ? vh : vl, td, tt);
+    V(Q_N) <+ transition(!state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_sdfrbp_1 (output electrical Q, Q_N, input electrical D, SCD, SCE, RESET_B, CLK);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(D)-vth) or cross(V(SCD)-vth) or cross(V(SCE)-vth) or cross(V(RESET_B)-vth) or cross(V(CLK)-vth, +1)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (cross(V(CLK)-vth, +1))
+            state = `SG13_LOGIC(SCE) ? `SG13_LOGIC(SCD) : `SG13_LOGIC(D);
+    end
+    V(Q)   <+ transition(state ? vh : vl, td, tt);
+    V(Q_N) <+ transition(!state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_sdfrbp_2 (output electrical Q, Q_N, input electrical D, SCD, SCE, RESET_B, CLK);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(D)-vth) or cross(V(SCD)-vth) or cross(V(SCE)-vth) or cross(V(RESET_B)-vth) or cross(V(CLK)-vth, +1)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (cross(V(CLK)-vth, +1))
+            state = `SG13_LOGIC(SCE) ? `SG13_LOGIC(SCD) : `SG13_LOGIC(D);
+    end
+    V(Q)   <+ transition(state ? vh : vl, td, tt);
+    V(Q_N) <+ transition(!state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_sdfrbpq_1 (output electrical Q, input electrical D, SCD, SCE, RESET_B, CLK);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(D)-vth) or cross(V(SCD)-vth) or cross(V(SCE)-vth) or cross(V(RESET_B)-vth) or cross(V(CLK)-vth, +1)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (cross(V(CLK)-vth, +1))
+            state = `SG13_LOGIC(SCE) ? `SG13_LOGIC(SCD) : `SG13_LOGIC(D);
+    end
+    V(Q) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+module sg13g2_sdfrbpq_2 (output electrical Q, input electrical D, SCD, SCE, RESET_B, CLK);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(D)-vth) or cross(V(SCD)-vth) or cross(V(SCE)-vth) or cross(V(RESET_B)-vth) or cross(V(CLK)-vth, +1)) begin
+        if (!`SG13_LOGIC(RESET_B))
+            state = 0;
+        else if (cross(V(CLK)-vth, +1))
+            state = `SG13_LOGIC(SCE) ? `SG13_LOGIC(SCD) : `SG13_LOGIC(D);
+    end
+    V(Q) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+// Bus hold cell
+module sg13g2_sighold (inout electrical SH);
+    `SG13_STD_PARAMS
+    real state;
+analog begin
+    @(cross(V(SH)-vth)) state = `SG13_LOGIC(SH);
+    V(SH) <+ transition(state ? vh : vl, td, tt);
+end
+endmodule
+
+// Delay cells modeled as buffers
+module sg13g2_dlygate4sd1_1 (output electrical X, input electrical A);
+    sg13g2_buf_base buf_i(.X(X), .A(A));
+endmodule
+module sg13g2_dlygate4sd2_1 (output electrical X, input electrical A);
+    sg13g2_buf_base buf_i(.X(X), .A(A));
+endmodule
+module sg13g2_dlygate4sd3_1 (output electrical X, input electrical A);
+    sg13g2_buf_base buf_i(.X(X), .A(A));
+endmodule
 
