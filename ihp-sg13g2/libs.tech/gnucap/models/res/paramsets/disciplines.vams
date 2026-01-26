@@ -1,0 +1,29 @@
+// Minimal disciplines.vams (enough for most simple Verilog-A / Verilog-AMS models)
+// Put this file in your include path and do: `include "disciplines.vams"
+
+`ifndef _DISCIPLINES_VAMS_
+`define _DISCIPLINES_VAMS_
+
+// --- Natures ---
+// Voltage and Current (base SI units).
+nature voltage;
+  units = "V";
+  access = V;
+  abstol = 1.0e-6;     // 1 microvolt
+endnature
+
+nature current;
+  units = "A";
+  access = I;
+  abstol = 1.0e-12;     // 1 picoamp
+endnature
+
+// --- Disciplines ---
+// Standard electrical discipline: potential is Voltage, flow is Current.
+discipline electrical;
+  potential voltage;
+  flow      current;
+enddiscipline
+
+`endif
+

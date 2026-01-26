@@ -1,0 +1,12 @@
+
+
+
+module top (d1, d2, d3);
+inout d1, d2, d3
+electrical d1, d2, d3;
+
+
+rsil #(.l(1u), .w(5u), .mm_ok(1)) r1(d1, d2, d3);
+rsil #(.l(1u), .w(5u)) r2(d1, d2, d3);
+
+endmodule
