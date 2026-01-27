@@ -8,6 +8,8 @@ load vams/vpulse.so
 module res_typ();
   // ---- seeds (constants) ----
   parameter real SEED = 101;
+  
+  parameter real xyz = 0.0;
 
   // ---- nominal (per corner) ----
   parameter real rsh_rsil_nom = 7.0;     // ohm/sq (example)
@@ -16,7 +18,7 @@ module res_typ();
   parameter real rsh_rsil_sigma_l = 0.20; // ohm/sq local
 
   // ---- local (instance mismatch) ----
-  parameter real drsh_l = $rdist_normal(0, 0.0, rsh_rsil_sigma_l);
+  parameter real drsh_l = xyz;
 
   // ---- final effective params for this corner ----
   parameter real rsh_rsil_eff = rsh_rsil_nom  + drsh_l;
@@ -24,16 +26,15 @@ endmodule
 
 
 ground gnd;
-res_typ #() global_res_typ();
+parameter seed = 0;
+res_typ #(.xyz($rdist_normal(seed,0.0,1.2))) global_res_typ();
 
-rsil #(.l(0.5u), .w(0.5u)) r2(n1, gnd, gnd);
+rsil #(.l(0.5u), .w(0.5u) ) r2(n1, gnd, gnd);
+rsil #(.l(0.5u), .w(0.5u) ) r1(n1, gnd, gnd);
 
 spice
 Ir n1 gnd 1
-.print dc  v(*)
-.options seed=2
-.dc
-.options seed=3
-.dc
+.print dc   v(*)
+.dc seed 0 10 1 > file
 
 
