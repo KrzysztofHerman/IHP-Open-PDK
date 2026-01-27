@@ -1,22 +1,4 @@
 
-module res_typ;
-  // ---- seeds (constants) ----
-  localparam integer SEED = 101;
-
-  // ---- nominal (per corner) ----
-  localparam real rsh_rsil_nom = 7.0;     // ohm/sq (example)
-
-  // ---- 1-sigma variations (example numbers) ----
-  localparam real rsh_rsil_sigma_l = 0.20; // ohm/sq local
-
-  // ---- local (instance mismatch) ----
-  // localparam real drsh_l = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_l, "instance");
-  localparam real drsh_l = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_l);
-
-  // ---- final effective params for this corner ----
-  //localparam real rsh_rsil_eff = rsh_rsil_nom  + drsh_l;
-  localparam real rsh_rsil_eff = rsh_rsil_nom ;
-endmodule
 
 // This
 module res_typ_stat;
@@ -41,3 +23,24 @@ module res_typ_stat;
   // ---- final effective params for this corner ----
   localparam real rsh_rsil_eff = rsh_rsil_nom + drsh_g + drsh_l;
 endmodule
+
+module res_typ();
+  // ---- seeds (constants) ----
+  parameter real SEED = 101;
+  
+  parameter real xyz = 0.0;
+
+  // ---- nominal (per corner) ----
+  parameter real rsh_rsil_nom = 7.0;     // ohm/sq (example)
+
+  // ---- 1-sigma variations (example numbers) ----
+  parameter real rsh_rsil_sigma_l = 0.20; // ohm/sq local
+
+  // ---- local (instance mismatch) ----
+  parameter real drsh_l = xyz;
+
+  // ---- final effective params for this corner ----
+  parameter real rsh_rsil_eff = rsh_rsil_nom  + drsh_l;
+endmodule
+
+

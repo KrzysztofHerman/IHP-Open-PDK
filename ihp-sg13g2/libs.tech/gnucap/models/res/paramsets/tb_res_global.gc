@@ -2,6 +2,7 @@
 // Libraries
 load mgsim
 verilog
+options insensitive
 load ./resistors_typ.so
 load vams/vpulse.so
 
@@ -27,14 +28,16 @@ endmodule
 
 ground gnd;
 parameter seed = 0;
-res_typ #(.xyz($rdist_normal(seed,0.0,1.2))) global_res_typ();
 
-rsil #(.l(0.5u), .w(0.5u) ) r2(n1, gnd, gnd);
+res_typ #(.xyz($rdist_normal(seed,0.0,0.2))) global_res_typ();
+
+rsil #(.l(0.5u), .w(0.5u) ) r2(n2, gnd, n1);
 rsil #(.l(0.5u), .w(0.5u) ) r1(n1, gnd, gnd);
 
 spice
-Ir n1 gnd 1
-.print dc   v(*)
-.dc seed 0 10 1 > file
+options noinsensitive
+Ir n2 gnd 1
+.print dc   v(r1) v(r2)
+.dc seed 0 10 1 
 
 

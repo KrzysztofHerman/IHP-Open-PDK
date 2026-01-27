@@ -7,7 +7,6 @@ paramset rsil r3_cmc
   parameter integer _rdist_seed = 0;
   parameter real w = 0.5e-6 from (0.1e-6:10e-6);
   parameter real l = 0.5e-6 from (0.5e-6:10e-6);
-  parameter real mm_ok = 1;
   parameter real b = 0;
   parameter real m = 1;
   parameter real trise = 0;
@@ -77,7 +76,7 @@ paramset rsil r3_cmc
 endparamset
 
 
-paramset rsil2 r3_cmc
+paramset rsil r3_cmc
   
   parameter integer _rdist_seed = 0;
   parameter real w = 0.5e-6 from (0.1e-6:10e-6);
@@ -105,7 +104,7 @@ paramset rsil2 r3_cmc
   parameter real rshspec = 7;
   parameter real rqrc = 4.5e-6;
   parameter real rz = rzspec / w - (postsim > 0) * rqrc / w;
-  parameter real rsh_rsil = $rdist_normal(4, 7.0, 0.8);
+  parameter real rsh_rsil = $rdist_normal(_rdist_seed, 7.0, 0.2);
   //parameter real rsh_rsil = 7.0;
 
     .c1(1);
