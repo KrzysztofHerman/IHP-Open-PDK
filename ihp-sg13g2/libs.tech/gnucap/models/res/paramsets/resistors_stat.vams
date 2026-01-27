@@ -1,5 +1,4 @@
 
-// This can be used to define typical resistor parameters
 module res_typ;
   // ---- seeds (constants) ----
   localparam integer SEED = 101;
@@ -11,10 +10,12 @@ module res_typ;
   localparam real rsh_rsil_sigma_l = 0.20; // ohm/sq local
 
   // ---- local (instance mismatch) ----
-  localparam real drsh_l = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_l, "instance");
+  // localparam real drsh_l = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_l, "instance");
+  localparam real drsh_l = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_l);
 
   // ---- final effective params for this corner ----
-  localparam real rsh_rsil_eff = rsh_rsil_nom  + drsh_l;
+  //localparam real rsh_rsil_eff = rsh_rsil_nom  + drsh_l;
+  localparam real rsh_rsil_eff = rsh_rsil_nom ;
 endmodule
 
 // This
@@ -30,10 +31,12 @@ module res_typ_stat;
   localparam real rsh_rsil_sigma_l = 0.20; // ohm/sq local
 
   // ---- global (shared across instances) ----
-  localparam real drsh_g = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_g, "global");
+  // localparam real drsh_g = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_g, "global");
+  localparam real drsh_g = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_g);
 
   // ---- local (instance mismatch) ----
-  localparam real drsh_l = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_l, "instance");
+  // localparam real drsh_l = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_l, "instance");
+  localparam real drsh_l = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_l);
 
   // ---- final effective params for this corner ----
   localparam real rsh_rsil_eff = rsh_rsil_nom + drsh_g + drsh_l;

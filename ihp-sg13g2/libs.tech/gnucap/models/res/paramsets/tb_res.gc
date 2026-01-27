@@ -1,0 +1,21 @@
+// Verilog
+// Libraries
+// It works in analog domain, the model shoulr be changed to support logic 
+verilog
+load mgsim
+load ../../../plugins/r3_cmc.so
+load ./resistors_typ.so
+load ./resistors_stat.so
+load vams/vpulse.so
+
+ground gnd;
+
+res_typ #() global_res_typ();
+
+rsil #(.l(0.5u), .w(0.5u)) r2(n1, gnd, gnd);
+
+// vpulse #(0, 1.2, 0, 1n, 1n, 5u, 10u) V1(n1, gnd);
+spice
+Ir n1 gnd 1
+.print dc  v(*)
+.dc

@@ -1,0 +1,10 @@
+
+`ifdef res_typ
+`include "resistors_typ.vams"
+`endif
+
+`ifdef res_typ_stat
+`include "resistors_typ_stat.vams"
+`endif
+
+
