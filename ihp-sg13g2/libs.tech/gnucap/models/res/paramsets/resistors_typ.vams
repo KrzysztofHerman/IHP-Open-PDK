@@ -5,9 +5,10 @@
 paramset rsil r3_cmc
   
   parameter integer _rdist_seed = 0;
-  parameter real w = 0.5e-6 from (0.1e-6:10e-6);
-  parameter real l = 0.5e-6 from (0.5e-6:10e-6);
+  parameter real w = 0.5e-6 from [0.5e-6:10e-6);
+  parameter real l = 0.5e-6 from [0.5e-6:10e-6);
   parameter real b = 0;
+  parameter integer mm_ok = 0 from [0:0];
   parameter real m = 1;
   parameter real trise = 0;
   parameter real sw_et = 0;
@@ -79,9 +80,9 @@ endparamset
 paramset rsil r3_cmc
   
   parameter integer _rdist_seed = 0;
-  parameter real w = 0.5e-6 from (0.1e-6:10e-6);
-  parameter real l = 0.5e-6 from (0.5e-6:10e-6);
-  parameter real mm_ok = 1;
+  parameter real w = 0.5e-6 from [0.1e-6:10e-6);
+  parameter real l = 0.5e-6 from [0.5e-6:10e-6);
+  parameter integer mm_ok = 1  from [1:1];
   parameter real b = 0;
   parameter real m = 1;
   parameter real trise = 0;
