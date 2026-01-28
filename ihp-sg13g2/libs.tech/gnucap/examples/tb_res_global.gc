@@ -3,7 +3,7 @@
 load mgsim
 verilog
 options insensitive
-load ./resistors_typ.so
+load ../plugins/resistors_paramsets.so
 load vams/vpulse.so
 
 module res_typ();

@@ -1,0 +1,40 @@
+// Verilog
+// Libraries
+load mgsim
+verilog
+load ../plugins/resistors_paramsets.so
+// load ../plugins/resistors_stat.so
+
+module res_typ();
+  // ---- seeds (constants) ----
+  parameter real SEED = 101;
+  
+  parameter real xyz = 0.0;
+
+  // ---- nominal (per corner) ----
+  parameter real rsh_rsil_nom = 7.0;     // ohm/sq (example)
+
+  // ---- 1-sigma variations (example numbers) ----
+  parameter real rsh_rsil_sigma_l = 0.20; // ohm/sq local
+
+  // ---- local (instance mismatch) ----
+  parameter real drsh_l = xyz;
+
+  // ---- final effective params for this corner ----
+  parameter real rsh_rsil_eff = rsh_rsil_nom  + drsh_l;
+endmodule
+
+
+ground gnd;
+parameter seed = 0;
+res_typ #(.xyz($rdist_normal(seed,0.0,1.2))) global_res_typ();
+
+rsil #(.l(0.5u), .w(0.5u) ) r2(n2, gnd, n1);
+rsil #(.l(0.5u), .w(0.5u) ) r1(n1, gnd, gnd);
+
+spice
+Ir n2 gnd 1
+.print dc   v(r1) v(r2)
+.dc seed 0 10 1 
+
+

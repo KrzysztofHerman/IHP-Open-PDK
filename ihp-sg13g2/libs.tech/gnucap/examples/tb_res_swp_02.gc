@@ -1,0 +1,31 @@
+// Verilog
+// Libraries
+load mgsim
+verilog
+// options trace
+load ../plugins/resistors_paramsets.so
+load ../plugins/resistors_stat.so
+
+
+ground gnd;
+parameter seed = 0;
+
+
+module rsil_tb(n1, n2, gnd);
+  parameter integer seed=0;
+  parameter integer mm_ok=0;
+  rsil #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r2(n2, gnd, n1);
+  rsil #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r1(n1, gnd, gnd);
+  res_typ #(.xyz($rdist_normal(seed,0.0,0.2))) global_res_typ();
+endmodule
+
+rsil_tb #(.seed(seed), .mm_ok(0)) tb1(n1, n2, gnd);
+//                            ^ 1 also works.
+
+// Still does not work trying to access values from the compiled object 
+spice
+.options noinsensitive
+Ir n2 gnd 1
+.print dc    v(tb1.r*) 
+.dc seed 0 10 1 
+

@@ -3,8 +3,7 @@
 load mgsim
 verilog
 options debug
-load ./resistors_typ.so
-load vams/vpulse.so
+load ../plugins/resistors_paramsets.so
 
 module res_typ();
   // ---- seeds (constants) ----
@@ -33,7 +32,7 @@ parameter seed = 0;
 
 module rsil_tb(n1, n2, gnd);
   parameter integer seed=0;
-  parameter integer mm_ok=1;
+  parameter integer mm_ok=0;
   rsil #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r2(n2, gnd, n1);
   rsil #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r1(n1, gnd, gnd);
 endmodule

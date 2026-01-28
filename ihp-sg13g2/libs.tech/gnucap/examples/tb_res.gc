@@ -2,7 +2,7 @@
 // Libraries
 load mgsim
 verilog
-load ./resistors_typ.so
+load ../plugins/resistors_paramsets.so
 load vams/vpulse.so
 
 module res_typ();
@@ -26,11 +26,11 @@ endmodule
 ground gnd;
 res_typ #() global_res_typ();
 
-rsil #(.l(0.5u), .w(0.5u)) r2(n1, gnd, gnd);
+rsil #(.l(0.5u), .w(0.5u)) r1(n1, gnd, gnd);
 
 spice
 Ir n1 gnd 1
-.print dc  v(*)
+.print dc  v(r1)
 .options seed=2
 .dc
 .options seed=3

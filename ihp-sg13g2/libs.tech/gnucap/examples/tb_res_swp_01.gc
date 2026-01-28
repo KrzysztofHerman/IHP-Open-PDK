@@ -3,8 +3,7 @@
 load mgsim
 verilog
 // options trace
-load ./resistors_typ.so
-load vams/vpulse.so
+load ../plugins/resistors_paramsets.so
 
 module res_typ();
   // ---- seeds (constants) ----
@@ -38,11 +37,14 @@ module rsil_tb(n1, n2, gnd);
   res_typ #(.xyz($rdist_normal(seed,0.0,0.2))) global_res_typ();
 endmodule
 
-rsil_tb #(.seed(seed), .mm_ok(1)) tb(n1, n2, gnd);
+rsil_tb #(.seed(seed), .mm_ok(1)) tb1(n1, n2, gnd);
 //                            ^ 1 also works.
+
+// Works as expected switching between the global and local variation 
+
 spice
 .options noinsensitive
 Ir n2 gnd 1
-.print dc    v(tb.r*)
+.print dc    v(tb1.r*) 
 .dc seed 0 10 1 
 
