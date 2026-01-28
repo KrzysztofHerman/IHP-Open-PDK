@@ -3,7 +3,8 @@
 load mgsim
 verilog
 // options trace
-load ../plugins/resistors_paramsets.so
+// load ../plugins/resistors_paramsets.so
+load ../plugins/cornerRES_stat.so
 
 module res_typ();
   // ---- seeds (constants) ----

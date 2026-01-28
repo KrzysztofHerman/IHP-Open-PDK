@@ -1,10 +1,21 @@
 
 `ifdef res_typ
-`include "resistors_typ.vams"
+`define rsh_rsil 7.0
+`include "resistors_paramsets.vams"
 `endif
 
-`ifdef res_typ_stat
-`include "resistors_typ_stat.vams"
+`ifdef res_bcs
+`define rsh_rsil 6.02
+`include "resistors_paramsets.vams"
 `endif
 
+`ifdef res_wcs
+`define rsh_rsil 7.98
+`include "resistors_paramsets.vams"
+`endif
+
+`ifdef res_stat
+`define rsh_rsil 7.0
+`include "resistors_paramsets_stat.vams"
+`endif
 

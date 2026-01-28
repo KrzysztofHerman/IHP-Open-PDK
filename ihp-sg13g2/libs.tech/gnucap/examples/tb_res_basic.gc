@@ -1,0 +1,16 @@
+// Verilog
+// Libraries
+load mgsim
+verilog
+load ../plugins/cornerRES_bcs.so
+//load ../plugins/cornerRES_typ.so
+
+ground gnd;
+
+rsil #(.l(0.5u), .w(0.5u)) r1(n1, gnd, gnd);
+
+spice
+Ir n1 gnd 1
+.print dc  v(r1)
+.dc
+

@@ -30,7 +30,7 @@ paramset rsil r3_cmc
   parameter real rshspec = 7;
   parameter real rqrc = 4.5e-6;
   parameter real rz = rzspec / w - (postsim > 0) * rqrc / w;
-  parameter real rsh_rsil = `rsh_rsil;
+  parameter real rsh_rsil = global_res_typ.rsh_rsil_eff;
 
     .c1(1);
     .a2(a);
@@ -104,7 +104,8 @@ paramset rsil r3_cmc
   parameter real rshspec = 7;
   parameter real rqrc = 4.5e-6;
   parameter real rz = rzspec / w - (postsim > 0) * rqrc / w;
-  parameter real rsh_rsil = $rdist_normal(_rdist_seed, `rsh_rsil, 0.2);
+  parameter real rsh_rsil = $rdist_normal(_rdist_seed, 0.0, 0.2) + global_res_typ.rsh_rsil_eff;
+  //parameter real rsh_rsil = 7.0;
 
     .c1(1);
     .a2(a);
