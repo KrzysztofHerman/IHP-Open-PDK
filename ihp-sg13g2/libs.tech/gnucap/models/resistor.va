@@ -122,6 +122,7 @@ module sp_resistor(pos, neg);
   (* desc = "noise frequency exponent" *) parameter real ef = 1.0;
 
   // Instance opvars
+  (* desc = "Voltage" *) real v;
   (* desc = "Current" *) real i;
   (* desc = "Power" *) real p;
 
@@ -318,6 +319,7 @@ module sp_resistor(pos, neg);
     end
 
     // Instance opvar computation
+    v = V(pos,neg);
     i = V(pos, neg);
     i = i * (RESconduct);
     p = V(pos, neg)*V(pos, neg);

@@ -1,32 +1,29 @@
 // Verilog
-// Libraries
 load mgsim
 verilog
 //load ../plugins/cornerRES_bcs.so
 //load ../plugins/cornerRES_wcs.so
 load ../plugins/cornerRES_typ.so
-
-
 ground gnd;
-
 
 rsil  #(.l(0.5u), .w(0.5u)) r1(n1, gnd, gnd);
 rppd  #(.l(0.5u), .w(0.5u)) r2(n2, gnd, gnd);
 rhigh #(.l(0.5u), .w(0.5u)) r3(n3, gnd, gnd);
 
-ptap1  #(.R(100)) rp1(n4, gnd);
+ptap1  #(.R(150)) rp1(n4, gnd);
 
-// ntap1  #(.R(200)) rp2(n5, gnd);
+ntap1  #(.R(220)) rp2(n5, gnd);
 
-// Rparasitic #() rpara(n6, gnd);
+Rparasitic #() rpara(n6, gnd);
 
 spice
 Ir1 n1 gnd 1m
 Ir2 n2 gnd 1m
 Ir3 n3 gnd 1m
 Ir4 n4 gnd 1m
-* Ir5 n5 gnd 1m
-* Ir6 n6 gnd 1m
-.print dc  v(r1) v(r2) v(r3) v(rp1)  
+Ir5 n5 gnd 1m
+Ir6 n6 gnd 1m
+.print dc  v(r1) v(r2) v(r3) v(rp1) v(rp2) v(rpara)  
+*.print dc  v(*)  
 .dc
 
