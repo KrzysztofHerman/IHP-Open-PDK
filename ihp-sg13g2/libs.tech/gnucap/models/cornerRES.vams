@@ -1,21 +1,28 @@
 
 `ifdef res_typ
+`define rsh_rhigh 1360
+`define rsh_rppd 260.0
 `define rsh_rsil 7.0
 `include "resistors_paramsets.vams"
 `endif
 
 `ifdef res_bcs
+`define rsh_rhigh 1020
+`define rsh_rppd 234.0
 `define rsh_rsil 6.02
 `include "resistors_paramsets.vams"
 `endif
 
 `ifdef res_wcs
+`define rsh_rhigh 1700
+`define rsh_rppd 286.0
 `define rsh_rsil 7.98
 `include "resistors_paramsets.vams"
 `endif
 
 `ifdef res_stat
+`define rsh_rhigh 1360
+`define rsh_rppd 260.0
 `define rsh_rsil 7.0
 `include "resistors_paramsets_stat.vams"
 `endif
-
