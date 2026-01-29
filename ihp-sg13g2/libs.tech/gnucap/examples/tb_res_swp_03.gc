@@ -3,7 +3,10 @@
 load mgsim
 verilog
 // options trace
-load ../plugins/resistors_paramsets.so
+load ../plugins/cornerRES_typ.so
+//load ../plugins/cornerRES_wcs.so
+//load ../plugins/cornerRES_bcs.so
+//load ../plugins/cornerRES_stat.so
 
 `include "../models/resistors_stat.vams"
 
@@ -12,20 +15,27 @@ ground gnd;
 parameter seed = 0;
 
 
-module rsil_tb(n1, n2, gnd);
+module res_tb(n1, n2, n3, gnd);
   parameter integer seed=0;
   parameter integer mm_ok=0;
-  rsil #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r2(n2, gnd, n1);
-  rsil #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r1(n1, gnd, gnd);
+  electrical net1, net2, net3;
+  rsil  #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r1(n1, gnd, net1);
+  rsil  #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r2(net1, gnd, gnd);
+  rppd  #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r3(n2, gnd, net2);
+  rppd  #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r4(net2, gnd, gnd);
+  rhigh #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r5(n3, gnd, net3);
+  rhigh #(.l(0.5u), .w(0.5u), ._rdist_seed(seed), .mm_ok(mm_ok)) r6(net3, gnd, gnd);
   res_typ #(.xyz($rdist_normal(seed,0.0,0.2))) global_res_typ();
 endmodule
 
-rsil_tb #(.seed(seed), .mm_ok(1)) tb1(n1, n2, gnd);
+res_tb #(.seed(seed), .mm_ok(1)) tb1(n1, n2, n3, gnd);
 //                            ^ 1 also works.
 
 spice
 .options noinsensitive
-Ir n2 gnd 1
+Ir1 n1 gnd 1m
+Ir2 n2 gnd 1m
+Ir3 n3 gnd 1m
 .print dc    v(tb1.r*) 
 .dc seed 0 10 1 
 

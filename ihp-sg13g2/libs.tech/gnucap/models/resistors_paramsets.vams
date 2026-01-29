@@ -1,6 +1,33 @@
 `pragma modelgen nogen-module
 `pragma modelgen gen-paramset
 `include "r3_cmc.va"
+`include "resistor.va"
+
+paramset ptap1 sp_resistor
+
+  parameter real R = 262.08;
+
+  .resistance = R;
+
+endparamset
+
+paramset ntap1 sp_resistor
+
+  parameter real R = 262.08;
+
+  .resistance = R;
+
+endparamset
+
+paramset Rparasitic sp_resistor
+
+  parameter real R = `res_rpara;
+  parameter real Tc1 = 0.00353;
+  parameter real Tc2 = 0.0;
+
+  .resistance = R;
+
+endparamset
 
 paramset rsil r3_cmc
   
@@ -80,7 +107,7 @@ paramset rhigh r3_cmc
   
   parameter integer _rdist_seed = 0;
   parameter real w = 0.5e-6 from [0.5e-6:10e-6);
-  parameter real l = 0.96e-6 from [0.5e-6:10e-6);
+  parameter real l = 0.5e-6 from [0.5e-6:10e-6);
   parameter real b = 0;
   parameter integer mm_ok = 0 from [0:0];
   parameter real m = 1;
@@ -154,8 +181,8 @@ paramset rhigh r3_cmc
   
   parameter integer _rdist_seed = 0;
   parameter real w = 0.5e-6 from [0.1e-6:10e-6);
-  parameter real l = 0.96e-6 from [0.5e-6:10e-6);
-  parameter integer mm_ok = 1  from [1:1];
+  parameter real l = 0.5e-6 from [0.5e-6:10e-6);
+  parameter integer mm_ok = 0  from [1:1];
   parameter real b = 0;
   parameter real m = 1;
   parameter real trise = 0;
@@ -178,7 +205,7 @@ paramset rhigh r3_cmc
   parameter real rshspec = 1360;
   parameter real rqrc = 4.5e-6;
   parameter real rz = rzspec / w - (postsim > 0) * rqrc / w;
-  parameter real rsh_rhigh = $rdist_normal(_rdist_seed, `rsh_rhigh, `rsh_rhigh * 0.05);
+  parameter real rsh_rhigh = $rdist_normal(_rdist_seed, `rsh_rhigh, 0.05);
 
     .c1 = 1;
     .a2 = a;
@@ -301,7 +328,7 @@ paramset rppd r3_cmc
   parameter integer _rdist_seed = 0;
   parameter real w = 0.5e-6 from [0.1e-6:10e-6);
   parameter real l = 0.5e-6 from [0.5e-6:10e-6);
-  parameter integer mm_ok = 1  from [1:1];
+  parameter integer mm_ok = 0  from [1:1];
   parameter real b = 0;
   parameter real m = 1;
   parameter real trise = 0;
@@ -323,7 +350,7 @@ paramset rppd r3_cmc
   parameter real p = (p0 > 0) * p0;
   parameter real rqrc = 4.5e-6;
   parameter real rz = rzspec / w - (postsim > 0) * rqrc / w;
-  parameter real rsh_rppd = $rdist_normal(_rdist_seed, `rsh_rppd, `rsh_rppd * 0.015);
+  parameter real rsh_rppd = $rdist_normal(_rdist_seed, `rsh_rppd, 0.015);
 
     .c1 = 1;
     .a2 = a;
@@ -372,7 +399,7 @@ paramset rsil r3_cmc
   parameter integer _rdist_seed = 0;
   parameter real w = 0.5e-6 from [0.1e-6:10e-6);
   parameter real l = 0.5e-6 from [0.5e-6:10e-6);
-  parameter integer mm_ok = 1  from [1:1];
+  parameter integer mm_ok = 0  from [1:1];
   parameter real b = 0;
   parameter real m = 1;
   parameter real trise = 0;

@@ -3,6 +3,8 @@
 `define rsh_rhigh 1360
 `define rsh_rppd 260.0
 `define rsh_rsil 7.0
+`define res_rpara 1.0
+`define res_rarea 1.0
 `include "resistors_paramsets.vams"
 `endif
 
@@ -10,6 +12,8 @@
 `define rsh_rhigh 1020
 `define rsh_rppd 234.0
 `define rsh_rsil 6.02
+`define res_rpara 1.0
+`define res_rarea 1.0
 `include "resistors_paramsets.vams"
 `endif
 
@@ -17,6 +21,8 @@
 `define rsh_rhigh 1700
 `define rsh_rppd 286.0
 `define rsh_rsil 7.98
+`define res_rpara 1.0
+`define res_rarea 1.0
 `include "resistors_paramsets.vams"
 `endif
 
@@ -24,5 +30,7 @@
 `define rsh_rhigh 1360
 `define rsh_rppd 260.0
 `define rsh_rsil 7.0
+`define res_rpara 1.0
+`define res_rarea 1.0
 `include "resistors_paramsets_stat.vams"
 `endif
