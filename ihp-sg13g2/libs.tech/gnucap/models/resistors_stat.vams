@@ -7,21 +7,33 @@ module res_typ_stat();
 
   // ---- nominal (per corner) ----
   parameter real rsh_rsil_nom = 7.0;     // ohm/sq (example)
+  parameter real rsh_rhigh_nom = 1360;   // ohm/sq (example)
+  parameter real rsh_rppd_nom = 260.0;   // ohm/sq (example)
 
   // ---- 1-sigma variations (example numbers) ----
   parameter real rsh_rsil_sigma_g = 0.0467; // ohm/sq global
+  parameter real rsh_rhigh_sigma_g = 0.0833; // ohm/sq global
+  parameter real rsh_rppd_sigma_g = 0.033; // ohm/sq global
   parameter real rsh_rsil_sigma_l = 0.20; // ohm/sq local
+  parameter real rsh_rhigh_sigma_l = 68.0; // ohm/sq local
+  parameter real rsh_rppd_sigma_l = 3.9; // ohm/sq local
 
   // ---- global (shared across instances) ----
   // parameter real drsh_g = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_g, "global");
   parameter real drsh_g = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_g);
+  parameter real drsh_rhigh_g = $rdist_normal(SEED, 0.0, rsh_rhigh_sigma_g);
+  parameter real drsh_rppd_g = $rdist_normal(SEED, 0.0, rsh_rppd_sigma_g);
 
   // ---- local (instance mismatch) ----
   // parameter real drsh_l = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_l, "instance");
   parameter real drsh_l = $rdist_normal(SEED, 0.0, rsh_rsil_sigma_l);
+  parameter real drsh_rhigh_l = $rdist_normal(SEED, 0.0, rsh_rhigh_sigma_l);
+  parameter real drsh_rppd_l = $rdist_normal(SEED, 0.0, rsh_rppd_sigma_l);
 
   // ---- final effective params for this corner ----
   parameter real rsh_rsil_eff = rsh_rsil_nom + drsh_g + drsh_l;
+  parameter real rsh_rhigh_eff = rsh_rhigh_nom + drsh_rhigh_g + drsh_rhigh_l;
+  parameter real rsh_rppd_eff = rsh_rppd_nom + drsh_rppd_g + drsh_rppd_l;
 endmodule
 
 module res_typ();
@@ -32,15 +44,22 @@ module res_typ();
 
   // ---- nominal (per corner) ----
   parameter real rsh_rsil_nom = 7.0;     // ohm/sq (example)
+  parameter real rsh_rhigh_nom = 1360;   // ohm/sq (example)
+  parameter real rsh_rppd_nom = 260.0;   // ohm/sq (example)
 
   // ---- 1-sigma variations (example numbers) ----
   parameter real rsh_rsil_sigma_l = 0.20; // ohm/sq local
+  parameter real rsh_rhigh_sigma_l = 68.0; // ohm/sq local
+  parameter real rsh_rppd_sigma_l = 3.9; // ohm/sq local
 
   // ---- local (instance mismatch) ----
   parameter real drsh_l = xyz;
+  parameter real drsh_rhigh_l = xyz;
+  parameter real drsh_rppd_l = xyz;
 
   // ---- final effective params for this corner ----
   parameter real rsh_rsil_eff = rsh_rsil_nom  + drsh_l;
+  parameter real rsh_rhigh_eff = rsh_rhigh_nom + drsh_rhigh_l;
+  parameter real rsh_rppd_eff = rsh_rppd_nom + drsh_rppd_l;
 endmodule
-
 
