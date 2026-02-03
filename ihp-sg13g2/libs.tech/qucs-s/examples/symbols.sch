@@ -40,7 +40,7 @@
   <Lib cap_rfcmim1 1 540 150 30 -26 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "cap_rfcmim" 0 "7.0u" 1 "7.0u" 1>
   <Lib cap_cmim1 1 380 150 30 -26 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "cap_cmim" 0 "7.0u" 1 "7.0u" 1>
   <Lib rppd1 1 960 140 25 -1 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "rppd" 0 "1.0u" 1 "0.5u" 1 "1" 1>
-  <Lib rhigh1 1 1078 140 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "rhigh" 0 "1.0u" 1 "0.5u" 1 "1" 1>
+  <Lib rhigh1 1 1078 140 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "rhigh" 0 "1.0u" 1 "0.96u" 1 "1" 1>
   <Lib rsil1 1 1218 140 25 -16 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_basic_components" 0 "rsil" 0 "1.0u" 1 "0.5u" 1 "1" 1>
   <Lib isolbox1 1 580 720 25 -60 0 0 "$HOME/<qucs_workspace>/user_lib/IHP_PDK_nonlinear_components" 0 "isolbox" 0 "3u" 1 "3u" 1>
 </Components>

@@ -32,7 +32,7 @@
         <Parameter name="w" unit="u" default_value="0.5" show="true">
             <Description>Width</Description>
         </Parameter>
-        <Parameter name="l" unit="u" default_value="0.5" show="true">
+        <Parameter name="l" unit="u" default_value="0.96" show="true">
             <Description>Length</Description>
         </Parameter>
         <Parameter name="b" unit="" default_value="0" show="false">

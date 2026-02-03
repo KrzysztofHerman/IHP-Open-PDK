@@ -114,7 +114,7 @@ m=1
 }
 C {sg13g2_pr/rhigh.sym} 420 40 0 0 {name=R3
 w=0.5e-6
-l=0.5e-6
+l=0.96e-6
 model=rhigh
 body=sub!
 spiceprefix=X

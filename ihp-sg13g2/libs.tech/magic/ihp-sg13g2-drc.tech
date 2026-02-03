@@ -801,7 +801,7 @@ variants *
 	"Rppd resistor space to poly contact < %d (Rppd.c)"
  extend pres *poly 500 "Rppd resistor length < %d (Rppd.e)"
 
- width xres 500 "Rhigh resistor width < %d (Rhi.a)"
+width xres 960 "Rhigh resistor width < %d (Rhi.a)"
  spacing xres pc 200 touching_illegal \
 	"Rhigh resistor space to poly contact < %d (Rhi.d)"
  extend xres *poly 500 "Rhigh resistor length < %d (Rhi.f)"
