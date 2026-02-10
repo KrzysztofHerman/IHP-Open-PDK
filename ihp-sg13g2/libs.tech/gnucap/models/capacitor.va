@@ -144,7 +144,8 @@ module sp_capacitor(pos, neg);
   real VACONSTcharge = 1.6021766208e-19;
   real VACONSTboltz = 1.38064852e-23;
   real VACONST_tnom = ($simparam("tnom", 27)+273.15);
-  real cpscale = $simparam("scale", 1);
+  real cpscale;
+ // real cpscale = $simparam("scale", 1);
 
   // Evaluation constants
 
@@ -153,6 +154,7 @@ module sp_capacitor(pos, neg);
   // Analog block
   analog begin
 
+  cpscale = $simparam("scale", 1);
     // Instance field assignments
     if ($param_given(capacitance)) begin
       CAPcapac = capacitance;
@@ -283,6 +285,7 @@ module sp_capacitor(pos, neg);
     // Instance opvar computation
 
     // Model opvar computation
+    $strobe("C = %f", CAPcapac*1.0e12);
 
   end
 endmodule
@@ -309,5 +312,7 @@ module cmim(node_PLUS, node_MINUS);
 
   sp_resistor #(.r(r)) R1 (node_PLUS, node_1);
   sp_capacitor #(.l(l / sf), .w(w / sf), .tc1(tc1), .tc2(tc2), .cj(cj), .cjsw(cjsw)) C1 (node_1, node_MINUS);
+
+
 endmodule
 

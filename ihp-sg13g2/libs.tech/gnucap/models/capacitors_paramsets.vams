@@ -33,7 +33,7 @@ paramset cap_cmim cmim
   parameter real r = 55e-3;
   parameter real tc1 = 3.6E-6;
   parameter real tc2 = 2E-9;
-  parameter real cj = 1.e-12;
+  parameter real cj = 1.0e-12;
   parameter real cjsw = 40E-18;
 
   .l = l;

@@ -4,7 +4,9 @@ load mgsim
 verilog
 load vams/vpulse.so
 // options trace
-load ../plugins/cornerCAP_typ.so
+//load ../plugins/cornerCAP_typ.so
+load ../plugins/sp_capacitor.so
+load ../plugins/sp_resistor.so
 //load ../../plugins/cornerRES_wcs.so
 //load ../../plugins/cornerRES_bcs.so
 //load ../../plugins/cornerRES_stat.so
@@ -16,18 +18,21 @@ parameter seed = 0;
 
 module cap_tb(n1, n2, gnd);
 
-  cap_cmim #(.l(100.5u), .w(100.5u)) c1(n1, n2);
+ // sp_capacitor #(.c(10u)) c1(n1, n2);
+  sp_capacitor #(.l(10u), .w(10u), .cj(1p), .cjsw(1.0e-18) ) c1(n1, n2);
+  //cmim #(.l(10p), .w(10p)) c1(n1, n2);
+  //cap_cmim #(.l(100.5u), .w(100.5u)) c1(n1, n2);
   //cparasitic #(.c(10n)) c1(n1,n2);
 
 endmodule
 
 cap_tb #() tb1(v, gnd, gnd);
 
-vpulse #(.val0(-1.0), .val1(1.0), .width(500u), .period(1000u)) v2(vsrc, gnd);
+vpulse #(.val0(-1.0), .val1(1.0), .width(500u, .rise(1u), .fall(1u)), .period(1000u)) v2(vsrc, gnd);
 
 
 spice
-Rsrc vsrc v 100000k
+Rsrc vsrc v 10k
 .print tran v nodes i(Rsrc)
 .tran 0 10m 0 10u > capacitor.txt
 
