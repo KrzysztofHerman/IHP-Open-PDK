@@ -2,38 +2,28 @@
 // Libraries
 load mgsim
 verilog
-load ../plugins/resistors_paramsets.so
+load ../plugins/cornerRES_typ.so
 load vams/vpulse.so
-
-module res_typ();
-  // ---- seeds (constants) ----
-  parameter real SEED = 101;
-
-  // ---- nominal (per corner) ----
-  parameter real rsh_rsil_nom = 7.0;     // ohm/sq (example)
-
-  // ---- 1-sigma variations (example numbers) ----
-  parameter real rsh_rsil_sigma_l = 0.20; // ohm/sq local
-
-  // ---- local (instance mismatch) ----
-  parameter real drsh_l = $rdist_normal(0, 0.0, rsh_rsil_sigma_l);
-
-  // ---- final effective params for this corner ----
-  parameter real rsh_rsil_eff = rsh_rsil_nom  + drsh_l;
-endmodule
 
 
 ground gnd;
-res_typ #() global_res_typ();
 
-rsil #(.l(0.5u), .w(0.5u)) r1(n1, gnd, gnd);
+rsil #(.l(0.5u), .w(0.5u) ) r0(n1, gnd, gnd);
+rsil #(.l(0.5u), .w(0.5u), .mm_ok(1) ) r1(n1, gnd, gnd);
+rppd #(.l(0.5u), .w(0.5u) ) r2(n2, gnd, gnd);
+rhigh #(.l(0.96u), .w(0.5u) ) r3(n3, gnd, gnd);
+rhigh #(.l(0.96u), .w(0.5u), .mm_ok(0) ) r4(n4, gnd, gnd);
+rhigh #(.l(0.96u), .w(0.5u), .mm_ok(1) ) r5(n5, gnd, gnd);
 
 spice
-Ir n1 gnd 1
-.print dc  v(r1)
-.options seed=2
+Ir1 n0 gnd 0.001
+Ir2 n1 gnd 0.001
+Ir3 n2 gnd 0.001
+Ir4 n3 gnd 0.001
+Ir5 n4 gnd 0.001
+Ir6 n5 gnd 0.001
+.print dc  v(r1) v(r2) v(r3) v(r4) v(r5) v(r0)
 .dc
-.options seed=3
+.options seed=25
 .dc
-
 

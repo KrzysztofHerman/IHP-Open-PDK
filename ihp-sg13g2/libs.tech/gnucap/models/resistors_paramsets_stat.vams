@@ -60,7 +60,7 @@ paramset rsil r3_cmc
   parameter real postsim = 0;
   parameter real kappa = 1.85;
   parameter real ps = 0.18e-6;
-  parameter real weff = w + 0.01e-6;
+  parameter real weff = w;
   parameter real leff = (b + 1) * l + (2 / kappa * weff + ps) * b;
   parameter real rzspec = 4.5e-6;
   parameter real lhead = 0.86e-6;
@@ -72,7 +72,6 @@ paramset rsil r3_cmc
   parameter real a = (a0 > 0) * a0;
   parameter real p0 = leff + lhead + w - (postsim > 0) * px * 1e-6;
   parameter real p = (p0 > 0) * p0;
-  parameter real rshspec = 7;
   parameter real rqrc = 4.5e-6;
   parameter real rz = rzspec / w - (postsim > 0) * rqrc / w;
   parameter real rsh_rsil = global_res_typ.rsh_rsil_eff;
@@ -90,7 +89,7 @@ paramset rsil r3_cmc
     .nsmm_rsh = 1;
     .bfn = 1.267;
     .gtha = 6e-6;
-    .sw_mman = 1;
+    .sw_mman = 0;
     .ca = cax;
     .gthc = 1e-12;
     .nsmm_w = 1;
@@ -133,7 +132,7 @@ paramset rhigh r3_cmc
   parameter real postsim = 0;
   parameter real kappa = 1.85;
   parameter real ps = 0.18e-6;
-  parameter real weff = w - 0.04e-6;
+  parameter real weff = w;
   parameter real leff = (b + 1) * l + (2 / kappa * weff + ps) * b;
   parameter real lhead = 0.86e-6;
   parameter real rzspec = 80e-6;
@@ -145,7 +144,6 @@ paramset rhigh r3_cmc
   parameter real a = (a0 > 0) * a0;
   parameter real p0 = leff + lhead + w - (postsim > 0) * px * 1e-6;
   parameter real p = (p0 > 0) * p0;
-  parameter real rshspec = 1360;
   parameter real rqrc = 4.5e-6;
   parameter real rz = rzspec / w - (postsim > 0) * rqrc / w;
   parameter real rsh_rhigh = global_res_typ.rsh_rhigh_eff;
@@ -163,7 +161,7 @@ paramset rhigh r3_cmc
     .nsmm_rsh = 1;
     .bfn = 0.9086;
     .gtha = 6e-6;
-    .sw_mman = 1;
+    .sw_mman = 0;
     .ca = cax;
     .gthc = 1e-12;
     .nsmm_w = 1;
@@ -206,7 +204,7 @@ paramset rhigh r3_cmc
   parameter real postsim = 0;
   parameter real kappa = 1.85;
   parameter real ps = 0.18e-6;
-  parameter real weff = w - 0.04e-6;
+  parameter real weff = w;
   parameter real leff = (b + 1) * l + (2 / kappa * weff + ps) * b;
   parameter real lhead = 0.86e-6;
   parameter real rzspec = 80e-6;
@@ -236,7 +234,7 @@ paramset rhigh r3_cmc
     .nsmm_rsh = 1;
     .bfn = 0.9086;
     .gtha = 6e-6;
-    .sw_mman = 1;
+    .sw_mman = 0;
     .ca = cax;
     .gthc = 1e-12;
     .nsmm_w = 1;
@@ -279,7 +277,7 @@ paramset rppd r3_cmc
   parameter real postsim = 0;
   parameter real kappa = 1.85;
   parameter real ps = 0.18e-6;
-  parameter real weff = w + 0.006e-6;
+  parameter real weff = w;
   parameter real leff = (b + 1) * l + (2 / kappa * weff + ps) * b;
   parameter real lhead = 0.86e-6;
   parameter real rzspec = 35e-6;
@@ -308,7 +306,7 @@ paramset rppd r3_cmc
     .nsmm_rsh = 1;
     .bfn = 0.9963;
     .gtha = 6e-6;
-    .sw_mman = 1;
+    .sw_mman = 0;
     .ca = cax;
     .gthc = 1e-12;
     .nsmm_w = 1;
@@ -350,7 +348,7 @@ paramset rppd r3_cmc
   parameter real postsim = 0;
   parameter real kappa = 1.85;
   parameter real ps = 0.18e-6;
-  parameter real weff = w + 0.006e-6;
+  parameter real weff = w;
   parameter real leff = (b + 1) * l + (2 / kappa * weff + ps) * b;
   parameter real lhead = 0.86e-6;
   parameter real rzspec = 35e-6;
@@ -380,7 +378,7 @@ paramset rppd r3_cmc
     .nsmm_rsh = 1;
     .bfn = 0.9963;
     .gtha = 6e-6;
-    .sw_mman = 1;
+    .sw_mman = 0;
     .ca = cax;
     .gthc = 1e-12;
     .nsmm_w = 1;
@@ -421,7 +419,7 @@ paramset rsil r3_cmc
   parameter real postsim = 0;
   parameter real kappa = 1.85;
   parameter real ps = 0.18e-6;
-  parameter real weff = w + 0.01e-6;
+  parameter real weff = w;
   parameter real leff = (b + 1) * l + (2 / kappa * weff + ps) * b;
   parameter real rzspec = 4.5e-6;
   parameter real lhead = 0.86e-6;
@@ -452,7 +450,7 @@ paramset rsil r3_cmc
     .nsmm_rsh = 1;
     .bfn = 1.267;
     .gtha = 6e-6;
-    .sw_mman = 1;
+    .sw_mman = 0;
     .ca = cax;
     .gthc = 1e-12;
     .nsmm_w = 1;

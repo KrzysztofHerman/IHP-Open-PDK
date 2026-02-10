@@ -60,7 +60,9 @@ module res_typ();
   // ---- seeds (constants) ----
   parameter real SEED = 101;
   
-  parameter real xyz = 0.0;
+  parameter real sig_rsil = 0.0;
+  parameter real sig_rppd = 0.0;
+  parameter real sig_rhigh = 0.0;
 
   // ---- nominal (per corner) ----
   parameter real rsh_rsil_nom = 7.0;     // ohm/sq (example)
@@ -79,9 +81,9 @@ module res_typ();
   parameter real rsh_rppd_sigma_l = 0.12; // ohm/sq local
 
   // ---- local (instance mismatch) ----
-  parameter real drsh_rsil_l = xyz;
-  parameter real drsh_rhigh_l = xyz;
-  parameter real drsh_rppd_l = xyz;
+  parameter real drsh_rsil_l = sig_rsil;
+  parameter real drsh_rhigh_l = sig_rhigh;
+  parameter real drsh_rppd_l = sig_rppd;
 
   // ---- final effective params for this corner ----
   parameter real rsh_rsil_eff = rsh_rsil_nom  + drsh_rsil_l;
