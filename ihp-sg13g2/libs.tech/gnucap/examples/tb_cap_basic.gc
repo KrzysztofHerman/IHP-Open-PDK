@@ -1,0 +1,33 @@
+// Verilog
+// Libraries
+load mgsim
+verilog
+load vams/vpulse.so
+// options trace
+load ../plugins/cornerCAP_typ.so
+//load ../../plugins/cornerRES_wcs.so
+//load ../../plugins/cornerRES_bcs.so
+//load ../../plugins/cornerRES_stat.so
+
+
+ground gnd;
+parameter seed = 0;
+
+
+module cap_tb(n1, n2, gnd);
+
+  cap_cmim #(.l(100.5u), .w(100.5u)) c1(n1, n2);
+  //cparasitic #(.c(10n)) c1(n1,n2);
+
+endmodule
+
+cap_tb #() tb1(v, gnd, gnd);
+
+vpulse #(.val0(-1.0), .val1(1.0), .width(500u), .period(1000u)) v2(vsrc, gnd);
+
+
+spice
+Rsrc vsrc v 100000k
+.print tran v nodes i(Rsrc)
+.tran 0 10m 0 10u > capacitor.txt
+

@@ -16,38 +16,27 @@
 //
 //#######################################################################
 
-`ifdef res_typ
-`define rsh_rhigh 1360
-`define rsh_rppd 260.0
-`define rsh_rsil 7.0
-`define res_rpara 1.0
-`define res_rarea 1.0
-`include "resistors_paramsets.vams"
+`ifdef cap_typ
+`define cap_carea 1.5E-15
+`define cap_cpara 1.0
+`include "capacitors_paramsets.vams"
 `endif
 
-`ifdef res_bcs
-`define rsh_rhigh 1020
-`define rsh_rppd 234.0
-`define rsh_rsil 6.02
-`define res_rpara 1.0
-`define res_rarea 1.0
-`include "resistors_paramsets.vams"
+`ifdef cap_bcs
+`define cap_carea 0.9 * 1.5E-15
+`define cap_cpara 0.9
+`include "capacitors_paramsets.vams"
 `endif
 
-`ifdef res_wcs
-`define rsh_rhigh 1700
-`define rsh_rppd 286.0
-`define rsh_rsil 7.98
-`define res_rpara 1.0
-`define res_rarea 1.0
-`include "resistors_paramsets.vams"
+`ifdef cap_wcs
+`define cap_carea 1.1 * 1.5E-15
+`define cap_cpara 1.1
+`include "capacitors_paramsets.vams"
 `endif
 
-`ifdef res_stat
-`define rsh_rhigh 1360
-`define rsh_rppd 260.0
-`define rsh_rsil 7.0
-`define res_rpara 1.0
-`define res_rarea 1.0
-`include "resistors_paramsets_stat.vams"
+`ifdef cap_stat
+`define cap_carea 1.5E-15
+`define cap_cpara 1.0
+`include "capacitors_paramsets_stat.vams"
 `endif
+

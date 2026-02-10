@@ -1,0 +1,61 @@
+//#######################################################################
+//
+// Copyright 2026 IHP PDK Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//#######################################################################
+
+`pragma modelgen nogen-module
+`pragma modelgen gen-paramset
+`include "capacitor.va"
+`include "resistor.va"
+`include "inductor.va"
+
+paramset cap_cmim cmim
+ 
+  parameter integer _rdist_seed = 0;
+
+  parameter real l = 7e-6;
+  parameter real w = 7e-6;
+  parameter real sf = 1E-6;
+  parameter real ic = 1E10;
+  parameter real r = 55e-3;
+  parameter real tc1 = 3.6E-6;
+  parameter real tc2 = 2E-9;
+  parameter real cj = 1.e-12;
+  parameter real cjsw = 40E-18;
+
+  .l = l;
+  .w = w;
+  .sf = sf;
+  .ic = ic;
+  .r = r;
+  .tc1 = tc1;
+  .tc2 = tc2;
+  .cj = cj;
+  .cjsw = cjsw;
+endparamset
+
+paramset cparasitic sp_capacitor
+
+  parameter integer _rdist_seed = 0;
+  parameter real c = 0;
+  parameter real tc1 = 0;
+  parameter real tc2 = 0;
+
+  .capacitance = c * `cap_cpara;
+  .tc1 = tc1;
+  .tc2 = tc2;
+endparamset
+

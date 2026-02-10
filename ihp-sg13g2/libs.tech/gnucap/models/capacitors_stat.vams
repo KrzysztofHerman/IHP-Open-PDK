@@ -1,0 +1,63 @@
+//#######################################################################
+//
+// Copyright 2026 IHP PDK Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//#######################################################################
+
+module cap_typ_stat();
+  // ---- seeds (constants) ----
+  parameter integer SEED = 101;
+
+  // ---- nominal (per corner) ----
+  parameter real cap_carea_nom = 1.5E-15;
+  parameter real cap_cpara_nom = 1.0;
+
+  // ---- 1-sigma variations (example numbers) ----
+  parameter real cap_carea_sigma_g = 0.033;
+  parameter real cap_cpara_sigma_g = 0.067;
+  parameter real cap_carea_sigma_l = 0.033;
+  parameter real cap_cpara_sigma_l = 0.067;
+
+  // ---- global (shared across instances) ----
+  parameter real dcap_carea_g = $rdist_normal(SEED, 0.0, cap_carea_sigma_g * cap_carea_nom);
+  parameter real dcap_cpara_g = $rdist_normal(SEED, 0.0, cap_cpara_sigma_g * cap_cpara_nom);
+
+  // ---- local (instance mismatch) ----
+  parameter real dcap_carea_l = $rdist_normal(SEED, 0.0, cap_carea_sigma_l * cap_carea_nom);
+  parameter real dcap_cpara_l = $rdist_normal(SEED, 0.0, cap_cpara_sigma_l * cap_cpara_nom);
+
+  // ---- final effective params for this corner ----
+  parameter real cap_carea_eff = cap_carea_nom + dcap_carea_g + dcap_carea_l;
+  parameter real cap_cpara_eff = cap_cpara_nom + dcap_cpara_g + dcap_cpara_l;
+endmodule
+
+module cap_typ();
+  // ---- seeds (constants) ----
+  parameter real SEED = 101;
+
+  parameter real xyz = 0.0;
+
+  // ---- nominal (per corner) ----
+  parameter real cap_carea_nom = 1.5E-15;
+  parameter real cap_cpara_nom = 1.0;
+
+  // ---- local (instance mismatch) ----
+  parameter real dcap_carea_l = xyz;
+  parameter real dcap_cpara_l = xyz;
+
+  // ---- final effective params for this corner ----
+  parameter real cap_carea_eff = cap_carea_nom + dcap_carea_l;
+  parameter real cap_cpara_eff = cap_cpara_nom + dcap_cpara_l;
+endmodule
