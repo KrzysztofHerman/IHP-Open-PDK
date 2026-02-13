@@ -2627,8 +2627,8 @@ end.().output("Rppd.d", "Min. EXTBlock enclosure of GatPoly = 0.18")
     SalBlock_Rppd.ext_width(0.5.um)
 end.().output("Rppd.e", "Min. SalBlock length = 0.50")
 -> do
-    Rhigh_a.ext_width(0.5.um)
-end.().output("Rhi.a", "Min. GatPoly width = 0.50")
+    Rhigh_a.ext_width(0.96.um)
+end.().output("Rhi.a", "Min. GatPoly width = 0.96")
 -> do
     Rhigh_identical_nsd_psd.dup
 end.().output("Rhi.b", "pSD and nSD are identical (nSD:drawing is only permitted within Rhigh resistors. Apart from that, nSD is generated automatically (see section 4.2).)")
@@ -2645,8 +2645,8 @@ end.()
     GP_Rhigh_extended.ext_enclosed(EXTBlock, 0.18.um, consider_intersecting_edges: false, consider_touch_points: false)
 end.().output("Rhi.e", "Min. EXTBlock enclosure of GatPoly = 0.18")
 -> do
-    SalBlock_Rhigh.ext_width(0.5.um)
-end.().output("Rhi.f", "Min. SalBlock length = 0.50")
+    SalBlock_Rhigh.ext_width(0.96.um)
+end.().output("Rhi.f", "Min. SalBlock length = 0.96")
 -> do
     Iso_PWell_Act.ext_outside(schottky_nbl1).ext_enclosed(nBuLay, 1.24.um)
 end.().output("nmosi.b", "Min. nBuLay enclosure of Iso-PWell-Activ (Iso-PWell-Activ = Activ AND nBuLay AND PWell) = 1.24")

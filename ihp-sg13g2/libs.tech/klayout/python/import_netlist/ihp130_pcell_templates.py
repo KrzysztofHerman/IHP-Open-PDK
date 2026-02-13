@@ -468,7 +468,7 @@ templates = [
                 "type": "int",
             },
         ],
-        "default_params": {"w": "0.5e-6", "l": "0.5e-6", "m": 1, "b": 0},
+        "default_params": {"w": "0.5e-6", "l": "0.96e-6", "m": 1, "b": 0},
     },
     {
         "regex": re.compile(
