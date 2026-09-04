@@ -1,0 +1,90 @@
+* Unified Verilog-A diode model cards.  Fitted antenna values are retained
+* below; ESD cards use the same model with SI geometry normalization.
+.model ihp_dantenna_va ihp_diode_va (
++ tnom_c=27 is_a=2.315e-07 n_a=1.009 isr_a=7.413e-07
++ nr_a=2 ibv_a=0 bv_a=11.64 nbv_a=48.9
++ xti_a=-4.29881419116 eg_a=1.38260997865 tcv_a=0.001 is_p=3.851e-15
++ n_p=1.022 isr_p=1.011e-11 nr_p=2 ibv_p=0
++ bv_p=31.86 nbv_p=112.1 xti_p=7.64731762019 eg_p=0.842205925459
++ tcv_p=0 is_c=6.502e-21 n_c=1 isr_c=0
++ nr_c=2 ibv_c=2.30196670032e-07 bv_c=12.8593041884 nbv_c=47.8052847155
++ xti_c=-0.525216817836 eg_c=1.10267517572 tcv_c=0.00466728103332 cj0_a=0.000903343527328
++ vj_a=0.502129211623 mj_a=0.249259979339 fc_a=0.5 tcj_a=0.000683835355625
++ tvj_a=-0.00102103077077 tt_a=7.009e-07 cj0_p=2.69563765879e-11 vj_p=1.52154530169
++ mj_p=6.5581131204e-24 fc_p=0.5 tcj_p=0.0026827853303 tvj_p=-0.00542405794305
++ tt_p=7.009e-07 cj0_c=0 vj_c=0.7 mj_c=0.5
++ fc_c=0.5 tcj_c=0 tvj_c=0 tt_c=0
++ gser_a=4559963.52 gser_p=0.592417062 gser_c=2.05888408e-06 fwd2_enable=0
++ is2_a=0 n2_a=2 xti2_a=3 eg2_a=1.11
++ tt2_a=0 ibv2_a=0 bv2_a=11.64 nbv2_a=48.9
++ ttbv_a=7.009e-07 ttbv2_a=7.009e-07 ibv2_p=0 bv2_p=31.86
++ nbv2_p=112.1 ttbv_p=7.009e-07 ttbv2_p=7.009e-07 ibv2_c=6.07370968769e-07
++ bv2_c=11.6893497491 nbv2_c=1.0253068296 ttbv_c=7.18272003086e-07 ttbv2_c=1e-15
++ gser_bv1_a=4619722.16484 gser_bv1_p=0 gser_bv1_c=0 gser_bv2_a=0
++ gser_bv2_p=0 gser_bv2_c=2.05591567897e-06 gsh=0 gleak_a=0
++ gleak_p=0 gleak_c=7.76579963695e-19
++)
+
+.model ihp_dpantenna_va ihp_diode_va (
++ tnom_c=27 is_a=8.569e-08 n_a=1.003 isr_a=2.421e-07
++ nr_a=2 ibv_a=0 bv_a=12.14 nbv_a=11.85
++ xti_a=3.01208330833 eg_a=1.15083626209 tcv_a=0.001 is_p=1.186e-14
++ n_p=1.006 isr_p=7.211e-12 nr_p=2 ibv_p=0
++ bv_p=27.26 nbv_p=32.47 xti_p=-6.23593087871 eg_p=1.4688816225
++ tcv_p=0 is_c=6.965e-21 n_c=1 isr_c=0
++ nr_c=2 ibv_c=1.83636955284e-07 bv_c=12.0434614636 nbv_c=11.832641558
++ xti_c=-0.0433724665467 eg_c=1.19100857981 tcv_c=0.00262576808977 cj0_a=0.000826371670123
++ vj_a=0.655861397945 mj_a=0.316260488436 fc_a=0.5 tcj_a=0.00110359022231
++ tvj_a=-0.00204514873275 tt_a=1e-12 cj0_p=3.66526455625e-11 vj_p=0.524101483983
++ mj_p=0.15214388033 fc_p=0.5 tcj_p=0.000782909163614 tvj_p=-0.00252929624615
++ tt_p=1e-12 cj0_c=0 vj_c=0.7 mj_c=0.5
++ fc_c=0.5 tcj_c=0 tvj_c=0 tt_c=0
++ gser_a=5787037.04 gser_p=0.634115409 gser_c=2.11237854e-06 fwd2_enable=0
++ is2_a=0 n2_a=2 xti2_a=3 eg2_a=1.11
++ tt2_a=0 ibv2_a=0 bv2_a=12.14 nbv2_a=11.85
++ ttbv_a=1e-12 ttbv2_a=1e-12 ibv2_p=0 bv2_p=27.26
++ nbv2_p=32.47 ttbv_p=1e-12 ttbv2_p=1e-12 ibv2_c=0
++ bv2_c=1000 nbv2_c=1 ttbv_c=1.2039286921e-12 ttbv2_c=0
++ gser_bv1_a=5771495.14148 gser_bv1_p=0 gser_bv1_c=0 gser_bv2_a=0
++ gser_bv2_p=0 gser_bv2_c=2.11237854e-06 gsh=0 gleak_a=0
++ gleak_p=0 gleak_c=7.31758925923e-19
++)
+
+* New non-invasive Verilog-A aliases; legacy dantenna/dpantenna remain in diodes.lib.
+.subckt dantenna_va A K l=780n w=780n m=1
+N_DANT_VA A K ihp_dantenna_va area={l*w} perim={2*(l+w)} corners=4 mult={m}
+.ends dantenna_va
+
+.subckt dpantenna_va A K l=780n w=780n m=1
+N_DPANT_VA A K ihp_dpantenna_va area={l*w} perim={2*(l+w)} corners=4 mult={m}
+.ends dpantenna_va
+
+* Common ESD model cards.  Geometry is expressed in SI units for the
+* unified model; the public ESD wrappers convert legacy um^2 values.
+.model diodevdd_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=4.911e-7 n_a=1.04 isr_a=5.422e-3
++knee_current_a=1e10 cj0_a=8.716e-4 mj_a=0.3294 vj_a=0.6621
++ibv_a=4.744e-4 bv_a=11.81 nbv_a=1 eg_a=1.11 xti_a=4
++gser_a=3.452e9
++)
+
+.model diodevss_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=9.017e-7 n_a=1.03 isr_a=3.776e-3
++knee_current_a=1.754e8 cj0_a=9.42e-4 mj_a=0.3012 vj_a=0.6684
++ibv_a=1000 bv_a=11.28 nbv_a=1.324 eg_a=1.17 xti_a=3
++gser_a=5e9
++)
+
+.model dsub_2kv_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=1.7e-4 n_a=1 isr_a=0
++knee_current_a=1e10 cj0_a=9.977e-5 mj_a=0.5 vj_a=0.4547
++ibv_a=1e-7 bv_a=10 nbv_a=1 eg_a=1.11 xti_a=3
++gser_a=2.101e11
++)
+
+.model dsub_4kv_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=1.7e-4 n_a=1 isr_a=0
++knee_current_a=1e8 cj0_a=9.977e-5 mj_a=0.5 vj_a=0.4547
++ibv_a=0 bv_a=10 nbv_a=1 eg_a=1.11 xti_a=3
++gser_a=2.101e11
++)

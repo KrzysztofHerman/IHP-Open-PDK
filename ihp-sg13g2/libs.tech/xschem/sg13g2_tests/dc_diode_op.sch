@@ -1,13 +1,13 @@
-v {xschem version=3.4.5 file_version=1.2
-}
+v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {}
 V {}
 S {}
+F {}
 E {}
 B 2 -510 -700 290 -300 {flags=graph
 y1=-3e-06
-y2=2.3e-06
+y2=2.8e-06
 ypos1=0
 ypos2=2
 divy=5
@@ -51,9 +51,7 @@ lab=#net1}
 C {devices/gnd.sym} -500 40 0 0 {name=l2 lab=GND}
 C {devices/code_shown.sym} -520 -180 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"
-value="
-.include $::MODELS_NGSPICE/diodes.lib
-"}
+value=".lib cornerDIO.lib dio_tt"}
 C {devices/code_shown.sym} -120 -250 0 0 {name=NGSPICE only_toplevel=true 
 value="
 .param temp=27

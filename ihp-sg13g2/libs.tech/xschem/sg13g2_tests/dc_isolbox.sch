@@ -1,8 +1,9 @@
-v {xschem version=3.4.6 file_version=1.2}
+v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {}
 V {}
 S {}
+F {}
 E {}
 B 2 -110 -410 690 -10 {flags=graph
 y1=-16
@@ -44,8 +45,6 @@ N -340 -30 -260 -30 {
 lab=nwell_net}
 N -340 -110 -260 -110 {
 lab=isosub_net}
-N -260 -30 -260 -10 {
-lab=nwell_net}
 C {devices/gnd.sym} -500 50 0 0 {name=l2 lab=GND}
 C {devices/code_shown.sym} -580 -490 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"
@@ -81,4 +80,4 @@ l=3.0u
 w=3.0u
 spiceprefix=X
 }
-C {noconn.sym} -260 -10 3 0 {name=l3}
+C {noconn.sym} -260 -30 3 0 {name=l3}

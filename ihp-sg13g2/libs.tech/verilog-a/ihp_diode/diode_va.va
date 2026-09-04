@@ -1,0 +1,478 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Charge-conservative two-terminal diffusion-diode surrogate.
+// Geometry instance parameters are SI: area [m^2], perim [m], corners [-].
+module ihp_diode_va(A, K);
+    inout A, K;
+    electrical A, K;
+    electrical JA, JP, JC, JB1, JB2;
+
+    (* units="m^2", type="instance", desc="Junction bottom area" *)
+    parameter real area = 1.0e-12 from (0.0:inf);
+    (* units="m", type="instance", desc="Junction perimeter" *)
+    parameter real perim = 4.0e-6 from [0.0:inf);
+    (* type="instance", desc="Number of rectangular junction corners" *)
+    parameter real corners = 4.0 from [0.0:inf);
+    (* type="instance", desc="Parallel device multiplier" *)
+    parameter real mult = 1.0 from (0.0:inf);
+    (* type="model", desc="Combine area, sidewall, and corner paths" *)
+    parameter integer shared_junction = 0 from [0:1];
+    (* units="A", type="model", desc="Area high-injection knee current density" *)
+    parameter real knee_current_a = 0.0 from [0.0:inf);
+    (* units="A", type="model", desc="Sidewall high-injection knee current density" *)
+    parameter real knee_current_p = 0.0 from [0.0:inf);
+    (* units="A", type="model", desc="Corner high-injection knee current" *)
+    parameter real knee_current_c = 0.0 from [0.0:inf);
+    // Small geometry-independent linear leakage used to reproduce the
+    // gmin-like floor present in the legacy reference cards.
+    parameter real gsh = 0.0 from [0.0:inf);
+    // Linear leakage densities (S/m², S/m, S/corner), stamped on the
+    // corresponding internal junction path for numerical conditioning.
+    parameter real gleak_a = 0.0 from [0.0:inf);
+    parameter real gleak_p = 0.0 from [0.0:inf);
+    parameter real gleak_c = 0.0 from [0.0:inf);
+
+    parameter real tnom_c = 27.0;
+
+    // Area-current parameters: densities are A/m^2.
+    parameter real is_a = 1.0e-7 from [0.0:inf);
+    parameter real n_a = 1.0 from (0.0:inf);
+    parameter real isr_a = 0.0 from [0.0:inf);
+    parameter real nr_a = 2.0 from (0.0:inf);
+    parameter real ibv_a = 0.0 from [0.0:inf);
+    parameter real bv_a = 12.0 from (0.0:inf);
+    parameter real nbv_a = 1.0 from (0.0:inf);
+    parameter real xti_a = 3.0;
+    parameter real eg_a = 1.11 from (0.0:inf);
+    parameter real tcv_a = 0.0;
+    parameter real ibv2_a = 0.0 from [0.0:inf);
+    parameter real bv2_a = 12.0 from (0.0:inf);
+    parameter real nbv2_a = 1.0 from (0.0:inf);
+
+    // Edge-current parameters: densities are A/m.
+    parameter real is_p = 1.0e-14 from [0.0:inf);
+    parameter real n_p = 1.0 from (0.0:inf);
+    parameter real isr_p = 0.0 from [0.0:inf);
+    parameter real nr_p = 2.0 from (0.0:inf);
+    parameter real ibv_p = 0.0 from [0.0:inf);
+    parameter real bv_p = 30.0 from (0.0:inf);
+    parameter real nbv_p = 1.0 from (0.0:inf);
+    parameter real xti_p = 3.0;
+    parameter real eg_p = 1.11 from (0.0:inf);
+    parameter real tcv_p = 0.0;
+    parameter real ibv2_p = 0.0 from [0.0:inf);
+    parameter real bv2_p = 30.0 from (0.0:inf);
+    parameter real nbv2_p = 1.0 from (0.0:inf);
+
+    // Corner-current parameters: currents are A/corner.
+    parameter real is_c = 0.0 from [0.0:inf);
+    parameter real n_c = 1.0 from (0.0:inf);
+    parameter real isr_c = 0.0 from [0.0:inf);
+    parameter real nr_c = 2.0 from (0.0:inf);
+    parameter real ibv_c = 0.0 from [0.0:inf);
+    parameter real bv_c = 12.0 from (0.0:inf);
+    parameter real nbv_c = 1.0 from (0.0:inf);
+    parameter real xti_c = 3.0;
+    parameter real eg_c = 1.11 from (0.0:inf);
+    parameter real tcv_c = 0.0;
+    parameter real ibv2_c = 0.0 from [0.0:inf);
+    parameter real bv2_c = 12.0 from (0.0:inf);
+    parameter real nbv2_c = 1.0 from (0.0:inf);
+
+    // Depletion charge: F/m^2, F/m and F/corner respectively.
+    parameter real cj0_a = 1.0e-3 from [0.0:inf);
+    parameter real vj_a = 0.7 from (0.0:inf);
+    parameter real mj_a = 0.5 from [0.0:1.0);
+    parameter real fc_a = 0.5 from (0.0:0.95);
+    parameter real tcj_a = 0.0;
+    parameter real tvj_a = 0.0;
+    parameter real tt_a = 0.0 from [0.0:inf);
+    parameter real ttbv_a = 0.0 from [0.0:inf);
+    parameter real ttbv2_a = 0.0 from [0.0:inf);
+
+    parameter real cj0_p = 1.0e-11 from [0.0:inf);
+    parameter real vj_p = 0.7 from (0.0:inf);
+    parameter real mj_p = 0.5 from [0.0:1.0);
+    parameter real fc_p = 0.5 from (0.0:0.95);
+    parameter real tcj_p = 0.0;
+    parameter real tvj_p = 0.0;
+    parameter real tt_p = 0.0 from [0.0:inf);
+    parameter real ttbv_p = 0.0 from [0.0:inf);
+    parameter real ttbv2_p = 0.0 from [0.0:inf);
+
+    parameter real cj0_c = 0.0 from [0.0:inf);
+    parameter real vj_c = 0.7 from (0.0:inf);
+    parameter real mj_c = 0.5 from [0.0:1.0);
+    parameter real fc_c = 0.5 from (0.0:0.95);
+    parameter real tcj_c = 0.0;
+    parameter real tvj_c = 0.0;
+    parameter real tt_c = 0.0 from [0.0:inf);
+    parameter real ttbv_c = 0.0 from [0.0:inf);
+    parameter real ttbv2_c = 0.0 from [0.0:inf);
+
+    // Parallel geometry-scaled conductance densities: S/m^2, S/m, S/corner.
+    parameter real gser_a = 1.0e6 from [0.0:inf);
+    parameter real gser_p = 1.0 from [0.0:inf);
+    parameter real gser_c = 1.0e-6 from [0.0:inf);
+    // The two corner-associated reverse bases may use any geometry-scaled
+    // conductance.  This captures legacy IBV normalization without baking it
+    // into the terminal API.
+    parameter real gser_bv1_a = 0.0 from [0.0:inf);
+    parameter real gser_bv1_p = 0.0 from [0.0:inf);
+    parameter real gser_bv1_c = 1.0e-6 from [0.0:inf);
+    parameter real gser_bv2_a = 0.0 from [0.0:inf);
+    parameter real gser_bv2_p = 0.0 from [0.0:inf);
+    parameter real gser_bv2_c = 1.0e-6 from [0.0:inf);
+
+    // Reserved second forward branch for future measured bipolar enhancement.
+    parameter integer fwd2_enable = 0 from [0:1];
+    parameter real is2_a = 0.0 from [0.0:inf);
+    parameter real n2_a = 2.0 from (0.0:inf);
+    parameter real xti2_a = 3.0;
+    parameter real eg2_a = 1.11 from (0.0:inf);
+    parameter real tt2_a = 0.0 from [0.0:inf);
+
+    real vak_a;
+    real vak_p;
+    real vak_c;
+    real vak_b1;
+    real vak_b2;
+    real tk;
+    real tnom_k;
+    real dtemp;
+    real ia;
+    real ip;
+    real ic;
+    real iba;
+    real ibp;
+    real ibc;
+    real iba2;
+    real ibp2;
+    real ibc2;
+    real i2;
+    real qa;
+    real qp;
+    real qc;
+    real qb1;
+    real qb2;
+    real gseries_a;
+    real gseries_p;
+    real gseries_c;
+    real gseries_b1;
+    real gseries_b2;
+    real cja_t;
+    real cjp_t;
+    real cjc_t;
+    real vja_t;
+    real vjp_t;
+    real vjc_t;
+
+    // C1-continuous exponential limiting for compact-model convergence.
+    analog function real safeexp;
+        input x;
+        real x;
+        begin
+            if (x > 80.0)
+                safeexp = exp(80.0) * (1.0 + x - 80.0);
+            else
+                safeexp = exp(x);
+        end
+    endfunction
+
+    analog function real positive_floor;
+        input x;
+        input floor_value;
+        real x;
+        real floor_value;
+        begin
+            if (x > floor_value)
+                positive_floor = x;
+            else
+                positive_floor = floor_value;
+        end
+    endfunction
+
+    analog function real scaled_is;
+        input is0;
+        input emission;
+        input xti;
+        input eg;
+        input temp_k;
+        input ref_k;
+        real is0;
+        real emission;
+        real xti;
+        real eg;
+        real temp_k;
+        real ref_k;
+        real ratio;
+        real exponent;
+        begin
+            ratio = temp_k / ref_k;
+            exponent = eg / (emission * `P_K * ref_k / `P_Q) * (1.0 - 1.0 / ratio);
+            scaled_is = is0 * pow(ratio, xti) * safeexp(exponent);
+        end
+    endfunction
+
+    // Enable reverse-breakdown current only beyond the SPICE reverse knee.
+    // The cubic smoothstep is C1 at both ends.
+    analog function real reverse_gate;
+        input v;
+        real v;
+        real x;
+        begin
+            x = (-v - 0.05) / 0.05;
+            if (x <= 0.0)
+                reverse_gate = 0.0;
+            else if (x >= 1.0)
+                reverse_gate = 1.0;
+            else
+                reverse_gate = x * x * (3.0 - 2.0 * x);
+        end
+    endfunction
+
+    // Keep helper definitions in dependency order.  Older Gnucap modelgen
+    // snapshots do not resolve forward references to later analog functions,
+    // while OpenVAF accepts both forms.
+    analog function real breakdown_current;
+        input v;
+        input ibv0;
+        input bv0;
+        input emission_bv;
+        input xti;
+        input eg;
+        input tcv;
+        input temp_k;
+        input ref_k;
+        real v;
+        real ibv0;
+        real bv0;
+        real emission_bv;
+        real xti;
+        real eg;
+        real tcv;
+        real temp_k;
+        real ref_k;
+        real vt;
+        real ibv_t;
+        real bv_t;
+        begin
+            vt = `P_K * temp_k / `P_Q;
+            ibv_t = scaled_is(ibv0, emission_bv, xti, eg, temp_k, ref_k);
+            bv_t = positive_floor(bv0 + tcv * (temp_k - ref_k), 1.0e-3);
+            breakdown_current = -ibv_t * safeexp((-v - bv_t) /
+                (emission_bv * vt)) * reverse_gate(v);
+        end
+    endfunction
+
+    analog function real component_current;
+        input v;
+        input is0;
+        input emission;
+        input isr0;
+        input emission_r;
+        input ibv0;
+        input bv0;
+        input emission_bv;
+        input xti;
+        input eg;
+        input tcv;
+        input knee_current0;
+        input temp_k;
+        input ref_k;
+        real v;
+        real is0;
+        real emission;
+        real isr0;
+        real emission_r;
+        real ibv0;
+        real bv0;
+        real emission_bv;
+        real xti;
+        real eg;
+        real tcv;
+        real knee_current0;
+        real temp_k;
+        real ref_k;
+        real vt;
+        real is_t;
+        real isr_t;
+        real ibv_t;
+        real bv_t;
+        real forward_current;
+        real recombination_current;
+        real breakdown_current;
+        begin
+            vt = `P_K * temp_k / `P_Q;
+            is_t = scaled_is(is0, emission, xti, eg, temp_k, ref_k);
+            isr_t = scaled_is(isr0, emission_r, xti, eg, temp_k, ref_k);
+            ibv_t = scaled_is(ibv0, emission_bv, xti, eg, temp_k, ref_k);
+            bv_t = positive_floor(bv0 + tcv * (temp_k - ref_k), 1.0e-3);
+            forward_current = is_t * (safeexp(v / (emission * vt)) - 1.0);
+            if (knee_current0 > 0.0 && forward_current > 0.0)
+                forward_current = forward_current /
+                    sqrt(1.0 + forward_current / knee_current0);
+            recombination_current = isr_t * (safeexp(v / (emission_r * vt)) - 1.0);
+            breakdown_current = -ibv_t * safeexp((-v - bv_t) / (emission_bv * vt)) * reverse_gate(v);
+            component_current = forward_current + recombination_current + breakdown_current;
+        end
+    endfunction
+
+    // Integral of the SPICE-style depletion capacitance, referenced to Q(0)=0.
+    analog function real depletion_charge;
+        input v;
+        input cj0;
+        input vj;
+        input grading;
+        input fc;
+        real v;
+        real cj0;
+        real vj;
+        real grading;
+        real fc;
+        real vfc;
+        real one_minus_fc;
+        real qfc;
+        real dv;
+        real linear_term;
+        begin
+            if (cj0 <= 0.0) begin
+                depletion_charge = 0.0;
+            end else begin
+                vfc = fc * vj;
+                one_minus_fc = 1.0 - fc;
+                if (v <= vfc) begin
+                    if (abs(1.0 - grading) < 1.0e-6)
+                        depletion_charge = -cj0 * vj * ln(1.0 - v / vj);
+                    else
+                        depletion_charge = cj0 * vj / (1.0 - grading) *
+                            (1.0 - pow(1.0 - v / vj, 1.0 - grading));
+                end else begin
+                    if (abs(1.0 - grading) < 1.0e-6)
+                        qfc = -cj0 * vj * ln(one_minus_fc);
+                    else
+                        qfc = cj0 * vj / (1.0 - grading) *
+                            (1.0 - pow(one_minus_fc, 1.0 - grading));
+                    dv = v - vfc;
+                    linear_term = 1.0 - fc * (1.0 + grading);
+                    depletion_charge = qfc + cj0 / pow(one_minus_fc, 1.0 + grading) *
+                        (linear_term * dv + grading / (2.0 * vj) *
+                         (v * v - vfc * vfc));
+                end
+            end
+        end
+    endfunction
+
+    analog begin
+        tk = $temperature;
+        tnom_k = tnom_c + 273.15;
+        dtemp = tk - tnom_k;
+        if (shared_junction != 0) begin
+            vak_a = V(JA, K);
+            vak_p = vak_a;
+            vak_c = vak_a;
+        end else begin
+            vak_a = V(JA, K);
+            vak_p = V(JP, K);
+            vak_c = V(JC, K);
+        end
+        vak_b1 = V(JB1, K);
+        vak_b2 = V(JB2, K);
+
+        cja_t = positive_floor(cj0_a * (1.0 + tcj_a * dtemp), 1.0e-30);
+        cjp_t = positive_floor(cj0_p * (1.0 + tcj_p * dtemp), 1.0e-30);
+        cjc_t = positive_floor(cj0_c * (1.0 + tcj_c * dtemp), 1.0e-30);
+        vja_t = positive_floor(vj_a + tvj_a * dtemp, 1.0e-3);
+        vjp_t = positive_floor(vj_p + tvj_p * dtemp, 1.0e-3);
+        vjc_t = positive_floor(vj_c + tvj_c * dtemp, 1.0e-3);
+
+        ia = area * component_current(vak_a, is_a, n_a, isr_a, nr_a,
+            ibv_a, bv_a, nbv_a, xti_a, eg_a, tcv_a, knee_current_a,
+            tk, tnom_k);
+        ia = ia + area * gleak_a * vak_a;
+        ip = perim * component_current(vak_p, is_p, n_p, isr_p, nr_p,
+            ibv_p, bv_p, nbv_p, xti_p, eg_p, tcv_p, knee_current_p,
+            tk, tnom_k);
+        ip = ip + perim * gleak_p * vak_p;
+        // The regular corner path carries transport current and depletion
+        // charge.  Its reverse bases use independent internal nodes below.
+        ic = corners * (component_current(vak_c, is_c, n_c, isr_c, nr_c,
+            ibv_c, bv_c, nbv_c, xti_c, eg_c, tcv_c, knee_current_c,
+            tk, tnom_k) -
+            breakdown_current(vak_c, ibv_c, bv_c, nbv_c,
+                xti_c, eg_c, tcv_c, tk, tnom_k));
+        ic = ic + corners * gleak_c * vak_c;
+
+        iba = area * breakdown_current(vak_a, ibv_a, bv_a, nbv_a,
+            xti_a, eg_a, tcv_a, tk, tnom_k);
+        ibp = perim * breakdown_current(vak_p, ibv_p, bv_p, nbv_p,
+            xti_p, eg_p, tcv_p, tk, tnom_k);
+        ibc = corners * breakdown_current(vak_b1, ibv_c, bv_c, nbv_c,
+            xti_c, eg_c, tcv_c, tk, tnom_k);
+        iba2 = area * breakdown_current(vak_a, ibv2_a, bv2_a, nbv2_a,
+            xti_a, eg_a, tcv_a, tk, tnom_k);
+        ibp2 = perim * breakdown_current(vak_p, ibv2_p, bv2_p, nbv2_p,
+            xti_p, eg_p, tcv_p, tk, tnom_k);
+        ibc2 = corners * breakdown_current(vak_b2, ibv2_c, bv2_c, nbv2_c,
+            xti_c, eg_c, tcv_c, tk, tnom_k);
+        ia = ia + iba2;
+        ip = ip + ibp2;
+
+        if (fwd2_enable != 0)
+            i2 = area * scaled_is(is2_a, n2_a, xti2_a, eg2_a, tk, tnom_k) *
+                (safeexp(vak_a / (n2_a * `P_K * tk / `P_Q)) - 1.0);
+        else
+            i2 = 0.0;
+
+        qa = tt_a * (ia - iba - iba2) + ttbv_a * iba + ttbv2_a * iba2 + tt2_a * i2;
+        qp = perim * depletion_charge(vak_p, cjp_t, vjp_t, mj_p, fc_p) +
+            tt_p * (ip - ibp - ibp2) + ttbv_p * ibp + ttbv2_p * ibp2;
+        qc = corners * depletion_charge(vak_c, cjc_t, vjc_t, mj_c, fc_c) + tt_c * ic;
+        // Bottom-junction depletion charge shares the first reverse path.  It
+        // therefore sees the same geometry-scaled series conductance as the
+        // fitted avalanche current, matching the legacy subcircuit topology.
+        qb1 = area * depletion_charge(vak_b1, cja_t, vja_t, mj_a, fc_a) + ttbv_c * ibc;
+        qb2 = ttbv2_c * ibc2;
+
+        gseries_a = positive_floor(mult * area * gser_a, 1.0e-15);
+        gseries_p = positive_floor(mult * perim * gser_p, 1.0e-15);
+        gseries_c = positive_floor(mult * corners * gser_c, 1.0e-15);
+        gseries_b1 = positive_floor(mult * (area * gser_bv1_a +
+            perim * gser_bv1_p + corners * gser_bv1_c), 1.0e-15);
+        gseries_b2 = positive_floor(mult * (area * gser_bv2_a +
+            perim * gser_bv2_p + corners * gser_bv2_c), 1.0e-15);
+
+        if (shared_junction != 0) begin
+            I(A, JP) <+ V(A, JP);
+            I(A, JC) <+ V(A, JC);
+            I(A, JB1) <+ V(A, JB1);
+            I(A, JB2) <+ V(A, JB2);
+            I(A, JA) <+ gseries_a * V(A, JA);
+            I(JA, K) <+ mult * (ia + ip + ic + i2);
+            I(JA, K) <+ ddt(mult * (qa + qp + qc));
+        end else begin
+            I(A, JA) <+ gseries_a * V(A, JA);
+            I(JA, K) <+ mult * (ia + i2);
+            I(JA, K) <+ ddt(mult * qa);
+
+            I(A, JP) <+ gseries_p * V(A, JP);
+            I(JP, K) <+ mult * ip;
+            I(JP, K) <+ ddt(mult * qp);
+
+            I(A, JC) <+ gseries_c * V(A, JC);
+            I(JC, K) <+ mult * ic;
+            I(JC, K) <+ ddt(mult * qc);
+        end
+
+        I(A, JB1) <+ gseries_b1 * V(A, JB1);
+        I(JB1, K) <+ mult * ibc;
+        I(JB1, K) <+ ddt(mult * qb1);
+
+        I(A, JB2) <+ gseries_b2 * V(A, JB2);
+        I(JB2, K) <+ mult * ibc2;
+        I(JB2, K) <+ ddt(mult * qb2);
+
+        I(A, K) <+ mult * gsh * V(A, K);
+    end
+endmodule

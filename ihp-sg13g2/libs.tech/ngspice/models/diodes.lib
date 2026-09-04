@@ -15,13 +15,8 @@
 * limitations under the License.
 *
 *#######################################################################
-       
-.MODEL darea D (tnom=27 is=2.315E-019 n=1.009 ik=1.434E-007 rs=2.193E+005 cj0=9.371E-016 m=0.3036 vj=0.696 fc=0.5 bv=11.64 ibv=3.458E-007 tcv=0.001 nbv = 48.9 isr=7.413E-019 xti=5.039 trs=0 trs2=0 tt=7.009E-007)
-.MODEL dperim D (tnom=27 is=3.851E-021 n=1.022 rs=1.688E+006 ik=7.838E-008 isr=1.011E-017 xti=3 bv=31.86 ibv=6.115E-014 nbv=112.1 cj=1.821E-017 m=0.01923 vj=0.598 tt=7.009E-007)
-.MODEL dcorner D (tnom=27 is=6.502E-021 n=1 rs=4.857E+005 ik=1E-006 isr=0 xti=3 bv=11.64 ibv=3.458E-007 cj=0 m =0.5 vj=0.7)
-.MODEL dparea D (tnom=27 is=8.569E-020 n=1.003 ik=2.957E-007 rs=1.728E+005 cj=8.252E-016 m=0.3171 vj=0.6628 fc=0.5 bv=12.14 ibv=1E-006 tcv=0.001 nbv=11.85 isr=2.421E-019 xti=4.56 trs=0 trs2=0 tt=1E-012)
-.MODEL dpperim D (tnom=27 is=1.186E-020 n=1.006 rs=1.577E+006 ik=2.158E-008 isr=7.211E-018 xti = 4.118 bv=27.26 ibv=1.832E-011 nbv=32.47 cj=3.657E-017 m=0.1512 vj=0.5241 tt=1E-012)
-.MODEL dpcorner D (tnom=27 is=6.965E-021 n=1 rs=4.734E+005 ik=1.19E-008 isr=0 xti=3 cj=0 m=0.5 vj=0.7)
+
+.include "$PDK_ROOT/$PDK/libs.tech/ngspice/models/ihp_diode_va.lib"
 
 
 **************************************
@@ -46,14 +41,8 @@
 *  DEV_C = number of corners (default=4)
 *************************************
 
-.subckt dantenna 1 2
-*subckt dantenna (bn C)
-*                (anode  cathode)
-*      (substrate/pWell  NSD)
-.params l=780n   w=780n   DEV_A=(l*w)/1p  DEV_P=(l+w)/0.5u  DEV_C=4
-D1 1 2 darea area=DEV_A
-D2 1 2 dperim area=DEV_P
-D3 1 2 dcorner area=DEV_C
+.subckt dantenna 1 2 l=780n w=780n m=1
+Xdantenna 1 2 dantenna_va l={l} w={w} m={m}
 .ends dantenna
 
 **************************************
@@ -77,13 +66,8 @@ D3 1 2 dcorner area=DEV_C
 *  DEV_C = number of corners (default=4)
 *************************************
 
-.subckt dpantenna 1 2
-*              (PSD  nWell)
-*             (anode  cathode)
-.params l=780n  w=780n  DEV_A=(l*w)/1p  DEV_P=(l+w)/0.5u  DEV_C=4
-D1 1 2 dparea area=DEV_A
-D2 1 2 dpperim area=DEV_P
-D3 1 2 dpcorner area=DEV_C
+.subckt dpantenna 1 2 l=780n w=780n m=1
+Xdpantenna 1 2 dpantenna_va l={l} w={w} m={m}
 .ends dpantenna
 
 
@@ -162,62 +146,53 @@ xdnwpsub NWell bn ddnwpsub l='l' w='w'
 +pws=pw/scaling
 +aws=aw/(scaling*scaling)
 
-dinner isosub NWell dinner_mod area=mf*aws pj=0
-dinneredge isosub NWell dinneredge_mod area=mf*pws pj=mf*pws
-dinrevl NWell isosub dinrevl_mod area=mf*aws pj=0
-dinrevlside NWell isosub dinrevlside_mod area=mf*pws pj=0
-dinrevh NWell isosub dinrevh_mod area=mf*aws pj=0
-dincaparea isosub NWell dincaparea_mod area=mf*aws pj=mf*pws-3
+N_DINNER isosub NWell dinner_mod area={mf*aws*1e-12} perim=0 mult=1
+N_DINNEREDGE isosub NWell dinneredge_mod area={mf*pws*1e-12} perim={mf*pws*1e-6} mult=1
+N_DINREVL NWell isosub dinrevl_mod area={mf*aws*1e-12} perim=0 mult=1
+N_DINREVLSIDE NWell isosub dinrevlside_mod area={mf*pws*1e-12} perim=0 mult=1
+N_DINREVH NWell isosub dinrevh_mod area={mf*aws*1e-12} perim=0 mult=1
+N_DINCAPAREA isosub NWell dincaparea_mod area={mf*aws*1e-12} perim={(mf*pws-3)*1e-6} mult=1
 
-.model dinner_mod d tnom=27 level=1 tlevc=0 tlev=2
-+is=1.5e-19
-+n=1.02
-+ik=100e-9
-+xti=1.9
-+bv=9.7
-+ibv=1e-12
-+nbv=0.1
-+tcv=-698.557e-6
-+rs=5e5
+.model dinner_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=1.5e-7 n_a=1.02 isr_a=0
++ibv_a=1e-3 bv_a=9.7 nbv_a=0.1
++xti_a=1.9 tcv_a=-698.557e-6
++gser_a=2e6
++)
 
-.model dinrevl_mod d tnom=27 level=1 tlevc=0 tlev=2
-+is=1e-18
-+n=100
-+xti=2200
+.model dinrevl_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=1e-6 n_a=100 isr_a=0
++ibv_a=0 bv_a=30 nbv_a=1 xti_a=2200
++gser_a=1e6
++)
 
-.model dinrevlside_mod d tnom=27 level=1 tlevc=0 tlev=2
-+is=10e-18
-+n=100
-+xti=2200
+.model dinrevlside_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=1e-5 n_a=100 isr_a=0
++ibv_a=0 bv_a=30 nbv_a=1 xti_a=2200
++gser_a=1e6
++)
 
-.model dinrevh_mod d tnom=27 level=1 tlevc=0 tlev=2
-+is=3e-21
-+n=30
-+xti=700
+.model dinrevh_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=3e-9 n_a=30 isr_a=0
++ibv_a=0 bv_a=30 nbv_a=1 xti_a=700
++gser_a=1e6
++)
 
-.model dincaparea_mod d tnom=27 level=1 tlevc=0 tlev=2
-+is=1e-25
-+cj=967.2e-18
-+cjsw=436e-18
-+mj=0.3436
-+mjsw=0.3234
-+vj=0.7312
-+php=0.7036
+.model dincaparea_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=1e-13 n_a=1 isr_a=0
++ibv_a=0 bv_a=30 nbv_a=1
++cj0_a=967.2e-6 mj_a=0.3436 vj_a=0.7312
++cj0_p=436e-12 mj_p=0.3234 vj_p=0.7036
++gser_a=1e12 gser_p=1e6
++)
 
-.model dinneredge_mod d tnom=27 level=1 tlevc=0 tlev=2
-+is=3.89e-20
-+jsw=7.239e-20
-+n=1.01
-+ik=3e-6
-*+ikp=10e-6
-+xti=1.529
-+bv=9.7
-+ibv=1e-12
-+nbv=0.1
-+tcv=-698.557e-6
-+isr=20e-18
-+rs=5e4
-*+rsw=12e3
+.model dinneredge_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=3.89e-8 n_a=1.01 isr_a=20e-6
++ibv_a=1 bv_a=9.7 nbv_a=0.1
++is_p=7.239e-14 n_p=1.01
++xti_a=1.529 xti_p=1.529 tcv_a=-698.557e-6
++gser_a=2e7 gser_p=20
++)
 
 .ends dpwdnw
 
@@ -235,72 +210,64 @@ dincaparea isosub NWell dincaparea_mod area=mf*aws pj=mf*pws-3
 +pbs=pb/scaling
 +abus=ab/(scaling*scaling)
 
-douter bn NWell dsub_mod area=mf*abus pj=0
+N_DOUTER bn NWell dsub_mod area={mf*abus*1e-12} perim=0 mult=1
 
 .if (xds<0.6)
-   douteredge0 bn NWell dsubedge0_mod area=mf*pbs pj=mf*pbs
+   N_DOUTEREDGE0 bn NWell dsubedge0_mod area={mf*pbs*1e-12} perim={mf*pbs*1e-6} mult=1
 .else
-   douteredgexds bn NWell dsubedgexds_mod area=mf*pbs pj=mf*pbs
+   N_DOUTEREDGEXDS bn NWell dsubedgexds_mod area={mf*pbs*1e-12} perim={mf*pbs*1e-6} mult=1
 .endif
 
-doutcapcorner bn NWell doutcapcorner_mod area=1.0e-10 pj=mf*14.4
-doutcaparea bn NWell doutcaparea_mod area=mf*abus pj=mf*pbs
+N_DOUTCAPCORNER bn NWell doutcapcorner_mod area=1.0e-22 perim={mf*14.4e-6} mult=1
+N_DOUTCAPAREA bn NWell doutcaparea_mod area={mf*abus*1e-12} perim={mf*pbs*1e-6} mult=1
 
-.model dsub_mod d tnom=27 level=1 tlevc=0 tlev=2
-+is=4.052e-18
-+n=1.01
-+ik=1.023e-9
-+xti=2.112
-+bv=94.7
-+nbv=6
-+tcv=-422.386e-6
-+isr=86e-18
-+rs=5e5
+.model dsub_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=4.052e-6 n_a=1.01 isr_a=86e-6
++knee_current_a=1.023e3 xti_a=2.112
++ibv_a=100 bv_a=94.7 nbv_a=6 tcv_a=-422.386e-6
++gser_a=2e6
++)
 
-.model dsubedge0_mod d tnom=27 level=1 tlevc=0 tlev=2
-+is=4.052e-18
-+n=1.01
-+jsw=17.26e-18
-+ik=1.023e-9
-*+ikp=10.73e-9
-+xti=2.112
-+bv=13.54
-+tcv=-747.415e-6
-+isr=10e-18
-+nbv=0.5
-+rs=10e3
+.model dsubedge0_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=4.052e-6 n_a=1.01 isr_a=10e-6
++is_p=17.26e-12 n_p=1.01
++knee_current_a=1.023e3 xti_a=2.112 xti_p=2.112
++ibv_a=100 bv_a=13.54 nbv_a=0.5 tcv_a=-747.415e-6
++gser_a=1e8 gser_p=100
++)
 
-.model dsubedgexds_mod d tnom=27 level=1 tlevc=0 tlev=2
-+is=4.052e-18
-+n=1.01
-+jsw=17.26e-18
-+ik=1.023e-9
-*+ikp=10.73e-9
-+xti=2.112
-+bv='(-11.70818-8.218455*xds+9.586918*ln(xds)+51.45397*sqrt(xds))'
-+tcv=-980.73e-6
-+nbv='5.452942+(0.4699715-5.452942)/((1+((xds/0.982607)**308.6349))**0.005495705)'
-+isr=1e-16
-+rs=28e3
-*+rsw=16e3
+.model dsubedgexds_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=4.052e-6 n_a=1.01 isr_a=100e-6
++is_p=17.26e-12 n_p=1.01
++knee_current_a=1.023e3 xti_a=2.112 xti_p=2.112
++ibv_a=100
++bv_a='(-11.70818-8.218455*xds+9.586918*ln(xds)+51.45397*sqrt(xds))'
++nbv_a='5.452942+(0.4699715-5.452942)/((1+((xds/0.982607)**308.6349))**0.005495705)'
++tcv_a=-980.73e-6
++gser_a=35714285.7143 gser_p=57.1428571429
++)
 
-.model doutcapcorner_mod d tnom=27 level=1 tlevc=0 tlev=2
-+jsw=1e-25
-+cjsw='(389.8354-784.332*xds+736.9852*(xds**1.33)-91.4155*xds*xds+5.388092*xds*xds*xds)*1e-18'
-+mjsw='0.3029153+16.37804*xds-16.45657*(xds**0.9972906)'
-+php='0.05502945+((0.51-0.05502945)/(1+((xds/1.059131)**7.087824)))'
-+bv='(213.2898+(145-213.2898)/((1+(xds/0.9145351)**38.88081)**0.02169905))'
-+nbv=200
+.model doutcapcorner_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=0 is_p=0 is_c=0
++cj0_p='(389.8354-784.332*xds+736.9852*(xds**1.33)-91.4155*xds*xds+5.388092*xds*xds*xds)*1e-12'
++mj_p='0.3029153+16.37804*xds-16.45657*(xds**0.9972906)'
++vj_p='0.05502945+((0.51-0.05502945)/(1+((xds/1.059131)**7.087824)))'
++ibv_a=100
++bv_a='(213.2898+(145-213.2898)/((1+(xds/0.9145351)**38.88081)**0.02169905))'
++nbv_a=200
++gser_a=1e12 gser_p=1e6
++)
 
-.model doutcaparea_mod d tnom=27 level=1 tlevc=0 tlev=2
-+is=1e-25
-+cj=70.13e-18
-+mj=0.3874
-+vj=0.3357
-+cjsw='(471.3008-320.939*xds+91.4155*xds*xds-5.388092*xds*xds*xds)*1e-18'
-+mjsw='0.2842892-0.1665323*xds+0.06902971*xds*xds-0.004775717*xds*xds*xds'
-+php='0.6372219-0.6615502*sqrt(xds)+0.2246224*xds-0.0005250178*xds*xds*xds'
-+bv='(262.7082+((154.5533-262.7082)/(1+(xds/3.044691)**1.691568)))'
-+nbv=200
+.model doutcaparea_mod ihp_diode_va (
++tnom_c=27 shared_junction=1 gsh=1e-12 is_a=1e-13 n_a=1
++cj0_a=70.13e-6 mj_a=0.3874 vj_a=0.3357
++cj0_p='(471.3008-320.939*xds+91.4155*xds*xds-5.388092*xds*xds*xds)*1e-12'
++mj_p='0.2842892-0.1665323*xds+0.06902971*xds*xds-0.004775717*xds*xds*xds'
++vj_p='0.6372219-0.6615502*sqrt(xds)+0.2246224*xds-0.0005250178*xds*xds*xds'
++ibv_a=100
++bv_a='(262.7082+((154.5533-262.7082)/(1+(xds/3.044691)**1.691568)))'
++nbv_a=200
++gser_a=1e12 gser_p=1e6
++)
 
 .ends ddnwpsub
